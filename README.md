@@ -15,6 +15,15 @@ ENSA AI proactively finds websites, SaaS platforms, mobile apps and business sof
 | [`docs/`](docs/README.md) | Strategy, Business Model Canvas, go-to-market, commercial model, operations, execution plans, templates |
 | [`docs/discovery/`](docs/discovery/README.md) | Discovery agent data: companies, product analyses, AI opportunities, segment research, run logs |
 | [`docs/references/source/`](docs/references/source/ENSA_AI_Business_Model_Canvas_and_Operating_Playbook_v1.0.md) | The original v1.0 playbook, kept unchanged |
+| [`site/`](site/index.html) | Landing page — static HTML/CSS/JS, Persian (RTL) first; English to follow in `site/en/` |
+
+## Run the landing page locally
+
+```bash
+python3 -m http.server 4321 --directory site
+```
+
+Then open <http://localhost:4321>.
 
 Start with [docs/README.md](docs/README.md).
 

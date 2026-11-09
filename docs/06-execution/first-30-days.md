@@ -21,4 +21,4 @@
 | Opportunity template | [`discovery/_templates/opportunities.md`](../discovery/_templates/opportunities.md) |
 | Scoring | [Scoring models](../04-operations/scoring-models.md) |
 | Outreach template | [`templates/outreach-message.md`](../templates/outreach-message.md) |
-| Simple ENSA landing page | Not started |
+| Simple ENSA landing page | Persian draft in [`site/`](../../site/index.html); English version and real contact details pending |
