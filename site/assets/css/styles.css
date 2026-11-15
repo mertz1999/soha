@@ -38,6 +38,8 @@
   --muted: #5D6278;
   --line: rgba(29, 43, 100, .12);
   --brand-ink: #2C3945;     /* slate of the logo's wordmark */
+  --soha-green: #078E68;    /* logo ribbon green */
+  --soha-green-ink: #067A59; /* darker, for white text */
 
   --font: 'Vazirmatn', system-ui, -apple-system, 'Segoe UI', Tahoma, sans-serif;
   --container: 1160px;

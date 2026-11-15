@@ -66,14 +66,6 @@
 
     <!-- ───────────── Agents in action (tabbed showcase) ───────────── -->
     <section class="showcase" id="agents" aria-labelledby="agents-title">
-      <svg class="sr-defs" aria-hidden="true" focusable="false">
-        <symbol id="khatam" viewBox="-50 -50 100 100">
-          <path fill="#111A42" stroke="#E3A33A" stroke-width="2" d="M46 0 32.53 13.47 32.53 32.53 13.47 32.53 0 46-13.47 32.53-32.53 32.53-32.53 13.47-46 0-32.53-13.47-32.53-32.53-13.47-32.53 0-46 13.47-32.53 32.53-32.53 32.53-13.47Z"/>
-          <path fill="none" stroke="#7FD1CC" stroke-width="1.6" d="M0-26 26 0 0 26-26 0Z"/>
-          <circle r="7" fill="#E3A33A"/>
-        </symbol>
-      </svg>
-
       <div class="container">
         <header class="section-head reveal">
           <p class="kicker">ایجنت‌ها در عمل</p>
@@ -104,16 +96,6 @@
         <div class="scenes reveal">
           <div class="scene" id="scene-support" role="tabpanel" aria-labelledby="tab-support" tabindex="0" data-active>
             <div class="stage">
-              <div class="agent-card">
-                <p class="agent-name"><span class="live-dot"></span>ایجنت پشتیبانی</p>
-                <div class="agent-core"><span class="ring"></span><span class="ring ring-2"></span><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#khatam" width="100" height="100"/></svg></div>
-                <p class="agent-status">در حال کار</p>
-                <ol class="agent-steps">
-                  <li data-done=".26"><i class="check"></i>درک پرسش</li>
-                  <li data-done=".40"><i class="check"></i>بررسی سفارش</li>
-                  <li data-done=".54"><i class="check"></i>پاسخ به مشتری</li>
-                </ol>
-              </div>
               <div class="device-area">
                 <div class="device device--phone">
                   <div class="screen">
@@ -123,16 +105,16 @@
                       <span class="app-title">پشتیبانی سفارش</span>
                       <span class="app-logo"></span>
                     </div>
-                    <div class="order-card screen-card" data-wire="in" data-pulse=".30 .38">
+                    <div class="order-card screen-card" data-focus=".28 .49" data-say="بررسی سفارش ۴۸۲۱…">
                       <span class="order-thumb"></span>
                       <span class="order-info"><b>سفارش ۴۸۲۱</b><span>در مسیر ارسال</span><span class="order-progress"><i></i></span></span>
                     </div>
                     <div class="chat">
-                      <p class="msg msg-user" data-in=".08" data-wire="in" data-pulse=".12 .24">سفارشم کی می‌رسد؟</p>
+                      <p class="msg msg-user" data-in=".06" data-focus=".10 .26" data-say="خواندن پرسش مشتری…">سفارشم کی می‌رسد؟</p>
                       <div class="reply">
-                        <span class="typing" data-show=".27 .63"><i></i><i></i><i></i></span>
+                        <span class="typing" data-show=".50 .66" data-focus=".51 .66" data-say="نوشتن پاسخ…"><i></i><i></i><i></i></span>
                         <div class="msg-agent" data-in=".67">
-                          <p class="msg" data-wire="out" data-pulse=".56 .66">فردا بین ساعت ۱۰ تا ۱۲ تحویل می‌شود.</p>
+                          <p class="msg" data-anchor="end" data-focus=".68 .93" data-say="✓ پاسخ داده شد">فردا بین ساعت ۱۰ تا ۱۲ تحویل می‌شود.</p>
                           <span class="agent-tag">ایجنت هوشمند</span>
                         </div>
                       </div>
@@ -142,45 +124,34 @@
                   </div>
                 </div>
               </div>
-              <svg class="wires" aria-hidden="true"></svg>
             </div>
             <p class="scene-caption">پاسخ به پرسش‌های تکراری مشتری، درون اپ شما <span class="scene-for">برای: فروشگاه‌ها و مارکت‌پلیس‌ها</span></p>
           </div>
           <div class="scene" id="scene-meetings" role="tabpanel" aria-labelledby="tab-meetings" tabindex="0">
             <div class="stage">
-              <div class="agent-card">
-                <p class="agent-name"><span class="live-dot"></span>ایجنت جلسات</p>
-                <div class="agent-core"><span class="ring"></span><span class="ring ring-2"></span><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#khatam" width="100" height="100"/></svg></div>
-                <p class="agent-status">در حال کار</p>
-                <ol class="agent-steps">
-                  <li data-done=".31"><i class="check"></i>تبدیل گفتار به متن</li>
-                  <li data-done=".45"><i class="check"></i>استخراج نکات کلیدی</li>
-                  <li data-done=".58"><i class="check"></i>ثبت در CRM</li>
-                </ol>
-              </div>
               <div class="device-area">
                 <div class="device device--window window mt">
                   <div class="window-bar">جلسهٔ فروش · ضبط‌شده<span class="window-dots"><i></i><i></i><i></i></span></div>
                   <div class="mt-body">
                     <div class="mt-meeting">
-                      <div class="mt-audio screen-card" data-wire="in" data-pulse=".08 .18">
+                      <div class="mt-audio screen-card" data-focus=".04 .19" data-say="گوش دادن به جلسه…">
                         <span class="mt-play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 6v12L7 12z"/></svg></span>
                         <span class="mt-wave"><i style="--h:30%;--dl:-0.00s"></i><i style="--h:79%;--dl:-0.13s"></i><i style="--h:36%;--dl:-0.26s"></i><i style="--h:43%;--dl:-0.39s"></i><i style="--h:52%;--dl:-0.52s"></i><i style="--h:77%;--dl:-0.65s"></i><i style="--h:68%;--dl:-0.78s"></i><i style="--h:48%;--dl:-0.91s"></i><i style="--h:35%;--dl:-1.04s"></i><i style="--h:45%;--dl:-0.07s"></i><i style="--h:85%;--dl:-0.20s"></i><i style="--h:38%;--dl:-0.33s"></i><i style="--h:66%;--dl:-0.46s"></i><i style="--h:30%;--dl:-0.59s"></i><i style="--h:60%;--dl:-0.72s"></i><i style="--h:50%;--dl:-0.85s"></i><i style="--h:82%;--dl:-0.98s"></i><i style="--h:55%;--dl:-0.01s"></i><i style="--h:38%;--dl:-0.14s"></i><i style="--h:48%;--dl:-0.27s"></i><i style="--h:57%;--dl:-0.40s"></i><i style="--h:85%;--dl:-0.53s"></i><i style="--h:44%;--dl:-0.66s"></i><i style="--h:50%;--dl:-0.79s"></i><i style="--h:31%;--dl:-0.92s"></i><i style="--h:75%;--dl:-1.05s"></i></span>
                         <span class="mt-time">۱۲:۴۰</span>
                       </div>
-                      <div class="mt-lines" data-wire="in" data-pulse=".36 .45">
+                      <div class="mt-lines" data-focus=".21 .47" data-say="استخراج نکات کلیدی…">
                         <div class="mt-line" data-in=".19"><span class="mt-who">م</span><p>بودجهٔ ما حدود <span class="mt-key">۵۰۰ میلیون تومان<i data-grow=".33 .37"></i></span> است.</p></div>
                         <div class="mt-line" data-in=".24"><span class="mt-who">م</span><p>تصمیم نهایی با <span class="mt-key">مدیر فنی<i data-grow=".37 .41"></i></span> ماست.</p></div>
                         <div class="mt-line" data-in=".29"><span class="mt-who is-us">ف</span><p><span class="mt-key">پنج‌شنبه دمو<i data-grow=".41 .45"></i></span> را نشان می‌دهیم.</p></div>
                       </div>
                     </div>
-                    <div class="mt-crm screen-card" data-wire="out" data-pulse=".47 .57">
+                    <div class="mt-crm screen-card" data-focus=".49 .72" data-say="ثبت اطلاعات در CRM…">
                       <div class="mt-crm-head"><span class="mt-crm-logo"></span>CRM · سرنخ جدید</div>
                       <div class="mt-field"><span>بودجه</span><b data-in=".58">۵۰۰ میلیون تومان</b></div>
                       <div class="mt-field"><span>تصمیم‌گیرنده</span><b data-in=".62">مدیر فنی</b></div>
                       <div class="mt-field"><span>مرحله</span><b data-in=".66">ارائهٔ دمو</b></div>
                       <div class="mt-field"><span>قدم بعدی</span><b data-in=".70">دمو، پنج‌شنبه</b></div>
-                      <div class="mt-actions">
+                      <div class="mt-actions" data-anchor="end" data-focus=".73 .80 | .81 .93" data-say="منتظر تأیید شما… | ✓ CRM به‌روز شد">
                         <span class="stack">
                           <span class="ui-btn" data-show=".74 .80" data-press=".79">تأیید و ثبت</span>
                           <span class="ui-btn is-ok" data-in=".81">✓ ثبت شد</span>
@@ -191,29 +162,18 @@
                   </div>
                 </div>
               </div>
-              <svg class="wires" aria-hidden="true"></svg>
             </div>
             <p class="scene-caption">صدای جلسه به اطلاعات مرتب در CRM تبدیل می‌شود <span class="scene-for">برای: نرم‌افزارهای CRM و فروش</span></p>
           </div>
           <div class="scene" id="scene-medical" role="tabpanel" aria-labelledby="tab-medical" tabindex="0">
             <div class="stage">
-              <div class="agent-card">
-                <p class="agent-name"><span class="live-dot"></span>ایجنت تصویر پزشکی</p>
-                <div class="agent-core"><span class="ring"></span><span class="ring ring-2"></span><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#khatam" width="100" height="100"/></svg></div>
-                <p class="agent-status">در حال کار</p>
-                <ol class="agent-steps">
-                  <li data-done=".28"><i class="check"></i>آماده‌سازی تصویر</li>
-                  <li data-done=".46"><i class="check"></i>علامت‌گذاری نواحی</li>
-                  <li data-done=".58"><i class="check"></i>گزارش برای پزشک</li>
-                </ol>
-              </div>
               <div class="device-area">
                 <div class="device device--window window mx">
                   <div class="window-bar">نمایشگر تصاویر پزشکی<span class="window-dots"><i></i><i></i><i></i></span></div>
                   <div class="mx-body">
-                    <div class="mx-viewer" data-wire="in" data-pulse=".10 .22">
+                    <div class="mx-viewer" data-focus=".04 .26" data-say="آماده‌سازی تصویر…">
                       <div class="mx-toolbar"><span>قفسهٔ سینه · نمای روبه‌رو</span><span class="mx-tools"><i></i><i></i><i></i></span></div>
-                      <div class="mx-image">
+                      <div class="mx-image" data-focus=".27 .48" data-say="جست‌وجوی نواحی مشکوک…">
                         <svg viewBox="0 0 200 160" aria-hidden="true">
                           <defs>
                             <filter id="mx-blur" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.6"/></filter>
@@ -243,10 +203,10 @@
                         <span class="mx-corners"></span>
                       </div>
                     </div>
-                    <div class="mx-report screen-card" data-wire="out" data-pulse=".48 .58">
+                    <div class="mx-report screen-card" data-focus=".50 .70" data-say="نوشتن گزارش برای پزشک…">
                       <div class="mx-report-head" data-in=".60"><span class="mx-badge">۱</span>یافتهٔ پیشنهادی</div>
                       <p data-in=".64">ناحیه‌ای در ریهٔ راست، برای بررسی دقیق‌تر</p>
-                      <div class="mx-row">
+                      <div class="mx-row" data-anchor="end" data-focus=".71 .80 | .81 .93" data-say="منتظر بررسی پزشک… | ✓ انجام شد">
                         <span class="ui-chip mx-prio" data-in=".68">اولویت بررسی: بالا</span>
                         <span class="stack">
                           <span class="ui-chip mx-wait" data-show=".71 .80">در انتظار بررسی پزشک</span>
@@ -258,31 +218,20 @@
                   </div>
                 </div>
               </div>
-              <svg class="wires" aria-hidden="true"></svg>
             </div>
             <p class="scene-caption">نواحی نیازمند توجه برای بررسی سریع‌تر پزشک علامت می‌خورد <span class="scene-for">برای: نرم‌افزارهای تصویربرداری پزشکی</span></p>
           </div>
           <div class="scene" id="scene-part" role="tabpanel" aria-labelledby="tab-part" tabindex="0">
             <div class="stage">
-              <div class="agent-card">
-                <p class="agent-name"><span class="live-dot"></span>ایجنت طراحی قطعه</p>
-                <div class="agent-core"><span class="ring"></span><span class="ring ring-2"></span><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#khatam" width="100" height="100"/></svg></div>
-                <p class="agent-status">در حال کار</p>
-                <ol class="agent-steps">
-                  <li data-done=".27"><i class="check"></i>فهم نیاز و ابعاد</li>
-                  <li data-done=".58"><i class="check"></i>ساخت مدل سه‌بعدی</li>
-                  <li data-done=".73"><i class="check"></i>آماده‌سازی چاپ</li>
-                </ol>
-              </div>
               <div class="device-area">
                 <div class="device device--window window cad">
                   <div class="window-bar">طراحی قطعه · پروژهٔ جدید<span class="window-dots"><i></i><i></i><i></i></span></div>
                   <div class="cad-body">
-                    <div class="cad-prompt screen-card" data-wire="in" data-pulse=".10 .22">
+                    <div class="cad-prompt screen-card" data-focus=".08 .27" data-say="فهم نیاز و ابعاد…">
                       <span class="cad-avatar">ط</span>
                       <span data-in=".06">یک براکت L شکل: ۱۰۰ × ۵۰ میلی‌متر، ارتفاع ۸۰، با دو سوراخ ۸ میلی‌متری</span>
                     </div>
-                    <div class="cad-canvas" data-wire="out" data-pulse=".28 .36">
+                    <div class="cad-canvas" data-focus=".29 .59 | .60 .74" data-say="ساخت مدل سه‌بعدی… | آماده‌سازی برای چاپ…">
                       <span class="cad-label">نمای سه‌بعدی</span>
                       <svg viewBox="70 -8 200 200" aria-hidden="true">
                           <path class="cad-face cad-side" data-in="0.46" d="M100.2 120.8 L199.8 178.2 L199.8 166.8 L110.2 115.0 L110.2 34.5 L100.2 28.8Z"/>
@@ -303,7 +252,7 @@
                       </svg>
                       <span class="cad-slice" data-sweep=".60 .72 up"></span>
                     </div>
-                    <div class="cad-out">
+                    <div class="cad-out" data-anchor="end" data-focus=".76 .93" data-say="✓ فایل آمادهٔ چاپ است">
                       <span class="ui-chip is-good" data-in=".76">✓ فایل آمادهٔ چاپ (STL)</span>
                       <span class="ui-chip" data-in=".79">زمان تقریبی چاپ: ۲ ساعت</span>
                       <span class="ui-btn" data-in=".82" data-press=".88">ارسال به چاپگر</span>
@@ -311,33 +260,22 @@
                   </div>
                 </div>
               </div>
-              <svg class="wires" aria-hidden="true"></svg>
             </div>
             <p class="scene-caption">از یک توضیح ساده تا فایل آمادهٔ چاپ سه‌بعدی <span class="scene-for">برای: پلتفرم‌های طراحی و چاپ سه‌بعدی</span></p>
           </div>
           <div class="scene" id="scene-daily" role="tabpanel" aria-labelledby="tab-daily" tabindex="0">
             <div class="stage">
-              <div class="agent-card">
-                <p class="agent-name"><span class="live-dot"></span>ایجنت تحلیل روزانه</p>
-                <div class="agent-core"><span class="ring"></span><span class="ring ring-2"></span><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#khatam" width="100" height="100"/></svg></div>
-                <p class="agent-status">در حال کار</p>
-                <ol class="agent-steps">
-                  <li data-done=".26"><i class="check"></i>جمع‌آوری داده‌ها</li>
-                  <li data-done=".52"><i class="check"></i>یافتن تغییرات مهم</li>
-                  <li data-done=".63"><i class="check"></i>ارسال گزارش</li>
-                </ol>
-              </div>
               <div class="device-area">
                 <div class="device device--window window dy">
                   <div class="window-bar">داشبورد مدیریت<span class="window-dots"><i></i><i></i><i></i></span></div>
                   <div class="dy-body">
-                    <div class="dy-sources" data-wire="in" data-pulse=".12 .22">
+                    <div class="dy-sources" data-focus=".04 .26" data-say="جمع‌آوری داده‌ها…">
                       <span class="dy-clock"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>هر روز، ساعت ۸:۰۰</span>
                       <span class="ui-chip" data-in=".04">فروش</span>
                       <span class="ui-chip" data-in=".07">انبار</span>
                       <span class="ui-chip" data-in=".10">تبلیغات</span>
                     </div>
-                    <div class="dy-card screen-card" data-wire="out" data-pulse=".28 .36">
+                    <div class="dy-card screen-card" data-focus=".28 .54" data-say="یافتن تغییرات مهم…">
                       <div class="dy-title">فروش روزانهٔ لوازم خانگی · ۱۴ روز اخیر</div>
                       <div class="dy-plot">
                         <svg class="dy-chart" viewBox="0 0 300 100" aria-hidden="true">
@@ -348,7 +286,7 @@
                         <span class="dy-anomaly" data-in=".50" style="left: 96.0%; top: 71.6%"><i></i><b>۱۸٪ کمتر</b></span>
                       </div>
                     </div>
-                    <div class="dy-insight screen-card" data-wire="out" data-pulse=".54 .62">
+                    <div class="dy-insight screen-card" data-anchor="end" data-focus=".56 .69 | .70 .82 | .83 .93" data-say="نوشتن گزارش صبح… | منتظر تصمیم شما… | ✓ انجام شد">
                       <span class="agent-tag" data-in=".62">گزارش صبح امروز</span>
                       <p data-in=".65">فروش دیروزِ لوازم خانگی <b>۱۸٪ کمتر</b> از میانگین دو هفته بود؛ علت احتمالی: تمام‌شدن موجودی دو کالای پرفروش.</p>
                       <span class="stack">
@@ -357,33 +295,18 @@
                       </span>
                     </div>
                   </div>
-                  <div class="dy-toast" data-in=".67">
-                    <span class="dy-toast-icon"></span>
-                    <span><b>سها</b> · گزارش امروز آماده است</span>
-                  </div>
                 </div>
               </div>
-              <svg class="wires" aria-hidden="true"></svg>
             </div>
             <p class="scene-caption">هر صبح، مهم‌ترین تغییرات کسب‌وکار در یک گزارش کوتاه <span class="scene-for">برای: داشبوردها و نرم‌افزارهای سازمانی</span></p>
           </div>
           <div class="scene" id="scene-invoice" role="tabpanel" aria-labelledby="tab-invoice" tabindex="0">
             <div class="stage">
-              <div class="agent-card">
-                <p class="agent-name"><span class="live-dot"></span>ایجنت فاکتور فارسی</p>
-                <div class="agent-core"><span class="ring"></span><span class="ring ring-2"></span><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#khatam" width="100" height="100"/></svg></div>
-                <p class="agent-status">در حال کار</p>
-                <ol class="agent-steps">
-                  <li data-done=".32"><i class="check"></i>خواندن فاکتور فارسی</li>
-                  <li data-done=".46"><i class="check"></i>استخراج و تطبیق اقلام</li>
-                  <li data-done=".62"><i class="check"></i>آماده‌سازی سند</li>
-                </ol>
-              </div>
               <div class="device-area">
                 <div class="device device--window window iv">
                   <div class="window-bar">حسابداری · فاکتورهای ورودی<span class="window-dots"><i></i><i></i><i></i></span></div>
                   <div class="iv-body">
-                    <div class="iv-paper" data-wire="in" data-pulse=".10 .22">
+                    <div class="iv-paper" data-focus=".06 .42" data-say="خواندن فاکتور فارسی…">
                       <div class="iv-title">صورتحساب فروش کالا و خدمات</div>
                       <div class="iv-meta">
                         <span class="iv-f">فروشنده: شرکت پخش نمونه<i class="iv-box" data-in=".28"></i></span>
@@ -398,15 +321,15 @@
                       <div class="iv-total iv-f"><span>جمع کل (ریال)</span><b>۱۲۵٬۴۰۰٬۰۰۰</b><i class="iv-box" data-in=".39"></i></div>
                       <span class="iv-scan" data-sweep=".24 .40"></span>
                     </div>
-                    <div class="iv-entry screen-card" data-wire="out" data-pulse=".50 .60">
-                      <div class="iv-entry-head">سند حسابداری پیشنهادی<span class="ui-chip is-good" data-in=".62">✓ مطابق سفارش خرید</span></div>
-                      <div class="iv-table">
+                    <div class="iv-entry screen-card">
+                      <div class="iv-entry-head" data-focus=".44 .62" data-say="تطبیق با سفارش خرید…">سند حسابداری پیشنهادی<span class="ui-chip is-good" data-in=".62">✓ مطابق سفارش خرید</span></div>
+                      <div class="iv-table" data-focus=".63 .74" data-say="نوشتن سند حسابداری…">
                         <span class="iv-th">شرح</span><span class="iv-th">بدهکار</span><span class="iv-th">بستانکار</span>
                         <span data-in=".64">موجودی لوازم مصرفی</span><span data-in=".64">۱۱۴٬۰۰۰٬۰۰۰</span><span data-in=".64">—</span>
                         <span data-in=".67">ارزش افزودهٔ خرید</span><span data-in=".67">۱۱٬۴۰۰٬۰۰۰</span><span data-in=".67">—</span>
                         <span data-in=".70">حساب‌های پرداختنی</span><span data-in=".70">—</span><span data-in=".70">۱۲۵٬۴۰۰٬۰۰۰</span>
                       </div>
-                      <div class="iv-foot">
+                      <div class="iv-foot" data-focus=".75 .84 | .85 .93" data-say="منتظر تأیید حسابدار… | ✓ انجام شد">
                         <span class="ui-chip is-good" data-in=".73">✓ تراز است</span>
                         <span class="stack">
                           <span class="ui-btn" data-show=".76 .84" data-press=".83">تأیید حسابدار</span>
@@ -417,7 +340,6 @@
                   </div>
                 </div>
               </div>
-              <svg class="wires" aria-hidden="true"></svg>
             </div>
             <p class="scene-caption">فاکتور فارسی خوانده می‌شود و سند حسابداری برای تأیید آماده می‌شود <span class="scene-for">برای: نرم‌افزارهای حسابداری</span></p>
           </div>

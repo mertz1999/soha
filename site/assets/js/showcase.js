@@ -1,14 +1,18 @@
-// Soha — "Agents in action" showcase: tabs, timeline engine and wires.
+// Soha — "Agents in action" showcase: tabs, timeline engine and the in-product agent.
 //
-// Each scene is described in HTML with timing attributes (fractions of one loop):
+// Each scene is a client product ("device"). The Soha agent appears INSIDE it as a
+// small cursor with a label, moving to whatever it is working on.
+//
+// Timing attributes (fractions of one loop):
 //   data-in="t" [data-out="t"]   fade/slide in at t, stay, fade out near the end
 //   data-show="a b"              visible only between a and b (typing dots, scan lines)
 //   data-draw="a b"              SVG stroke draws itself (element needs pathLength="1")
 //   data-grow="a b"              grows from the start edge (bars, filled fields)
 //   data-sweep="a b [up]"        moves top → bottom of its parent ("up": bottom → top)
-//   data-done="t"                agent step gets its check mark at t
 //   data-press="t"               button press bump (human approval)
-//   data-wire="in|out" data-pulse="a b"   wire to the agent; pulse travels in/out
+//   data-focus="a b [| a b]"     the agent works on this element between a and b:
+//   data-say="text [| text]"       cursor moves here, element gets a ring, label shows text
+//   data-anchor="end"            park the cursor at the element's end side (default: start)
 // Base CSS is the final frame, so reduced-motion and no-JS visitors see it.
 (() => {
   const root = document.querySelector('.showcase');
@@ -20,9 +24,10 @@
   const scenes = tabs.map((t) => document.getElementById(t.getAttribute('aria-controls')));
   const box = root.querySelector('.scenes');
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const SVG = 'http://www.w3.org/2000/svg';
+  const logoSrc = document.querySelector('.brand-mark')?.getAttribute('src') || 'assets/img/logo-mark.png';
   const D = 10000;              // one loop, ms
   const OUT = 0.93, GONE = 0.97;
+  const MOVE = 0.035;           // cursor travel time between targets
   const EASE = 'cubic-bezier(.2,.7,.2,1)';
 
   let current = -1;
@@ -32,7 +37,7 @@
   let inView = false;
 
   const nums = (v) => String(v).trim().split(/\s+/).map(Number);
-  const clamp = (x) => Math.min(1, Math.max(0, x));
+  const clamp = (x, lo = 0, hi = 1) => Math.min(hi, Math.max(lo, x));
   const frames = (pairs) => {          // monotonic offsets, per-segment easing
     let last = 0;
     return pairs.map(([o, p]) => {
@@ -45,6 +50,131 @@
     const a = el.animate(kf, { duration: D, iterations: Infinity });
     anims.push(a);
     return a;
+  };
+  const px = (n) => `${n.toFixed(1)}px`;
+
+  // ---------- the in-product agent (cursor + label + focus rings) ----------
+  const rel = (el, box) => {           // layout box inside `box`, ignoring transforms
+    let x = 0, y = 0;
+    for (let n = el; n && n !== box; n = n.offsetParent) { x += n.offsetLeft; y += n.offsetTop; }
+    return { l: x, t: y, r: x + el.offsetWidth, b: y + el.offsetHeight, w: el.offsetWidth, h: el.offsetHeight };
+  };
+
+  const agentFor = (scene) => {        // build the DOM once per scene
+    if (scene._agent) return scene._agent;
+    const area = scene.querySelector('.device-area');
+    const segs = [];
+    const rings = [];
+    scene.querySelectorAll('[data-focus]').forEach((el) => {
+      const times = el.dataset.focus.split('|').map(nums);
+      const says = (el.dataset.say || '').split('|').map((s) => s.trim());
+      const ring = document.createElement('span');
+      ring.className = 'soha-ring';
+      ring.setAttribute('aria-hidden', 'true');
+      ring._target = el;
+      rings.push(ring);
+      times.forEach(([a, b], k) => segs.push({ el, ring, a, b, say: says[k] ?? says[says.length - 1] }));
+    });
+    segs.sort((p, q) => p.a - q.a);
+
+    const chip = document.createElement('div');
+    chip.className = 'soha-cursor';
+    chip.setAttribute('aria-hidden', 'true');
+    chip.innerHTML = '<svg class="soha-arrow" viewBox="0 0 16 16"><path d="M1.5 1.5v11.6l3.2-3 2.3 5.2 2.2-1-2.3-5.1h4.5z"/></svg>'
+      + `<span class="soha-pill"><img src="${logoSrc}" alt=""><b>سها</b><span class="soha-say"></span></span>`;
+    const say = chip.querySelector('.soha-say');
+    segs.forEach((s) => {
+      s.span = document.createElement('span');
+      s.span.textContent = s.say;
+      say.appendChild(s.span);
+    });
+    rings.forEach((r) => area.appendChild(r));
+    area.appendChild(chip);
+    scene._agent = { area, chip, say, segs, rings, ready: false };
+    return scene._agent;
+  };
+
+  // Measure targets and place rings; compute where the cursor sits for each step.
+  const layoutAgent = (scene) => {
+    const ag = agentFor(scene);
+    const { area, chip, say, segs, rings } = ag;
+    ag.ready = false;
+    if (!segs.length || !area.offsetWidth) return ag;
+
+    const rtl = getComputedStyle(area).direction === 'rtl';
+    const em = parseFloat(getComputedStyle(chip).fontSize);
+    const W = area.offsetWidth, H = area.offsetHeight;
+
+    rings.forEach((r) => {
+      const t = rel(r._target, area);
+      const pad = em * 0.45;
+      Object.assign(r.style, { left: px(t.l - pad), top: px(t.t - pad), width: px(t.w + 2 * pad), height: px(t.h + 2 * pad) });
+    });
+
+    say.style.width = 'auto';
+    const box = (el) => el.getBoundingClientRect().width;   // fractional widths
+    const sayW = say.clientWidth - parseFloat(getComputedStyle(say).paddingInlineStart), chipW = box(chip), chipH = chip.offsetHeight;
+    segs.forEach((s) => {
+      const t = rel(s.el, area);
+      s.w = Math.ceil(box(s.span)) + 1;
+      const cw = chipW - sayW + s.w;               // chip width while showing this text
+      // cursor tip just inside the target's bottom corner (start side unless data-anchor="end");
+      // the label hangs below it
+      const inset = Math.min(t.w * 0.3, em * 2.2);
+      const atRight = rtl !== (s.el.dataset.anchor === 'end');
+      const tipX = atRight ? t.r - inset : t.l + inset;
+      const tipY = t.b - Math.min(t.h * 0.3, em * 0.9);
+      s.x = clamp(rtl ? tipX - cw : tipX, 0, Math.max(0, W - cw));
+      s.y = clamp(tipY, 0, Math.max(0, H - chipH));
+    });
+
+    // final frame (reduced motion / before animations start)
+    const last = segs[segs.length - 1];
+    chip.style.transform = `translate(${px(last.x)}, ${px(last.y)})`;
+    chip.style.opacity = '1';
+    say.style.width = px(last.w);
+    ag.ready = true;
+    return ag;
+  };
+
+  const animateAgent = (ag) => {
+    if (!ag || !ag.ready) return;
+    const { chip, say, segs, rings } = ag;
+    const first = segs[0], last = segs[segs.length - 1];
+    const at = (s, o) => ({ transform: `translate(${px(s.x)}, ${px(s.y)})`, opacity: o });
+
+    const move = [[0, at(first, 0)], [first.a - 0.03, at(first, 0)], [first.a, at(first, 1)]];
+    const width = [[0, { width: px(first.w) }], [first.a, { width: px(first.w) }]];
+    segs.slice(1).forEach((s, i) => {
+      const prev = segs[i];
+      move.push([s.a - MOVE, at(prev, 1)], [s.a, at(s, 1)]);
+      width.push([s.a - MOVE, { width: px(prev.w) }], [s.a, { width: px(s.w) }]);
+    });
+    move.push([OUT, at(last, 1)], [OUT + 0.04, at(last, 0)], [1, at(last, 0)]);
+    width.push([1, { width: px(last.w) }]);
+    play(chip, frames(move));
+    play(say, frames(width));
+
+    segs.forEach((s, i) => {                       // label text cross-fades per step
+      const next = segs[i + 1];
+      const on = i ? s.a - 0.02 : first.a - 0.03;
+      const off = next ? next.a - 0.02 : OUT + 0.04;
+      play(s.span, frames([[0, { opacity: 0 }], [on, { opacity: 0 }], [on + 0.015, { opacity: 1 }],
+        [off, { opacity: 1 }], [off + 0.015, { opacity: 0 }], [1, { opacity: 0 }]]));
+    });
+
+    rings.forEach((r) => {                         // ring on while its element is in focus
+      const spans = [];
+      segs.filter((s) => s.ring === r).forEach((s) => {
+        const prev = spans[spans.length - 1];
+        if (prev && s.a - prev[1] < 0.03) prev[1] = s.b; else spans.push([s.a, s.b]);
+      });
+      const kf = [[0, { opacity: 0 }]];
+      spans.forEach(([a, b]) => kf.push([a - 0.015, { opacity: 0 }], [a + 0.005, { opacity: 1 }],
+        [b - 0.01, { opacity: 1 }], [b + 0.01, { opacity: 0 }]));
+      kf.push([1, { opacity: 0 }]);
+      play(r, frames(kf));
+    });
   };
 
   // ---------- timeline ----------
@@ -89,96 +219,13 @@
         [b + 0.02, { top: to, opacity: 0 }], [1, { top: to, opacity: 0 }]]));
     });
 
-    q('[data-done]', (li) => {
-      const t = +li.dataset.done;
-      play(li, frames([[0, { opacity: 0.5 }], [t - 0.02, { opacity: 0.5 }], [t, { opacity: 1 }],
-        [OUT, { opacity: 1 }], [GONE, { opacity: 0.5 }], [1, { opacity: 0.5 }]]));
-      const check = li.querySelector('.check');
-      if (check) {
-        const off = { opacity: 0, transform: 'scale(.4)' };
-        const on = { opacity: 1, transform: 'scale(1)' };
-        play(check, frames([[0, off], [t - 0.02, off], [t, on], [OUT, on], [GONE, { opacity: 0, transform: 'scale(1)' }], [1, off]]));
-      }
-    });
-
     q('[data-press]', (el) => {
       const t = +el.dataset.press;
       const n = { transform: 'scale(1)' };
       play(el, frames([[0, n], [t - 0.015, n], [t, { transform: 'scale(.9)' }], [t + 0.015, n], [1, n]]));
     });
 
-    q('[data-pulse]', (el) => {
-      const pulse = el._sohaPulse;
-      if (!pulse) return;
-      const [a, b] = nums(el.dataset.pulse);
-      play(pulse, frames([[0, { strokeDashoffset: 0.12, opacity: 0 }], [a - 0.001, { strokeDashoffset: 0.12, opacity: 0 }],
-        [a, { strokeDashoffset: 0.12, opacity: 1 }], [b, { strokeDashoffset: -1, opacity: 1 }],
-        [b + 0.001, { strokeDashoffset: -1, opacity: 0 }], [1, { strokeDashoffset: -1, opacity: 0 }]]));
-    });
-  };
-
-  // ---------- wires ----------
-  const rel = (el, stage) => {          // position in the stage, ignoring transforms
-    let x = 0, y = 0;
-    for (let n = el; n && n !== stage; n = n.offsetParent) { x += n.offsetLeft; y += n.offsetTop; }
-    return { l: x, t: y, r: x + el.offsetWidth, b: y + el.offsetHeight, cx: x + el.offsetWidth / 2, cy: y + el.offsetHeight / 2 };
-  };
-  const mk = (tag, cls, parent) => {
-    const n = document.createElementNS(SVG, tag);
-    n.setAttribute('class', cls);
-    parent.appendChild(n);
-    return n;
-  };
-  const f = (n) => n.toFixed(1);
-
-  const drawWires = (scene) => {
-    const stage = scene.querySelector('.stage');
-    const svg = scene.querySelector('.wires');
-    const card = scene.querySelector('.agent-card');
-    const core = scene.querySelector('.agent-core');
-    const device = scene.querySelector('.device');
-    if (!stage || !svg || !card || !device || !stage.offsetWidth) return;
-
-    svg.setAttribute('viewBox', `0 0 ${stage.offsetWidth} ${stage.offsetHeight}`);
-    const c = rel(card, stage), k = rel(core, stage), d = rel(device, stage);
-    const stacked = c.b <= d.t + 1;    // phones: card above device
-    const deviceRight = d.cx > c.cx;
-
-    let hub;
-    if (stacked) hub = { x: k.cx, y: c.b };
-    else hub = { x: deviceRight ? c.r : c.l, y: k.cy };
-
-    if (!svg._sohaHub) svg._sohaHub = mk('circle', 'wire-hub', svg);
-    svg._sohaHub.setAttribute('cx', f(hub.x));
-    svg._sohaHub.setAttribute('cy', f(hub.y));
-    svg._sohaHub.setAttribute('r', '4.5');
-
-    scene.querySelectorAll('[data-wire]').forEach((el) => {
-      const t = rel(el, stage);
-      let end, geo;
-      if (stacked) {
-        end = { x: Math.min(d.r - 12, Math.max(d.l + 12, t.cx)), y: d.t };
-        const dy = (end.y - hub.y) * 0.55;
-        geo = (p, q) => `M${f(p.x)} ${f(p.y)}C${f(p.x)} ${f(p.y + (q.y > p.y ? dy : -dy))} ${f(q.x)} ${f(q.y + (q.y > p.y ? -dy : dy))} ${f(q.x)} ${f(q.y)}`;
-      } else {
-        end = { x: deviceRight ? d.l : d.r, y: Math.min(d.b - 12, Math.max(d.t + 12, t.cy)) };
-        const dx = (end.x - hub.x) * 0.5;
-        geo = (p, q) => `M${f(p.x)} ${f(p.y)}C${f(p.x + (q.x > p.x ? Math.abs(dx) : -Math.abs(dx)))} ${f(p.y)} ${f(q.x + (q.x > p.x ? -Math.abs(dx) : Math.abs(dx)))} ${f(q.y)} ${f(q.x)} ${f(q.y)}`;
-      }
-      if (!el._sohaWire) {
-        el._sohaWire = mk('path', 'wire', svg);
-        el._sohaPulse = mk('path', 'wire-pulse', svg);
-        el._sohaPulse.setAttribute('pathLength', '1');
-        el._sohaNode = mk('circle', 'wire-node', svg);
-        el._sohaNode.setAttribute('r', '3.5');
-        svg.appendChild(svg._sohaHub);        // keep the hub on top
-      }
-      const inward = el.dataset.wire === 'in';
-      el._sohaWire.setAttribute('d', geo(hub, end));
-      el._sohaPulse.setAttribute('d', inward ? geo(end, hub) : geo(hub, end));
-      el._sohaNode.setAttribute('cx', f(end.x));
-      el._sohaNode.setAttribute('cy', f(end.y));
-    });
+    animateAgent(scene._agent);
   };
 
   // ---------- playback ----------
@@ -186,6 +233,8 @@
     const run = inView && !document.hidden;
     [...anims, progress].forEach((a) => a && (run ? a.play() : a.pause()));
   };
+
+  const stop = () => { anims.forEach((a) => a.cancel()); anims = []; };
 
   const scrollTabIntoView = (tab) => {
     if (tablist.scrollWidth <= tablist.clientWidth + 1) return;
@@ -195,8 +244,7 @@
 
   const select = (i, { focus = false, force = false } = {}) => {
     if (i === current && !force) return;
-    anims.forEach((a) => a.cancel());
-    anims = [];
+    stop();
     if (progress) progress.cancel();
     progress = null;
 
@@ -212,7 +260,7 @@
     scrollTabIntoView(tabs[i]);
 
     const scene = scenes[i];
-    drawWires(scene);
+    layoutAgent(scene);
     if (reduce.matches) return;
 
     build(scene);
@@ -222,6 +270,22 @@
     progress.onfinish = () => { if (!userPicked) select((i + 1) % tabs.length); };
     sync();
   };
+
+  // Layout changed (resize, fonts): re-measure and rebuild, keeping the playhead.
+  let pending = 0;
+  const relayout = () => {
+    pending = 0;
+    if (current < 0) return;
+    const t = progress ? progress.currentTime : null;
+    stop();
+    const scene = scenes[current];
+    layoutAgent(scene);
+    if (reduce.matches) return;
+    build(scene);
+    if (t != null) anims.forEach((a) => { a.currentTime = t; });
+    sync();
+  };
+  const queueRelayout = () => { if (!pending) pending = requestAnimationFrame(relayout); };
 
   tabs.forEach((t, n) => t.addEventListener('click', () => {
     userPicked = true;
@@ -249,8 +313,8 @@
     inView = true;
   }
   document.addEventListener('visibilitychange', sync);
-  if ('ResizeObserver' in window) new ResizeObserver(() => current >= 0 && drawWires(scenes[current])).observe(box);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => current >= 0 && drawWires(scenes[current]));
+  if ('ResizeObserver' in window) new ResizeObserver(queueRelayout).observe(box);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(queueRelayout);
   reduce.addEventListener?.('change', () => select(current, { force: true }));
 
   select(0);
