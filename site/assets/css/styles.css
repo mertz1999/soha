@@ -1,9 +1,26 @@
 /* ==========================================================================
-   ENSA AI — landing page
+   Soha — landing page
    Palette drawn from Persian tilework: lajvard (lapis), firouzeh (turquoise),
    zafaran (saffron), anar (pomegranate), on khesht/kahgel (adobe) cream.
    Layout uses logical properties so the same CSS serves fa (RTL) and en (LTR).
    ========================================================================== */
+
+/* Wordmark font: Almarai (OFL), the closest free match to the logo's «سها».
+   Used only by .brand-name. For production, self-host these two files. */
+@font-face {
+  font-family: 'Soha Wordmark';
+  src: url('https://cdn.jsdelivr.net/fontsource/fonts/almarai@latest/arabic-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-display: block;
+  unicode-range: U+0600-06FF, U+200C-200E, U+FB50-FDFF, U+FE70-FEFF;
+}
+@font-face {
+  font-family: 'Soha Wordmark';
+  src: url('https://cdn.jsdelivr.net/fontsource/fonts/almarai@latest/latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-display: block;
+  unicode-range: U+0000-00FF;
+}
 
 :root {
   --khesht: #F4EDE2;        /* adobe / kahgel cream — page background */
@@ -20,6 +37,7 @@
   --ink: #161C33;
   --muted: #5D6278;
   --line: rgba(29, 43, 100, .12);
+  --brand-ink: #2C3945;     /* slate of the logo's wordmark */
 
   --font: 'Vazirmatn', system-ui, -apple-system, 'Segoe UI', Tahoma, sans-serif;
   --container: 1160px;
@@ -165,23 +183,27 @@ img, svg { display: block; }
   gap: .6rem;
   text-decoration: none;
 }
-.brand-mark { width: 34px; height: 34px; }
-.brand-star { fill: var(--lajvard); }
-.brand-inner { fill: none; stroke: var(--firouzeh); stroke-width: 3; }
-.brand-dot { fill: var(--zafaran); }
+/* Logo mark: green + red ribbons (assets/img/logo-mark.png, transparent). */
+.brand-mark { display: block; height: 40px; width: auto; }
 
+/* Wordmark: Persian name + small Latin tag. No letter-spacing on the
+   Persian part — it breaks the joins between Persian letters. */
 .brand-name {
-  font-weight: 800;
-  font-size: 1.3rem;
-  letter-spacing: .14em;
-  color: var(--lajvard);
+  display: inline-flex;
+  align-items: center;
+  gap: .55em;
+  font-family: 'Soha Wordmark', var(--font);
+  font-weight: 400;
+  font-size: 1.9rem;
+  color: var(--brand-ink);
   line-height: 1;
 }
 .brand-name span {
-  margin-inline-start: .35em;
-  font-weight: 500;
-  letter-spacing: .1em;
-  color: var(--firouzeh-ink);
+  padding-inline-start: .6em;
+  border-inline-start: 1px solid var(--line);
+  font-size: max(.4em, .7rem);
+  letter-spacing: .3em;
+  color: var(--brand-ink);
 }
 
 .nav {
@@ -551,9 +573,7 @@ img, svg { display: block; }
   border-radius: 50% 50% 28px 28px / var(--r) var(--r) 28px 28px;
   box-shadow: 0 40px 80px -50px rgba(17, 26, 66, .35);
 }
-.contact-mark { width: 56px; height: 56px; margin: 0 auto 1.4rem; }
-.contact-mark path { fill: var(--lajvard); }
-.contact-mark circle { fill: var(--zafaran); }
+.contact-mark { display: block; height: 64px; width: auto; margin: 0 auto 1.4rem; }
 
 .contact-card h2 { font-size: clamp(1.7rem, 1.2rem + 2vw, 2.6rem); font-weight: 800; margin-bottom: .8rem; }
 .contact-card p { max-width: 34rem; margin: 0 auto 2.2rem; color: var(--muted); font-size: 1.08rem; text-wrap: balance; }
@@ -587,7 +607,9 @@ img, svg { display: block; }
   font-size: .92rem;
   color: var(--muted);
 }
-.footer-inner .brand-name { font-size: 1.05rem; }
+.brand--footer { gap: .5rem; }
+.brand--footer .brand-mark { height: 30px; }
+.footer-inner .brand-name { font-size: 1.35rem; }
 
 /* ---------- Reveal on scroll (only when JS is running) ---------- */
 .js .reveal {
@@ -615,6 +637,12 @@ img, svg { display: block; }
 }
 
 @media (max-width: 440px) {
+  /* compact header brand: Persian name only, so it fits beside the button */
+  .header-inner { gap: 1rem; }
+  .site-header .brand-mark { height: 34px; }
+  .site-header .brand-name { font-size: 1.7rem; }
+  .site-header .brand-name span { display: none; }
+
   .hero-actions .btn { flex: 1 1 100%; justify-content: center; }
 
   /* steps become a compact vertical timeline */

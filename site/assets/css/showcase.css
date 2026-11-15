@@ -1,6 +1,6 @@
 /* ==========================================================================
-   ENSA AI — "Agents in action" tabbed showcase
-   Each tab is a scene: an ENSA agent card + a client product ("device"),
+   Soha — "Agents in action" tabbed showcase
+   Each tab is a scene: a Soha agent card + a client product ("device"),
    joined by wires. Timings live in data-* attributes and are played by
    showcase.js. Base styles are the FINAL frame, so reduced-motion and
    no-JS visitors see each scene's finished state.

@@ -1,4 +1,4 @@
-// ENSA AI — "Agents in action" showcase: tabs, timeline engine and wires.
+// Soha — "Agents in action" showcase: tabs, timeline engine and wires.
 //
 // Each scene is described in HTML with timing attributes (fractions of one loop):
 //   data-in="t" [data-out="t"]   fade/slide in at t, stay, fade out near the end
@@ -108,7 +108,7 @@
     });
 
     q('[data-pulse]', (el) => {
-      const pulse = el._ensaPulse;
+      const pulse = el._sohaPulse;
       if (!pulse) return;
       const [a, b] = nums(el.dataset.pulse);
       play(pulse, frames([[0, { strokeDashoffset: 0.12, opacity: 0 }], [a - 0.001, { strokeDashoffset: 0.12, opacity: 0 }],
@@ -148,10 +148,10 @@
     if (stacked) hub = { x: k.cx, y: c.b };
     else hub = { x: deviceRight ? c.r : c.l, y: k.cy };
 
-    if (!svg._ensaHub) svg._ensaHub = mk('circle', 'wire-hub', svg);
-    svg._ensaHub.setAttribute('cx', f(hub.x));
-    svg._ensaHub.setAttribute('cy', f(hub.y));
-    svg._ensaHub.setAttribute('r', '4.5');
+    if (!svg._sohaHub) svg._sohaHub = mk('circle', 'wire-hub', svg);
+    svg._sohaHub.setAttribute('cx', f(hub.x));
+    svg._sohaHub.setAttribute('cy', f(hub.y));
+    svg._sohaHub.setAttribute('r', '4.5');
 
     scene.querySelectorAll('[data-wire]').forEach((el) => {
       const t = rel(el, stage);
@@ -165,19 +165,19 @@
         const dx = (end.x - hub.x) * 0.5;
         geo = (p, q) => `M${f(p.x)} ${f(p.y)}C${f(p.x + (q.x > p.x ? Math.abs(dx) : -Math.abs(dx)))} ${f(p.y)} ${f(q.x + (q.x > p.x ? -Math.abs(dx) : Math.abs(dx)))} ${f(q.y)} ${f(q.x)} ${f(q.y)}`;
       }
-      if (!el._ensaWire) {
-        el._ensaWire = mk('path', 'wire', svg);
-        el._ensaPulse = mk('path', 'wire-pulse', svg);
-        el._ensaPulse.setAttribute('pathLength', '1');
-        el._ensaNode = mk('circle', 'wire-node', svg);
-        el._ensaNode.setAttribute('r', '3.5');
-        svg.appendChild(svg._ensaHub);        // keep the hub on top
+      if (!el._sohaWire) {
+        el._sohaWire = mk('path', 'wire', svg);
+        el._sohaPulse = mk('path', 'wire-pulse', svg);
+        el._sohaPulse.setAttribute('pathLength', '1');
+        el._sohaNode = mk('circle', 'wire-node', svg);
+        el._sohaNode.setAttribute('r', '3.5');
+        svg.appendChild(svg._sohaHub);        // keep the hub on top
       }
       const inward = el.dataset.wire === 'in';
-      el._ensaWire.setAttribute('d', geo(hub, end));
-      el._ensaPulse.setAttribute('d', inward ? geo(end, hub) : geo(hub, end));
-      el._ensaNode.setAttribute('cx', f(end.x));
-      el._ensaNode.setAttribute('cy', f(end.y));
+      el._sohaWire.setAttribute('d', geo(hub, end));
+      el._sohaPulse.setAttribute('d', inward ? geo(end, hub) : geo(hub, end));
+      el._sohaNode.setAttribute('cx', f(end.x));
+      el._sohaNode.setAttribute('cy', f(end.y));
     });
   };
 

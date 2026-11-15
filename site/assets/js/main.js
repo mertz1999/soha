@@ -1,4 +1,4 @@
-// ENSA AI — small progressive enhancements. The page works without this file.
+// Soha — small progressive enhancements. The page works without this file.
 (() => {
   // Header border once the page scrolls
   const header = document.querySelector('.site-header');

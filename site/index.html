@@ -3,16 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ENSA AI — نرم‌افزار شما، هوشمندتر</title>
-  <meta name="description" content="ENSA AI فرصت‌های هوش مصنوعی را در محصولات نرم‌افزاری کشف می‌کند، ایجنت هوشمند می‌سازد و آن را مستقیماً به نرم‌افزار اضافه می‌کند.">
+  <title>سها — نرم‌افزار شما، هوشمندتر</title>
+  <meta name="description" content="سها فرصت‌های هوش مصنوعی را در محصولات نرم‌افزاری کشف می‌کند، ایجنت هوشمند می‌سازد و آن را مستقیماً به نرم‌افزار اضافه می‌کند.">
   <meta name="theme-color" content="#1D2B64">
-  <meta property="og:title" content="ENSA AI — نرم‌افزار شما، هوشمندتر">
+  <meta property="og:title" content="سها — نرم‌افزار شما، هوشمندتر">
   <meta property="og:description" content="کشف، ساخت و استقرار ایجنت‌های هوش مصنوعی در نرم‌افزارهای موجود.">
   <meta property="og:locale" content="fa_IR">
-  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/img/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <!-- Vazirmatn (OFL). For production in Iran, self-host these font files under assets/fonts/. -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+  <!-- Almarai (OFL) — only for the «سها» wordmark. Self-host with Vazirmatn for production. -->
+  <link rel="preload" href="https://cdn.jsdelivr.net/fontsource/fonts/almarai@latest/arabic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/css/styles.css">
   <link rel="stylesheet" href="assets/css/showcase.css">
   <script>document.documentElement.classList.add('js')</script>
@@ -23,13 +26,9 @@
   <!-- ───────────── Header ───────────── -->
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="#top" aria-label="ENSA AI، صفحهٔ اصلی">
-        <svg class="brand-mark" viewBox="0 0 80 80" aria-hidden="true">
-          <path class="brand-star" d="M78 40 66.87 51.13 66.87 66.87 51.13 66.87 40 78 28.87 66.87 13.13 66.87 13.13 51.13 2 40 13.13 28.87 13.13 13.13 28.87 13.13 40 2 51.13 13.13 66.87 13.13 66.87 28.87Z"/>
-          <path class="brand-inner" d="M40 17 63 40 40 63 17 40Z"/>
-          <circle class="brand-dot" cx="40" cy="40" r="7"/>
-        </svg>
-        <span class="brand-name" dir="ltr">ENSA<span>AI</span></span>
+      <a class="brand" href="#top" aria-label="سها، صفحهٔ اصلی">
+        <img class="brand-mark" src="assets/img/logo-mark.png" alt="" width="281" height="256">
+        <span class="brand-name">سها<span lang="en">SOHA</span></span>
       </a>
       <nav class="nav" aria-label="ناوبری اصلی">
         <a href="#agents">ایجنت‌ها</a>
@@ -360,7 +359,7 @@
                   </div>
                   <div class="dy-toast" data-in=".67">
                     <span class="dy-toast-icon"></span>
-                    <span><b>ENSA</b> · گزارش امروز آماده است</span>
+                    <span><b>سها</b> · گزارش امروز آماده است</span>
                   </div>
                 </div>
               </div>
@@ -519,13 +518,10 @@
     <section class="section contact" id="contact">
       <div class="container">
         <div class="contact-card reveal">
-          <svg class="contact-mark" viewBox="0 0 80 80" aria-hidden="true">
-            <path d="M78 40 66.87 51.13 66.87 66.87 51.13 66.87 40 78 28.87 66.87 13.13 66.87 13.13 51.13 2 40 13.13 28.87 13.13 13.13 28.87 13.13 40 2 51.13 13.13 66.87 13.13 66.87 28.87Z"/>
-            <circle cx="40" cy="40" r="7"/>
-          </svg>
+          <img class="contact-mark" src="assets/img/logo-mark.png" alt="" width="281" height="256">
           <h2>یک فرصت، مخصوص محصول شما</h2>
           <p>نشانی محصولتان را بفرستید؛ یک ایدهٔ هوشمند برایش پیشنهاد می‌دهیم.</p>
-          <!-- TODO: replace with ENSA's real email address -->
+          <!-- TODO: replace with Soha's real email address -->
           <a class="btn btn-lg" href="mailto:hello@example.com?subject=%D8%A8%D8%B1%D8%B1%D8%B3%DB%8C%20%D8%B1%D8%A7%DB%8C%DA%AF%D8%A7%D9%86%20%D9%85%D8%AD%D8%B5%D9%88%D9%84">ارسال نشانی محصول</a>
           <!-- TODO: replace # with real profile links, or remove -->
           <div class="socials">
@@ -548,7 +544,10 @@
   <footer class="site-footer">
     <div class="kashi-band" aria-hidden="true"></div>
     <div class="container footer-inner">
-      <span class="brand-name" dir="ltr">ENSA<span>AI</span></span>
+      <span class="brand brand--footer">
+        <img class="brand-mark" src="assets/img/logo-mark.png" alt="" width="281" height="256">
+        <span class="brand-name">سها<span lang="en">SOHA</span></span>
+      </span>
       <p>نوآوری و مهندسی هوش مصنوعی · ۱۴۰۵</p>
     </div>
   </footer>
