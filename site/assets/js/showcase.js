@@ -25,6 +25,7 @@
   const box = root.querySelector('.scenes');
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
   const logoSrc = document.querySelector('.brand-mark')?.getAttribute('src') || 'assets/img/logo-mark.png';
+  const agentName = root.dataset.agentName || 'سها';   // translated pages set their own
   const D = 10000;              // one loop, ms
   const OUT = 0.93, GONE = 0.97;
   const MOVE = 0.035;           // cursor travel time between targets
@@ -81,7 +82,7 @@
     chip.className = 'soha-cursor';
     chip.setAttribute('aria-hidden', 'true');
     chip.innerHTML = '<svg class="soha-arrow" viewBox="0 0 16 16"><path d="M1.5 1.5v11.6l3.2-3 2.3 5.2 2.2-1-2.3-5.1h4.5z"/></svg>'
-      + `<span class="soha-pill"><img src="${logoSrc}" alt=""><b>سها</b><span class="soha-say"></span></span>`;
+      + `<span class="soha-pill"><img src="${logoSrc}" alt=""><b>${agentName}</b><span class="soha-say"></span></span>`;
     const say = chip.querySelector('.soha-say');
     segs.forEach((s) => {
       s.span = document.createElement('span');
@@ -114,18 +115,33 @@
     say.style.width = 'auto';
     const box = (el) => el.getBoundingClientRect().width;   // fractional widths
     const sayW = say.clientWidth - parseFloat(getComputedStyle(say).paddingInlineStart), chipW = box(chip), chipH = chip.offsetHeight;
-    segs.forEach((s) => {
-      const t = rel(s.el, area);
-      s.w = Math.ceil(box(s.span)) + 1;
-      const cw = chipW - sayW + s.w;               // chip width while showing this text
-      // cursor tip just inside the target's bottom corner (start side unless data-anchor="end");
-      // the label hangs below it
+    // the agent never covers a human approval button
+    const human = [...scene.querySelectorAll('[data-press]')].map((el) => rel(el, area));
+    const covers = (x, y, cw) => human.some((b) => !(x + cw <= b.l || x >= b.r || y + chipH <= b.t || y >= b.b));
+    segs.forEach((s) => { s.w = Math.ceil(box(s.span)) + 1; s.cw = chipW - sayW + s.w; });   // chip width per text
+    const place = (t, right, where, cw) => {          // where: inside | below | above the target
       const inset = Math.min(t.w * 0.3, em * 2.2);
-      const atRight = rtl !== (s.el.dataset.anchor === 'end');
-      const tipX = atRight ? t.r - inset : t.l + inset;
-      const tipY = t.b - Math.min(t.h * 0.3, em * 0.9);
-      s.x = clamp(rtl ? tipX - cw : tipX, 0, Math.max(0, W - cw));
-      s.y = clamp(tipY, 0, Math.max(0, H - chipH));
+      const tip = right ? t.r - inset : t.l + inset;
+      const tipY = where === 'below' ? t.b + em * 0.2 : where === 'above' ? t.t - chipH - em * 0.2 : t.b - Math.min(t.h * 0.3, em * 0.9);
+      return { tip, x: clamp(rtl ? tip - cw : tip, 0, Math.max(0, W - cw)), y: clamp(tipY, 0, Math.max(0, H - chipH)) };
+    };
+    // One spot per element (all its steps share it), chosen for its widest text: the cursor tip sits
+    // just inside the bottom corner (start side unless data-anchor="end"), label hanging below it.
+    new Set(segs.map((s) => s.el)).forEach((el) => {
+      const mine = segs.filter((s) => s.el === el);
+      const t = rel(el, area);
+      const widest = Math.max(...mine.map((s) => s.cw));
+      const atRight = rtl !== (el.dataset.anchor === 'end');
+      const options = ['inside', 'below', 'above'].flatMap((w) => [[atRight, w], [!atRight, w]]);
+      const [right, where] = options.find(([r, w]) => { const o = place(t, r, w, widest); return !covers(o.x, o.y, widest); }) || options[0];
+      mine.forEach((s) => { const o = place(t, right, where, s.cw); s.tip = o.tip; s.x = o.x; s.y = o.y; });
+    });
+    // halfway between two steps the label is wide enough for both texts, and swaps text there
+    segs.forEach((s, i) => {
+      const prev = segs[i - 1];
+      if (!prev) return;
+      const cw = Math.max(prev.cw, s.cw), tip = (prev.tip + s.tip) / 2;
+      s.mid = { w: Math.max(prev.w, s.w), y: (prev.y + s.y) / 2, x: clamp(rtl ? tip - cw : tip, 0, Math.max(0, W - cw)) };
     });
 
     // final frame (reduced motion / before animations start)
@@ -147,8 +163,8 @@
     const width = [[0, { width: px(first.w) }], [first.a, { width: px(first.w) }]];
     segs.slice(1).forEach((s, i) => {
       const prev = segs[i];
-      move.push([s.a - MOVE, at(prev, 1)], [s.a, at(s, 1)]);
-      width.push([s.a - MOVE, { width: px(prev.w) }], [s.a, { width: px(s.w) }]);
+      move.push([s.a - MOVE, at(prev, 1)], [s.a - MOVE / 2, at(s.mid, 1)], [s.a, at(s, 1)]);
+      width.push([s.a - MOVE, { width: px(prev.w) }], [s.a - MOVE / 2, { width: px(s.mid.w) }], [s.a, { width: px(s.w) }]);
     });
     move.push([OUT, at(last, 1)], [OUT + 0.04, at(last, 0)], [1, at(last, 0)]);
     width.push([1, { width: px(last.w) }]);
@@ -157,10 +173,10 @@
 
     segs.forEach((s, i) => {                       // label text cross-fades per step
       const next = segs[i + 1];
-      const on = i ? s.a - 0.02 : first.a - 0.03;
-      const off = next ? next.a - 0.02 : OUT + 0.04;
-      play(s.span, frames([[0, { opacity: 0 }], [on, { opacity: 0 }], [on + 0.015, { opacity: 1 }],
-        [off, { opacity: 1 }], [off + 0.015, { opacity: 0 }], [1, { opacity: 0 }]]));
+      const on = i ? s.a - MOVE / 2 : first.a - 0.03;          // swap at the hand-off midpoint,
+      const off = next ? next.a - MOVE / 2 - 0.008 : OUT + 0.04; // when the label fits both texts
+      play(s.span, frames([[0, { opacity: 0 }], [on, { opacity: 0 }], [on + 0.008, { opacity: 1 }],
+        [off, { opacity: 1 }], [off + 0.008, { opacity: 0 }], [1, { opacity: 0 }]]));
     });
 
     rings.forEach((r) => {                         // ring on while its element is in focus
@@ -315,6 +331,7 @@
   document.addEventListener('visibilitychange', sync);
   if ('ResizeObserver' in window) new ResizeObserver(queueRelayout).observe(box);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(queueRelayout);
+  document.fonts?.addEventListener?.('loadingdone', queueRelayout);   // fonts that start loading later (e.g. Inter on /en/)
   reduce.addEventListener?.('change', () => select(current, { force: true }));
 
   select(0);

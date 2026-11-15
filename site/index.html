@@ -9,12 +9,18 @@
   <meta property="og:title" content="سها — نرم‌افزار شما، هوشمندتر">
   <meta property="og:description" content="کشف، ساخت و استقرار ایجنت‌های هوش مصنوعی در نرم‌افزارهای موجود.">
   <meta property="og:locale" content="fa_IR">
+  <!--LANG-ALTERNATES-->
+  <link rel="alternate" hreflang="fa" href="./">
+  <link rel="alternate" hreflang="en" href="en/">
+  <link rel="alternate" hreflang="tr" href="tr/">
+  <link rel="alternate" hreflang="x-default" href="./">
+  <!--/LANG-ALTERNATES-->
   <link rel="icon" href="assets/img/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <!-- Vazirmatn (OFL). For production in Iran, self-host these font files under assets/fonts/. -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
-  <!-- Almarai (OFL) — only for the «سها» wordmark. Self-host with Vazirmatn for production. -->
+  <!-- Almarai (OFL) — only for the Soha wordmark. Self-host with Vazirmatn for production. -->
   <link rel="preload" href="https://cdn.jsdelivr.net/fontsource/fonts/almarai@latest/arabic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/css/styles.css">
   <link rel="stylesheet" href="assets/css/showcase.css">
@@ -32,11 +38,17 @@
       </a>
       <nav class="nav" aria-label="ناوبری اصلی">
         <a href="#agents">ایجنت‌ها</a>
-        <a href="#value">ارزش</a>
         <a href="#process">مسیر همکاری</a>
         <a href="#contact">تماس</a>
       </nav>
-      <a class="btn btn-sm" href="#contact">گفت‌وگو کنیم</a>
+      <!--LANG-SWITCH-->
+      <nav class="lang-switch" aria-label="زبان">
+        <a href="./" lang="fa" hreflang="fa" aria-current="page">فا</a>
+        <a href="en/" lang="en" hreflang="en">EN</a>
+        <a href="tr/" lang="tr" hreflang="tr">TR</a>
+      </nav>
+      <!--/LANG-SWITCH-->
+      <a class="btn btn-sm header-cta" href="mailto:reza.tz780210@gmail.com">گفت‌وگو کنیم</a>
     </div>
   </header>
 
@@ -65,7 +77,7 @@
     </section>
 
     <!-- ───────────── Agents in action (tabbed showcase) ───────────── -->
-    <section class="showcase" id="agents" aria-labelledby="agents-title">
+    <section class="showcase" id="agents" aria-labelledby="agents-title" data-agent-name="سها">
       <div class="container">
         <header class="section-head reveal">
           <p class="kicker">ایجنت‌ها در عمل</p>
@@ -135,7 +147,7 @@
                   <div class="mt-body">
                     <div class="mt-meeting">
                       <div class="mt-audio screen-card" data-focus=".04 .19" data-say="گوش دادن به جلسه…">
-                        <span class="mt-play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 6v12L7 12z"/></svg></span>
+                        <span class="mt-play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 6v12l9-6z"/></svg></span>
                         <span class="mt-wave"><i style="--h:30%;--dl:-0.00s"></i><i style="--h:79%;--dl:-0.13s"></i><i style="--h:36%;--dl:-0.26s"></i><i style="--h:43%;--dl:-0.39s"></i><i style="--h:52%;--dl:-0.52s"></i><i style="--h:77%;--dl:-0.65s"></i><i style="--h:68%;--dl:-0.78s"></i><i style="--h:48%;--dl:-0.91s"></i><i style="--h:35%;--dl:-1.04s"></i><i style="--h:45%;--dl:-0.07s"></i><i style="--h:85%;--dl:-0.20s"></i><i style="--h:38%;--dl:-0.33s"></i><i style="--h:66%;--dl:-0.46s"></i><i style="--h:30%;--dl:-0.59s"></i><i style="--h:60%;--dl:-0.72s"></i><i style="--h:50%;--dl:-0.85s"></i><i style="--h:82%;--dl:-0.98s"></i><i style="--h:55%;--dl:-0.01s"></i><i style="--h:38%;--dl:-0.14s"></i><i style="--h:48%;--dl:-0.27s"></i><i style="--h:57%;--dl:-0.40s"></i><i style="--h:85%;--dl:-0.53s"></i><i style="--h:44%;--dl:-0.66s"></i><i style="--h:50%;--dl:-0.79s"></i><i style="--h:31%;--dl:-0.92s"></i><i style="--h:75%;--dl:-1.05s"></i></span>
                         <span class="mt-time">۱۲:۴۰</span>
                       </div>
@@ -306,7 +318,7 @@
                 <div class="device device--window window iv">
                   <div class="window-bar">حسابداری · فاکتورهای ورودی<span class="window-dots"><i></i><i></i><i></i></span></div>
                   <div class="iv-body">
-                    <div class="iv-paper" data-focus=".06 .42" data-say="خواندن فاکتور فارسی…">
+                    <div class="iv-paper" dir="rtl" lang="fa" data-focus=".06 .42" data-say="خواندن فاکتور فارسی…">
                       <div class="iv-title">صورتحساب فروش کالا و خدمات</div>
                       <div class="iv-meta">
                         <span class="iv-f">فروشنده: شرکت پخش نمونه<i class="iv-box" data-in=".28"></i></span>
@@ -347,74 +359,92 @@
       </div>
     </section>
 
-    <div class="kashi-band" aria-hidden="true"></div>
-
-    <!-- ───────────── Value ───────────── -->
-    <section class="section" id="value">
-      <div class="container">
-        <header class="section-head reveal">
-          <p class="kicker">ارزش</p>
-          <h2>هوش مصنوعی، با نتیجهٔ روشن</h2>
-        </header>
-
-        <div class="cards">
-          <article class="card reveal" style="--d:1">
-            <span class="badge" aria-hidden="true">
-              <svg class="icon" viewBox="0 0 32 32"><path d="M5 24l7.5-7.5 5.5 4.5L27 10"/><path d="M20 10h7v7"/></svg>
-            </span>
-            <h3>درآمد بیشتر</h3>
-            <p>قابلیت‌های هوشمند تازه برای فروش و ارتقا</p>
-          </article>
-
-          <article class="card reveal" style="--d:2">
-            <span class="badge" aria-hidden="true">
-              <svg class="icon" viewBox="0 0 32 32"><path d="M26 16a10 10 0 0 1-17.3 6.8"/><path d="M6 16A10 10 0 0 1 23.3 9.2"/><path d="M23.5 4v5.5H18"/><path d="M8.5 28v-5.5H14"/></svg>
-            </span>
-            <h3>هزینهٔ کمتر</h3>
-            <p>سپردن کارهای تکراری به ایجنت‌ها</p>
-          </article>
-
-          <article class="card reveal" style="--d:3">
-            <span class="badge" aria-hidden="true">
-              <svg class="icon" viewBox="0 0 32 32"><path d="M16 4c1 7 5 11 12 12-7 1-11 5-12 12-1-7-5-11-12-12 7-1 11-5 12-12z"/></svg>
-            </span>
-            <h3>تجربهٔ بهتر</h3>
-            <p>مسیری سریع‌تر و ساده‌تر برای کاربران</p>
-          </article>
-        </div>
+    <!-- ───────────── Clients ───────────── -->
+    <section class="clients" aria-labelledby="clients-title">
+      <div class="container reveal">
+        <h2 class="kicker" id="clients-title">مشتریان ما</h2>
+        <ul class="client-logos">
+          <!-- Add a client: one <li> with a transparent logo in assets/img/clients/ (about 480px wide) -->
+          <li>
+            <a href="https://www.ntrty.com/" target="_blank" rel="noopener">
+              <img src="assets/img/clients/next-trend-realty.webp" alt="Next Trend Realty" width="480" height="374" loading="lazy" decoding="async">
+            </a>
+          </li>
+          <li>
+            <a href="https://hitai.pro/" target="_blank" rel="noopener">
+              <img src="assets/img/clients/hitai.svg" alt="HITAI" width="198" height="62" loading="lazy" decoding="async">
+            </a>
+          </li>
+          <li>
+            <a href="https://agentfaai.ir/" target="_blank" rel="noopener">
+              <img src="assets/img/clients/agentfa.webp" alt="ایجنت فا" width="240" height="203" loading="lazy" decoding="async">
+            </a>
+          </li>
+        </ul>
       </div>
     </section>
 
-    <!-- ───────────── Process ───────────── -->
+    <div class="kashi-band" aria-hidden="true"></div>
+
+    <!-- ───────────── Process: the client journey (docs/01-market-and-offer/offer-structure.md, docs/04-operations/eight-stage-workflow.md) ───────────── -->
     <section class="section section-alt" id="process">
       <div class="container">
         <header class="section-head reveal">
           <p class="kicker">مسیر همکاری</p>
-          <h2>از کشف تا اجرا</h2>
+          <h2>از ایده تا ایجنت فعال</h2>
+          <p class="section-lede">در هر مرحله، تصمیم با شماست.</p>
         </header>
 
-        <ol class="steps">
-          <li class="step reveal" style="--d:1">
-            <span class="step-num" aria-hidden="true">۱</span>
-            <h3>کشف</h3>
-            <p>محصول را می‌شناسیم و فرصت‌ها را پیدا می‌کنیم</p>
-          </li>
-          <li class="step reveal" style="--d:2">
-            <span class="step-num" aria-hidden="true">۲</span>
-            <h3>آزمون</h3>
-            <p>ایده را کوچک می‌سازیم و ارزشش را می‌سنجیم</p>
-          </li>
-          <li class="step reveal" style="--d:3">
-            <span class="step-num" aria-hidden="true">۳</span>
-            <h3>استقرار</h3>
-            <p>ایجنت را امن در نرم‌افزارتان پیاده می‌کنیم</p>
-          </li>
-          <li class="step reveal" style="--d:4">
-            <span class="step-num" aria-hidden="true">۴</span>
-            <h3>بهبود</h3>
-            <p>پایش، بهینه‌سازی و یافتن فرصت بعدی</p>
-          </li>
-        </ol>
+        <div class="flow reveal" data-loop-label="↺ فرصت بعدی">
+          <ol class="flow-steps">
+            <li class="flow-step">
+              <span class="flow-node" aria-hidden="true"><span>۱</span></span>
+              <div class="flow-card">
+                <span class="flow-tag">رایگان</span>
+                <h3>پیش‌نمایش</h3>
+                <p>۱ تا ۲ ایده، مخصوص محصول شما</p>
+              </div>
+              <p class="flow-gate"><span class="flow-diamond" aria-hidden="true"></span><span class="sr-only">تصمیم شما: </span><span class="flow-gate-label">ایده را پسندیدید؟</span></p>
+            </li>
+            <li class="flow-step">
+              <span class="flow-node" aria-hidden="true"><span>۲</span></span>
+              <div class="flow-card">
+                <span class="flow-tag">۱ تا ۲ هفته</span>
+                <h3>کشف</h3>
+                <p>نیازها، داده‌ها و برنامهٔ کار</p>
+              </div>
+              <p class="flow-gate"><span class="flow-diamond" aria-hidden="true"></span><span class="sr-only">تصمیم شما: </span><span class="flow-gate-label">تأیید پروپوزال</span></p>
+            </li>
+            <li class="flow-step">
+              <span class="flow-node" aria-hidden="true"><span>۳</span></span>
+              <div class="flow-card">
+                <span class="flow-tag">۲ تا ۴ هفته</span>
+                <h3>پایلوت</h3>
+                <p>نسخهٔ آزمایشی، سنجیده با دادهٔ واقعی</p>
+              </div>
+              <p class="flow-gate"><span class="flow-diamond" aria-hidden="true"></span><span class="sr-only">تصمیم شما: </span><span class="flow-gate-label">پذیرش پایلوت</span></p>
+            </li>
+            <li class="flow-step">
+              <span class="flow-node" aria-hidden="true"><span>۴</span></span>
+              <div class="flow-card">
+                <span class="flow-tag">۴ تا ۱۰ هفته</span>
+                <h3>استقرار</h3>
+                <p>انتشار امن و مرحله‌به‌مرحله</p>
+              </div>
+              <p class="flow-gate"><span class="flow-diamond" aria-hidden="true"></span><span class="sr-only">تصمیم شما: </span><span class="flow-gate-label">تأیید انتشار</span></p>
+            </li>
+            <li class="flow-step">
+              <span class="flow-node" aria-hidden="true"><span>۵</span></span>
+              <div class="flow-card">
+                <span class="flow-tag">ماهانه</span>
+                <h3>پشتیبانی</h3>
+                <p>پایش، بهبود و فرصت بعدی</p>
+              </div>
+            </li>
+          </ol>
+          <p class="flow-again">و بعد، فرصت بعدی</p>
+        </div>
+
 
         <div class="audience reveal">
           <p class="audience-title">برای کسب‌وکارهای نرم‌افزاری</p>
@@ -428,12 +458,37 @@
       </div>
     </section>
 
-    <!-- ───────────── Quote ───────────── -->
-    <section class="quote" aria-label="سخن فردوسی">
-      <figure class="container reveal">
-        <blockquote>توانا بود هر که دانا بود</blockquote>
-        <figcaption>فردوسی</figcaption>
-      </figure>
+    <!-- ───────────── Soha: the faint star (brand band) ───────────── -->
+    <section class="night" aria-labelledby="night-title">
+      <!-- Photo: MohammadHosein Mohebbi / Unsplash (Unsplash License) — Kaluts of Shahdad, Kerman. See assets/img/CREDITS.md -->
+      <picture class="night-photo">
+        <source media="(max-width: 720px)" srcset="assets/img/night-shahdad-tall.webp" width="900" height="1125">
+        <img src="assets/img/night-shahdad-wide.webp" alt="" width="1920" height="1280" loading="lazy" decoding="async">
+      </picture>
+      <div class="container night-inner reveal">
+        <!-- Big Dipper from real RA/Dec (gnomonic projection); Alcor–Mizar gap exaggerated 2.5× so it can be seen -->
+        <svg class="dipper" viewBox="0 0 360 189" role="img" aria-labelledby="dipper-title">
+          <title id="dipper-title">هفت‌اورنگ و ستارهٔ کم‌نور سُها در کنار آن</title>
+          <path class="dipper-line" pathLength="1" d="M14 175 81.5 113.4 139.8 108.7 210.9 96.9 321.3 14 346 82.5 254.8 138.1 210.9 96.9"/>
+          <g class="dipper-stars">
+            <circle cx="14" cy="175" r="3.2" style="--i:0"/>
+            <circle cx="81.5" cy="113.4" r="2.9" style="--i:1"/>
+            <circle cx="139.8" cy="108.7" r="3.3" style="--i:2"/>
+            <circle cx="210.9" cy="96.9" r="1.8" style="--i:3"/>
+            <circle cx="321.3" cy="14" r="3.3" style="--i:4"/>
+            <circle cx="346" cy="82.5" r="2.7" style="--i:5"/>
+            <circle cx="254.8" cy="138.1" r="2.7" style="--i:6"/>
+          </g>
+          <g class="soha-mark">
+            <circle class="soha-halo" cx="75.8" cy="109.9" r="7.5"/>
+            <path class="soha-lead" d="M72.2 103.4 61 80"/>
+            <text class="soha-label" x="58" y="72" text-anchor="middle">سُها</text>
+          </g>
+          <circle class="soha-star" cx="75.8" cy="109.9" r="1.3"/>
+        </svg>
+        <h2 id="night-title">فرصت‌هایی را می‌بینیم که دیده نمی‌شوند</h2>
+        <p>سُها کم‌نورترین ستارهٔ «هفت‌اورنگ» است؛ قدیمی‌ها تیزبینی چشم را با آن تست می‌کردند.</p>
+      </div>
     </section>
 
     <!-- ───────────── Contact ───────────── -->
@@ -443,20 +498,8 @@
           <img class="contact-mark" src="assets/img/logo-mark.png" alt="" width="281" height="256">
           <h2>یک فرصت، مخصوص محصول شما</h2>
           <p>نشانی محصولتان را بفرستید؛ یک ایدهٔ هوشمند برایش پیشنهاد می‌دهیم.</p>
-          <!-- TODO: replace with Soha's real email address -->
-          <a class="btn btn-lg" href="mailto:hello@example.com?subject=%D8%A8%D8%B1%D8%B1%D8%B3%DB%8C%20%D8%B1%D8%A7%DB%8C%DA%AF%D8%A7%D9%86%20%D9%85%D8%AD%D8%B5%D9%88%D9%84">ارسال نشانی محصول</a>
-          <!-- TODO: replace # with real profile links, or remove -->
-          <div class="socials">
-            <a href="mailto:hello@example.com" aria-label="ایمیل">
-              <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M4 7l8 6 8-6"/></svg>
-            </a>
-            <a href="#" aria-label="لینکدین">
-              <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3.5"/><path d="M8 10.5V17M8 7.25v.01M12 17v-6.5M12 13.5a2.5 2.5 0 0 1 5 0V17"/></svg>
-            </a>
-            <a href="#" aria-label="تلگرام">
-              <svg class="icon" viewBox="0 0 24 24"><path d="M21 4.5 3.5 11.2l5.6 2 2 6.1 3.2-3.9 5 3.8z"/><path d="m9.1 13.2 9.6-7.1"/></svg>
-            </a>
-          </div>
+          <a class="btn btn-lg" href="mailto:reza.tz780210@gmail.com?subject=%D8%A8%D8%B1%D8%B1%D8%B3%DB%8C%20%D8%B1%D8%A7%DB%8C%DA%AF%D8%A7%D9%86%20%D9%85%D8%AD%D8%B5%D9%88%D9%84">ارسال نشانی محصول</a>
+          <a class="contact-email" href="mailto:reza.tz780210@gmail.com" dir="ltr">reza.tz780210@gmail.com</a>
         </div>
       </div>
     </section>
@@ -476,5 +519,6 @@
 
   <script src="assets/js/main.js" defer></script>
   <script src="assets/js/showcase.js" defer></script>
+  <script src="assets/js/flow.js" defer></script>
 </body>
 </html>

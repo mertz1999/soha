@@ -1,0 +1,6 @@
+# OS / editor
+.DS_Store
+
+# Python (tools/i18n)
+__pycache__/
+*.pyc
