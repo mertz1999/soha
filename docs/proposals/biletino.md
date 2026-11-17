@@ -1,16 +1,19 @@
 # Proposal: Biletino (SOHA → Biletino)
 
 > **Status:** Published · **Updated:** 2026-11-17
-> **Page:** `site/proposals/biletino/` → <https://mertz1999.github.io/soha/proposals/biletino/>
+> **Pages:** English (default) `site/proposals/biletino/` → <https://mertz1999.github.io/soha/proposals/biletino/>
+> Turkish `site/proposals/biletino/tr/` → <https://mertz1999.github.io/soha/proposals/biletino/tr/>
 > **Production design:** [biletino-production-architecture.md](biletino-production-architecture.md)
 
 An interactive proposal for Biletino's founders. It presents three AI ideas as working prototypes rather than slides:
 
-1. **AI Event Studio** (*Akıllı Etkinlik Oluşturma Stüdyosu*): an organizer describes the event in plain Turkish and gets a ready-to-review event page.
+1. **AI Event Studio** (*Akıllı Etkinlik Oluşturma Stüdyosu*): an organizer describes the event in plain language (English or Turkish) and gets a ready-to-review event page.
 2. **AI Poster Creator** (*AI Afiş Tasarım Stüdyosu*): three original poster directions, editable text, four output formats. This is the visual centrepiece.
 3. **AI Event Suggestions** (*Sana Özel Etkinlik Önerileri*): a phone screen where ticket buyers set preferences and see three personalised events with a reason for each.
 
-The page is in Turkish. These docs are in English.
+**Languages.** English is the default page and Turkish lives at `/tr/`. The **EN / TR** switch in the top bar opens the same section in the other language. Each page has its own `lang`, canonical URL, `hreflang` alternates and social preview image.
+
+The demos are translated too: the event drafts, poster labels and dates, suggestion reasons and every control. Event, venue and area names stay as Turkish proper names in both languages. On the English page they keep Turkish capitals ("SİNYAL", "LİMAN DEPO") until the user types their own name.
 
 **Positioning.** The ideas are presented as extensions of the current product: "eklenebilecek üç yapay zekâ katmanı" ("three AI layers that could be added"). The page never says Biletino lacks these features and makes no claim about Biletino's roadmap.
 
@@ -104,7 +107,7 @@ Each art system has three variations and three curated palettes, and is drawn as
 ## How the demo stays honest
 
 - **No model is called anywhere.** The page states this next to each demo:
-  - **Event studio:** "Kural tabanlı demo". Date, time, city, district, type, capacity, duration and price are read from the text with rules (`parse()` in `demo-data.js`). The page text comes from prewritten Turkish templates per category. The short "hazırlanıyor" shimmer is a transition.
+  - **Event studio:** "Kural tabanlı demo". Date, time, city, district, type, capacity, duration and price are read from the text with rules (`parse()` in `demo-data.js`). The reader understands English and Turkish (for example "15 December", "March 3rd at 9pm", "150 guests", "15 Aralık'ta", "saat 21.00", "400 kişilik"). The page text comes from prewritten templates per category and language. The short "hazırlanıyor" shimmer is a transition.
   - **Poster studio:** "İnteraktif konsept". The posters come from SOHA's predesigned art systems, generated in the browser by rules, with text as editable layers. "Görüntü üreten bir model çağrılmaz" ("no image-generating model is called").
   - **Suggestions:** "Demo verisi". 33 fictional events in İstanbul, Ankara and İzmir. Dates are relative to today, so "Bu hafta sonu" always means the coming weekend.
 - **How suggestions are scored:**
@@ -134,12 +137,13 @@ The Pages workflow publishes `site/` on every push to `main`, so any later chang
 
 | File | Purpose |
 |---|---|
-| `site/proposals/biletino/index.html` | The seven sections, the studio forms, the viewer and the publish-preview dialogs |
+| `site/proposals/biletino/index.html` | English page (default): the seven sections, the studio forms, the viewer and the publish-preview dialogs |
+| `site/proposals/biletino/tr/index.html` | Turkish page: the same markup in Turkish, loading the shared `../assets/` |
 | `site/proposals/biletino/assets/posterkit.js` | **Poster renderer.** Spec → SVG poster: three art systems × three variations, palettes, intensity, layout, four formats, text fitting. No dependencies |
 | `site/proposals/biletino/assets/demo-data.js` | Sample events, the 33-event catalogue, the rule-based reader and draft templates, and recommendation scoring and reasons |
 | `site/proposals/biletino/assets/proposal.js` | Page logic: slides and keyboard, event studio, poster studio and viewer, suggestions with animated reordering, connected flow |
 | `site/proposals/biletino/assets/biletino.css` | Page design: Biletino orange and black, Bricolage Grotesque headlines, Nunito UI. SOHA navy and turquoise only as small accents |
-| `site/proposals/biletino/assets/og-image.png` | 1200×630 social preview, rendered from the real posters with headless Chrome |
+| `site/proposals/biletino/assets/og-image.png`, `og-image-tr.png` | 1200×630 social previews (English and Turkish), rendered from the real posters with headless Chrome |
 
 The page reuses SOHA's logo and favicon from `site/assets/img/`. Nothing else in the site was changed.
 
@@ -163,7 +167,8 @@ await PosterKit.ready();        // loads the poster fonts; re-render after it re
 
 ## Editing
 
-- **Page copy:** `index.html`.
+- **Page copy:** `index.html` (English) and `tr/index.html` (Turkish). The two files share the same markup, so a structural change goes into both.
+- **Strings set by script:** `STR` in `proposal.js` (buttons, chips, toasts, the publish preview, phone text), `TXT` in `posterkit.js` (poster labels, months and days, format, style and palette names), and `L10N`, `CAT_TXT`, `SAMPLES.texts`, `TEMPLATES[cat].en/.tr`, `BUDGET` and `WHEN` in `demo-data.js`. The language comes from `<html lang>`.
 - **Sample events and descriptions:** `SAMPLES` in `demo-data.js`.
 - **Draft wording per category:** `TEMPLATES` in `demo-data.js`. Phrases avoid Turkish case suffixes after variables (for example "saat 21.00 itibarıyla"), so edited text stays grammatical.
 - **Suggestion catalogue:** `EVENTS` in `demo-data.js`. `day` is the offset from the coming Saturday.
@@ -190,4 +195,9 @@ await PosterKit.ready();        // loads the poster fonts; re-render after it re
   - Arrow keys work in the sample, format and variation radio groups and in the draft-page tabs.
   - Dialogs are native `<dialog>` elements (Esc closes them) and return focus to the button that opened them.
 - **Reduced motion:** no animations. Content is visible without entrance effects, and the draft and variations appear instantly (about 40 ms).
+- **Both languages:** at 1440×900 every English and Turkish section fits one screen. At 375×812 neither page overflows sideways, and the top bar fits the logo, the EN/TR switch and the call button.
+  - English drafts, chips, poster labels ("15 DECEMBER", "STARTS"), suggestion reasons ("Matches your interest in electronic music and your weekend preference.") and the publish preview are all in English.
+  - An English description ("Stand-up comedy night in Kızılay, Ankara on February 28th at 8:30 pm. Room for 150 guests.") produces "Açık Mikrofon: Stand-up Night", "28 February 2027 - Sunday", with an English programme and tickets.
+  - A typed English poster title uses English capitals ("WINTER SOLSTICE").
+  - The language switch carries the current section (for example `tr/#s3`), and the Turkish page's assets, logo and SOHA link resolve from `/tr/`.
 - **Fonts and console:** all seven font families load with their Latin and Latin Extended subsets (Turkish glyphs). No console errors and no broken images.

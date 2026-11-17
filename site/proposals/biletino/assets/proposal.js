@@ -16,6 +16,55 @@
   const TODAY = new Date();
   K.installDefs();
 
+  // The page language comes from <html lang>: English at /proposals/biletino/,
+  // Turkish at /proposals/biletino/tr/.
+  const LANG = (document.documentElement.lang || 'en').slice(0, 2) === 'tr' ? 'tr' : 'en';
+  K.setLang(LANG); D.setLang(LANG);
+  const STR = {
+    tr: {
+      chip: { city: 'Şehir', date: 'Tarih', time: 'Saat', cat: 'Tür', cap: 'Kapasite' }, missing: (l) => `${l} yok`, people: (n) => `${n} kişi`, readFrom: 'Metinden okunanlar:',
+      update: 'Taslağı Güncelle', regen: 'Taslağı Yeniden Oluştur', building: 'Taslak hazırlanıyor…',
+      suggested: '7 alan önerildi: başlık, açıklama, kategori, etiketler, program, biletler, SSS',
+      removeTag: (t) => `${t} etiketini kaldır`, tagRemoved: 'Etiket kaldırıldı', free: 'Ücretsiz',
+      pub: { nav: 'Etkinlik Ara · Blog · Yardım', details: 'Etkinlik Detayları', faq: 'Sıkça Sorulan Sorular', start: 'Başlangıç', loc: 'Konum', program: 'Program', tickets: 'Biletler' },
+      styles: [['auto', 'Otomatik', 'Kategoriye göre'], ['electronic', 'Elektronik', 'Dev tipografi'], ['jazz', 'Editoryal', 'Zarif serif'], ['workshop', 'Geometrik', 'Cesur biçimler']],
+      fmt: { poster: 'Afiş', cover: 'Etkinlik kapağı', post: 'Gönderi', story: 'Hikâye' },
+      variation: (i, n) => `Varyasyon ${i}: ${n}`, again: 'Yeniden Üret', newVars: (st) => `3 yeni varyasyon: ${st} tarzı`,
+      addLogo: 'Logo ekle', refImg: 'Referans görsel', logoMax: 'Logo en fazla 3 MB olabilir', logoSet: (n) => `Logo: ${n}`,
+      logoNote: '<b>Logo afişe yerleşti.</b> Değiştirmek için yeniden seç. Dosya cihazından çıkmaz.',
+      imgMax: 'Görsel en fazla 8 MB olabilir', noColour: 'Görselde belirgin bir renk bulunamadı', refSet: (h) => `Renk: ${h}`,
+      refNote: (sw, h) => `<b>Referans görselden renk alındı:</b> ${sw} ${h}. Görsel cihazından çıkmaz.`, palRef: '· referans',
+      show: ['A · Elektronik', 'B · Caz & Kültür', 'C · Yaratıcı Atölye'], openFull: (t) => `${t} afişini tam ekran aç`, tryStudio: 'Stüdyoda dene →',
+      poster: 'Afiş', viewerVar: (t, i, v) => `${t} · Varyasyon ${i} (${v})`, editable: 'Metinler düzenlenebilir katmanlardır.',
+      interests: [['electronic', 'Elektronik müzik'], ['jazz', 'Caz'], ['theatre', 'Tiyatro'], ['workshop', 'Atölyeler'], ['festival', 'Festivaller'], ['comedy', 'Komedi']],
+      match: (n) => `%${n} uyum`, pct: (n) => `%${n}`, ints: (n) => (n ? `${n} ilgi alanı` : 'Tüm türler'),
+      foot: (c, total, strict) => `Demo verisi · ${c} için ${total} kurgusal etkinlik puanlandı${strict < 3 ? ` · tam uyan: ${strict}` : ''}`,
+      flowWhy: (i) => `✦ ${i.charAt(0).toLocaleUpperCase('tr-TR')}${i.slice(1)} ilginize ve hafta sonu tercihinize uygun.`,
+      time: (t) => t.replace(':', '.'),
+    },
+    en: {
+      chip: { city: 'City', date: 'Date', time: 'Time', cat: 'Type', cap: 'Capacity' }, missing: (l) => `No ${l.toLowerCase()}`, people: (n) => `${n} people`, readFrom: 'Read from the text:',
+      update: 'Update Draft', regen: 'Regenerate Draft', building: 'Preparing the draft…',
+      suggested: '7 fields suggested: title, description, category, tags, schedule, tickets, FAQ',
+      removeTag: (t) => `Remove tag ${t}`, tagRemoved: 'Tag removed', free: 'Free',
+      pub: { nav: 'Search Events · Blog · Help', details: 'Event Details', faq: 'Frequently Asked Questions', start: 'Starts', loc: 'Location', program: 'Schedule', tickets: 'Tickets' },
+      styles: [['auto', 'Auto', 'By category'], ['electronic', 'Electronic', 'Huge type'], ['jazz', 'Editorial', 'Elegant serif'], ['workshop', 'Geometric', 'Bold shapes']],
+      fmt: { poster: 'Poster', cover: 'Event cover', post: 'Post', story: 'Story' },
+      variation: (i, n) => `Variation ${i}: ${n}`, again: 'Generate Again', newVars: (st) => `3 new variations: ${st} style`,
+      addLogo: 'Add logo', refImg: 'Reference image', logoMax: 'The logo can be up to 3 MB', logoSet: (n) => `Logo: ${n}`,
+      logoNote: '<b>Logo placed on the poster.</b> Choose again to replace it. The file never leaves your device.',
+      imgMax: 'The image can be up to 8 MB', noColour: 'No clear colour found in the image', refSet: (h) => `Colour: ${h}`,
+      refNote: (sw, h) => `<b>Colour taken from the reference image:</b> ${sw} ${h}. The image never leaves your device.`, palRef: '· reference',
+      show: ['A · Electronic', 'B · Jazz & Culture', 'C · Creative Workshop'], openFull: (t) => `Open the ${t} poster full screen`, tryStudio: 'Try it in the studio →',
+      poster: 'Poster', viewerVar: (t, i, v) => `${t} · Variation ${i} (${v})`, editable: 'Text stays as editable layers.',
+      interests: [['electronic', 'Electronic music'], ['jazz', 'Jazz'], ['theatre', 'Theatre'], ['workshop', 'Workshops'], ['festival', 'Festivals'], ['comedy', 'Comedy']],
+      match: (n) => `${n}% match`, pct: (n) => `${n}%`, ints: (n) => (n ? `${n} interest${n > 1 ? 's' : ''}` : 'All types'),
+      foot: (c, total, strict) => `Demo data · ${total} fictional events scored for ${c}${strict < 3 ? ` · exact matches: ${strict}` : ''}`,
+      flowWhy: (i) => `✦ Matches your interest in ${i} and your weekend preference.`,
+      time: (t) => t,
+    },
+  }[LANG];
+
   const toastEl = $('#toast'); let toastT;
   const toast = (msg) => { toastEl.textContent = msg; toastEl.classList.add('is-on'); clearTimeout(toastT); toastT = setTimeout(() => toastEl.classList.remove('is-on'), 2800); };
 
@@ -32,14 +81,14 @@
 
   /* ------------------------------------------------------------ poster helpers */
   const placeOf = (o) => [o.district, o.city].filter(Boolean).join(', ');
-  const sampleContent = (s) => ({ title: s.title, kicker: D.CATS[s.cat].kicker, date: s.date, time: s.time, venue: s.venue, city: placeOf(s), org: s.org });
+  const TR_NAMES = { title: 'tr-TR', venue: 'tr-TR', org: 'tr-TR' };
+  const sampleContent = (s) => ({ title: s.title, kicker: D.CATS[s.cat].kicker, date: s.date, time: s.time, venue: s.venue, city: placeOf(s), org: s.org, locale: { ...TR_NAMES } });
   const samplePoster = (i, format = 'poster', extra = {}) => K.render({ ...D.SAMPLES[i].poster, format, seed: 0, content: sampleContent(D.SAMPLES[i]), ...extra });
   const eventPoster = (e, format = 'poster') => K.render({
     style: D.CATS[e.cat].style, variant: e.v, palette: e.p, seed: K.util.hash(e.id) % 97, format,
-    content: { title: e.t, kicker: D.CATS[e.cat].kicker, date: e.date, time: e.time, venue: e.venue, city: `${e.district}, ${D.CITY_NAMES[e.city]}`, org: '' },
+    content: { title: e.t, kicker: D.CATS[e.cat].kicker, date: e.date, time: e.time, venue: e.venue, city: `${e.district}, ${D.CITY_NAMES[e.city]}`, org: '', locale: TR_NAMES },
   });
-  const MONTHS = D.MONTHS; const DAYS = D.DAYS;
-  const dateShort = (iso) => { const d = D.fromIso(iso); return `${d.getDate()} ${MONTHS[d.getMonth()]} ${DAYS[d.getDay()]}`; };
+  const dateShort = (iso) => D.dateShort(iso);
 
   /* ============================================================ 1 · hero + 2 · ideas */
   function paintHero() {
@@ -50,7 +99,7 @@
     $$('[data-ivp]').forEach((el) => { el.innerHTML = samplePoster(+el.dataset.ivp); });
     $('#iv-cover').innerHTML = samplePoster(0, 'cover');
     const recs = D.recommend({ city: 'istanbul', interests: ['electronic', 'jazz'], when: 'weekend', budget: 'any' }, TODAY).items;
-    recs.forEach((e, i) => { const el = $(`#ivs-${i}`); if (el) el.innerHTML = `<span class="t">${eventPoster(e)}</span><span><b>${esc(e.t)}</b><small>${esc(e.label)}</small></span><em>%${e.match}</em>`; });
+    recs.forEach((e, i) => { const el = $(`#ivs-${i}`); if (el) el.innerHTML = `<span class="t">${eventPoster(e)}</span><span><b>${esc(e.t)}</b><small>${esc(e.label)}</small></span><em>${STR.pct(e.match)}</em>`; });
   }
 
   /* ============================================================ 3 · event studio */
@@ -70,17 +119,17 @@
   function paintFound() {
     const f = D.parse(E.text.value, TODAY);
     const chips = [
-      ['city', f.city ? (f.district ? `${f.district}, ${f.city}` : f.city) : null, 'Şehir'],
-      ['date', f.date ? dateShort(f.date) : null, 'Tarih'],
-      ['time', f.time ? f.time.replace(':', '.') : null, 'Saat'],
-      ['cat', f.cat ? D.CATS[f.cat].label : null, 'Tür'],
-      ['cap', f.capacity ? `${f.capacity} kişi` : null, 'Kapasite'],
+      ['city', f.city ? (f.district ? `${f.district}, ${f.city}` : f.city) : null],
+      ['date', f.date ? dateShort(f.date) : null],
+      ['time', f.time ? STR.time(f.time) : null],
+      ['cat', f.cat ? D.CATS[f.cat].label : null],
+      ['cap', f.capacity ? STR.people(f.capacity) : null],
     ];
-    E.found.innerHTML = `<span class="sr-only">Metinden okunanlar:</span>${chips.map(([k, v, l]) => `<span class="chip${v ? '' : ' off'}">${ICON[k]}${v ? esc(v) : `${l} yok`}</span>`).join('')}`;
+    E.found.innerHTML = `<span class="sr-only">${STR.readFrom}</span>${chips.map(([k, v]) => `<span class="chip${v ? '' : ' off'}">${ICON[k]}${v ? esc(v) : esc(STR.missing(STR.chip[k]))}</span>`).join('')}`;
   }
   function markDirty() {
     paintFound();
-    if (ed.draft && !ed.dirty) { ed.dirty = true; E.goLabel.textContent = 'Taslağı Güncelle'; }
+    if (ed.draft && !ed.dirty) { ed.dirty = true; E.goLabel.textContent = STR.update; }
   }
   E.text.addEventListener('input', debounce(markDirty, 120));
   [E.venue, E.org, E.price].forEach((el) => el.addEventListener('input', markDirty));
@@ -93,7 +142,7 @@
     paintFound();
     if (build) buildDraft();
   }
-  const draftCover = (d) => K.render({ style: d.style, variant: 0, format: 'cover', content: { title: d.shortTitle, kicker: d.kicker, date: d.date, time: d.time, venue: d.venue, city: placeOf(d), org: d.org } });
+  const draftCover = (d) => K.render({ style: d.style, variant: 0, format: 'cover', content: { title: d.shortTitle, kicker: d.kicker, date: d.date, time: d.time, venue: d.venue, city: placeOf(d), org: d.org, locale: TR_NAMES } });
   function fillDraft(d) {
     F('date').textContent = d.dateLine;
     F('title').textContent = d.title;
@@ -103,9 +152,9 @@
     F('price').textContent = d.priceRange;
     F('cover').innerHTML = draftCover(d);
     F('desc').innerHTML = d.desc.map((p) => `<p>${esc(p)}</p>`).join('');
-    F('tags').innerHTML = d.tags.map((t) => `<li>${esc(t)}<button type="button" aria-label="${esc(t)} etiketini kaldır">×</button></li>`).join('');
+    F('tags').innerHTML = d.tags.map((t) => `<li>${esc(t)}<button type="button" aria-label="${esc(STR.removeTag(t))}">×</button></li>`).join('');
     F('sched').innerHTML = d.schedule.map(([t, l]) => `<li><b>${esc(t)}</b><span>${esc(l)}</span></li>`).join('');
-    F('tix').innerHTML = d.tickets.map((t) => `<li><span><b>${esc(t.name)}</b><small>${esc(t.desc)}</small></span><strong>${t.price === 0 ? 'Ücretsiz' : `${D.fmtTL(t.price)} TRY`}</strong></li>`).join('');
+    F('tix').innerHTML = d.tickets.map((t) => `<li><span><b>${esc(t.name)}</b><small>${esc(t.desc)}</small></span><strong>${t.price === 0 ? STR.free : `${D.fmtTL(t.price)} TRY`}</strong></li>`).join('');
     F('faq').innerHTML = d.faq.map(([q, a], i) => `<details${i === 0 ? ' open' : ''}><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('');
   }
   let building = false;
@@ -115,13 +164,13 @@
     const d = D.draft(E.text.value, { venue: E.venue.value.trim(), org: E.org.value.trim(), price: E.price.value.trim() }, s, TODAY);
     ed.draft = d; ed.dirty = false;
     E.go.disabled = true; E.ep.classList.add('is-building'); E.ep.setAttribute('aria-busy', 'true');
-    E.note.textContent = 'Taslak hazırlanıyor…';
+    E.note.textContent = STR.building;
     fillDraft(d);
     await wait(850);
     E.ep.classList.remove('is-building'); E.ep.setAttribute('aria-busy', 'false');
     if (!reduce) ['cover', 'date', 'title', 'org', 'cat', 'loc', 'price', 'desc', 'tags'].forEach((k, n) => { const el = F(k); el.classList.remove('pop'); void el.offsetWidth; el.style.animationDelay = `${n * 70}ms`; el.classList.add('pop'); });
-    E.note.textContent = '7 alan önerildi: başlık, açıklama, kategori, etiketler, program, biletler, SSS';
-    E.goLabel.textContent = 'Taslağı Yeniden Oluştur'; E.go.disabled = false; building = false;
+    E.note.textContent = STR.suggested;
+    E.goLabel.textContent = STR.regen; E.go.disabled = false; building = false;
   }
   E.form.addEventListener('submit', (e) => { e.preventDefault(); buildDraft(); });
 
@@ -145,7 +194,7 @@
   F('tags').addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return;
     const li = b.parentElement; const next = li.nextElementSibling || li.previousElementSibling;
-    li.remove(); toast('Etiket kaldırıldı'); if (next) $('button', next).focus();
+    li.remove(); toast(STR.tagRemoved); if (next) $('button', next).focus();
   });
   [F('title'), F('desc')].forEach((el) => el.addEventListener('keydown', (e) => { if (e.key === 'Escape') el.blur(); }));
   F('title').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); e.currentTarget.blur(); } });
@@ -159,7 +208,7 @@
     const descHtml = (paras.length ? paras : F('desc').innerText.split(/\n+/)).map((p) => `<p>${esc(p)}</p>`).join('');
     const tags = $$('li', F('tags')).map((li) => li.firstChild.textContent);
     $('#pub-page').innerHTML = `
-      <div class="pub-head"><b>biletino</b><span>Etkinlik Ara · Blog · Yardım</span></div>
+      <div class="pub-head"><b>biletino</b><span>${STR.pub.nav}</span></div>
       <div class="ep-top">
         <div class="ep-info">
           <p class="ep-date">${esc(d.dateLine)}</p><h3 class="ep-title">${esc(title)}</h3>
@@ -169,9 +218,9 @@
         <div class="ep-cover">${draftCover(d)}</div>
       </div>
       <div class="pub-body">
-        <div><h4>Etkinlik Detayları</h4><div class="ep-desc">${descHtml}</div>${tags.length ? `<ul class="ep-tags">${tags.map((t) => `<li style="padding-right:11px">${esc(t)}</li>`).join('')}</ul>` : ''}
-          <h4 style="margin-top:22px">Sıkça Sorulan Sorular</h4><div class="ep-faq">${d.faq.map(([q, a]) => `<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('')}</div></div>
-        <aside class="pub-side"><div><b>Başlangıç</b>${esc(d.dateLine)}, ${esc(d.time.replace(':', '.'))}</div><div><b>Konum</b>${esc(`${d.venue}, ${placeOf(d)}`)}</div><div><b>Program</b>${d.schedule.map(([t, l]) => `${esc(t)} · ${esc(l)}`).join('<br>')}</div><div><b>Biletler</b>${d.tickets.map((t) => `${esc(t.name)}: ${t.price === 0 ? 'Ücretsiz' : `${D.fmtTL(t.price)} TRY`}`).join('<br>')}</div></aside>
+        <div><h4>${STR.pub.details}</h4><div class="ep-desc">${descHtml}</div>${tags.length ? `<ul class="ep-tags">${tags.map((t) => `<li style="padding-right:11px">${esc(t)}</li>`).join('')}</ul>` : ''}
+          <h4 style="margin-top:22px">${STR.pub.faq}</h4><div class="ep-faq">${d.faq.map(([q, a]) => `<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('')}</div></div>
+        <aside class="pub-side"><div><b>${STR.pub.start}</b>${esc(d.dateLine)}, ${esc(STR.time(d.time))}</div><div><b>${STR.pub.loc}</b>${esc(`${d.venue}, ${placeOf(d)}`)}</div><div><b>${STR.pub.program}</b>${d.schedule.map(([t, l]) => `${esc(t)} · ${esc(l)}`).join('<br>')}</div><div><b>${STR.pub.tickets}</b>${d.tickets.map((t) => `${esc(t.name)}: ${t.price === 0 ? STR.free : `${D.fmtTL(t.price)} TRY`}`).join('<br>')}</div></aside>
       </div>`;
     pub.showModal();
   });
@@ -184,7 +233,7 @@
     cat: $('#st-cat'), styles: $('#st-styles'), logo: $('#st-logo'), ref: $('#st-ref'), logoB: $('#st-logo-b'), refB: $('#st-ref-b'), upNote: $('#up-note'),
     gen: $('#st-gen'), genLabel: $('#st-gen-label'), canvas: $('#st-canvas'), poster: $('#st-poster'), vars: $('#st-vars'), fmt: $('#fmt-tabs'), meta: $('#fmt-meta'), palName: $('#pal-name'),
   };
-  const STYLE_OPTS = [['auto', 'Otomatik', 'Kategoriye göre'], ['electronic', 'Elektronik', 'Dev tipografi'], ['jazz', 'Editoryal', 'Zarif serif'], ['workshop', 'Geometrik', 'Cesur biçimler']];
+  const STYLE_OPTS = STR.styles;
   const FMT_ORDER = ['poster', 'cover', 'post', 'story'];
   const FMT_ICON = { poster: [10, 12.5], cover: [16, 9], post: [11, 11], story: [7.5, 13] };
   const defaultsFor = (seed) => [0, 1, 2].map((i) => ({ palette: seed === 0 ? 0 : (seed + i) % 3, intensity: 1, alt: seed === 0 ? false : (seed + i) % 2 === 1 }));
@@ -196,7 +245,7 @@
   S.samples.innerHTML = D.SAMPLES.map((s, i) => `<button type="button" role="radio" data-v="${i}" aria-checked="${i === 0}" tabindex="${i === 0 ? 0 : -1}"><span class="th" data-st-th="${i}"></span>${esc(s.tab)}</button>`).join('');
   S.cat.innerHTML = Object.entries(D.CATS).map(([k, c]) => `<option value="${k}">${esc(c.label)}</option>`).join('');
   S.styles.innerHTML = STYLE_OPTS.map(([v, n, d], i) => `<label><input type="radio" name="st-style" value="${v}"${i === 0 ? ' checked' : ''}><span><i class="sw-${v}" aria-hidden="true"></i><span>${n}<small>${d}</small></span></span></label>`).join('');
-  S.fmt.innerHTML = FMT_ORDER.map((f) => { const F0 = K.FORMATS[f]; const [w, h] = FMT_ICON[f]; return `<button type="button" role="radio" data-v="${f}" aria-checked="${f === 'poster'}" tabindex="${f === 'poster' ? 0 : -1}"><i style="width:${w}px;height:${h}px" aria-hidden="true"></i>${F0.label === 'Instagram gönderisi' ? 'Gönderi' : F0.label} <small>${F0.ratio}</small></button>`; }).join('');
+  S.fmt.innerHTML = FMT_ORDER.map((f) => { const F0 = K.FORMATS[f]; const [w, h] = FMT_ICON[f]; return `<button type="button" role="radio" data-v="${f}" aria-checked="${f === 'poster'}" tabindex="${f === 'poster' ? 0 : -1}"><i style="width:${w}px;height:${h}px" aria-hidden="true"></i>${STR.fmt[f]} <small>${F0.ratio}</small></button>`; }).join('');
 
   function fillForm() {
     const c = st.content;
@@ -219,11 +268,11 @@
     S.poster.innerHTML = K.render(specFor(st.sel));
     if (o.swap && !reduce) { S.poster.classList.remove('swap'); void S.poster.offsetWidth; S.poster.classList.add('swap'); }
     const names = K.STYLES[styleOf()].variants;
-    S.vars.innerHTML = [0, 1, 2].map((i) => `<button type="button" role="radio" data-v="${i}" aria-checked="${i === st.sel}" tabindex="${i === st.sel ? 0 : -1}" aria-label="Varyasyon ${i + 1}: ${esc(names[i])}">${K.render(specFor(i))}<span class="vn" aria-hidden="true">${i + 1} · ${esc(names[i])}</span></button>`).join('');
+    S.vars.innerHTML = [0, 1, 2].map((i) => `<button type="button" role="radio" data-v="${i}" aria-checked="${i === st.sel}" tabindex="${i === st.sel ? 0 : -1}" aria-label="${esc(STR.variation(i + 1, names[i]))}">${K.render(specFor(i))}<span class="vn" aria-hidden="true">${i + 1} · ${esc(names[i])}</span></button>`).join('');
     const F0 = K.FORMATS[f];
     S.meta.textContent = `${F0.w} × ${F0.h} px · ${F0.use}`;
     const v = st.vars[st.sel]; const pals = K.PALETTES[styleOf()];
-    S.palName.textContent = st.accent ? '· referans' : `· ${pals[(K.DEFAULT_PAL[styleOf()][st.sel] + v.palette) % pals.length].name}`;
+    S.palName.textContent = st.accent ? STR.palRef : `· ${pals[(K.DEFAULT_PAL[styleOf()][st.sel] + v.palette) % pals.length].name}`;
     $('[data-r="less"]').disabled = v.intensity <= 0; $('[data-r="more"]').disabled = v.intensity >= 2;
     $('[data-r="reset"]').disabled = JSON.stringify(v) === JSON.stringify(defaultsFor(st.seed)[st.sel]) && !st.accent;
     paintFlowFormats();
@@ -233,7 +282,11 @@
   radioGroup(S.fmt, (v) => { st.format = v; setRadio(S.fmt, v); renderStudio({ swap: true }); });
 
   // live text layers
-  const bindText = (el, key, clean = (x) => x) => el.addEventListener('input', () => { st.content[key] = clean(el.value); renderQuick(); paintFlowDebounced(); });
+  const bindText = (el, key, clean = (x) => x) => el.addEventListener('input', () => {
+    st.content[key] = clean(el.value);
+    if (st.content.locale && key in st.content.locale) st.content.locale = { ...st.content.locale, [key]: null };
+    renderQuick(); paintFlowDebounced();
+  });
   bindText(S.title, 'title'); bindText(S.venue, 'venue'); bindText(S.city, 'city');
   S.date.addEventListener('change', () => { if (/^\d{4}-\d{2}-\d{2}$/.test(S.date.value)) { st.content.date = S.date.value; renderStudio(); paintFlow(); } });
   S.time.addEventListener('input', () => {
@@ -253,8 +306,8 @@
     st.seed += 1; st.vars = defaultsFor(st.seed); st.sel = 0;
     S.canvas.classList.remove('is-gen'); renderStudio({ swap: true });
     if (!reduce) $$('button', S.vars).forEach((b, n) => b.animate([{ opacity: 0, transform: 'translateY(14px)' }, { opacity: 1, transform: 'none' }], { duration: 450, delay: 120 + n * 110, easing: 'cubic-bezier(.2,.7,.2,1)', fill: 'backwards' }));
-    S.genLabel.textContent = 'Yeniden Üret'; S.gen.disabled = false; generating = false;
-    toast(`3 yeni varyasyon: ${K.STYLES[styleOf()].name} tarzı`);
+    S.genLabel.textContent = STR.again; S.gen.disabled = false; generating = false;
+    toast(STR.newVars(K.STYLES[styleOf()].name));
     paintFlow();
   });
 
@@ -274,15 +327,15 @@
   const upNote0 = S.upNote.innerHTML;
   function setUp(input, btn, label) {
     const box = input.closest('.up'); box.classList.toggle('is-set', !!label);
-    btn.textContent = label || (input === S.logo ? 'Logo ekle' : 'Referans görsel');
+    btn.textContent = label || (input === S.logo ? STR.addLogo : STR.refImg);
     if (!label && !st.logo && !st.accent) S.upNote.innerHTML = upNote0;
   }
   const readFile = (file) => new Promise((res, rej) => { const fr = new FileReader(); fr.onload = () => res(fr.result); fr.onerror = rej; fr.readAsDataURL(file); });
   S.logo.addEventListener('change', async () => {
     const file = S.logo.files[0]; if (!file) return;
-    if (file.size > 3e6) { toast('Logo en fazla 3 MB olabilir'); S.logo.value = ''; return; }
+    if (file.size > 3e6) { toast(STR.logoMax); S.logo.value = ''; return; }
     st.logo = await readFile(file); st.logoName = file.name;
-    setUp(S.logo, S.logoB, `Logo: ${file.name}`); S.upNote.innerHTML = '<b>Logo afişe yerleşti.</b> Değiştirmek için yeniden seç. Dosya cihazından çıkmaz.';
+    setUp(S.logo, S.logoB, STR.logoSet(file.name)); S.upNote.innerHTML = STR.logoNote;
     renderStudio({ swap: true });
   });
   function dominant(img) {
@@ -303,21 +356,21 @@
   }
   S.ref.addEventListener('change', async () => {
     const file = S.ref.files[0]; if (!file) return;
-    if (file.size > 8e6) { toast('Görsel en fazla 8 MB olabilir'); S.ref.value = ''; return; }
+    if (file.size > 8e6) { toast(STR.imgMax); S.ref.value = ''; return; }
     const url = await readFile(file); const img = new Image();
     img.onload = () => {
       const hex = dominant(img);
-      if (!hex) { toast('Görselde belirgin bir renk bulunamadı'); S.ref.value = ''; return; }
-      st.accent = hex; setUp(S.ref, S.refB, `Renk: ${hex}`);
-      S.upNote.innerHTML = `<b>Referans görselden renk alındı:</b> <span style="display:inline-block;width:11px;height:11px;border-radius:3px;background:${hex};vertical-align:-1px"></span> ${hex}. Görsel cihazından çıkmaz.`;
+      if (!hex) { toast(STR.noColour); S.ref.value = ''; return; }
+      st.accent = hex; setUp(S.ref, S.refB, STR.refSet(hex));
+      S.upNote.innerHTML = STR.refNote(`<span style="display:inline-block;width:11px;height:11px;border-radius:3px;background:${hex};vertical-align:-1px"></span>`, hex);
       renderStudio({ swap: true });
     };
     img.src = url;
   });
 
   // showcase row (the three original posters)
-  const SHOW_LABEL = ['A · Elektronik', 'B · Caz & Kültür', 'C · Yaratıcı Atölye'];
-  $('#show-row').innerHTML = D.SAMPLES.map((s, i) => `<figure class="show-card"><button type="button" class="show-poster" data-show="${i}" aria-label="${esc(s.title)} afişini tam ekran aç">${samplePoster(i)}</button><figcaption><span class="sc-k">${SHOW_LABEL[i]}</span><span class="sc-t">${esc(s.title)}</span><button type="button" class="sc-try" data-load="${i}">Stüdyoda dene →</button></figcaption></figure>`).join('');
+  const SHOW_LABEL = STR.show;
+  $('#show-row').innerHTML = D.SAMPLES.map((s, i) => `<figure class="show-card"><button type="button" class="show-poster" data-show="${i}" aria-label="${esc(STR.openFull(s.title))}">${samplePoster(i)}</button><figcaption><span class="sc-k">${SHOW_LABEL[i]}</span><span class="sc-t">${esc(s.title)}</span><button type="button" class="sc-try" data-load="${i}">${STR.tryStudio}</button></figcaption></figure>`).join('');
   $('#show-row').addEventListener('click', (e) => {
     const p = e.target.closest('[data-show]'); if (p) { openViewer({ mode: 'show', i: +p.dataset.show, format: 'poster' }, p); return; }
     const t = e.target.closest('[data-load]'); if (t) { loadStudioSample(+t.dataset.load); $('#studio').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' }); }
@@ -334,9 +387,9 @@
       $('#viewer-title').textContent = `${SHOW_LABEL[vctx.i]} · ${s.title}`;
     } else {
       box.innerHTML = K.render(specFor(vctx.i, f));
-      $('#viewer-title').textContent = `${st.content.title || 'Afiş'} · Varyasyon ${vctx.i + 1} (${K.STYLES[styleOf()].variants[vctx.i]})`;
+      $('#viewer-title').textContent = STR.viewerVar(st.content.title || STR.poster, vctx.i + 1, K.STYLES[styleOf()].variants[vctx.i]);
     }
-    const F0 = K.FORMATS[f]; $('#vw-meta').textContent = `${F0.label} · ${F0.w} × ${F0.h} px · ${F0.use}. Metinler düzenlenebilir katmanlardır.`;
+    const F0 = K.FORMATS[f]; $('#vw-meta').textContent = `${F0.label} · ${F0.w} × ${F0.h} px · ${F0.use}. ${STR.editable}`;
   }
   function openViewer(ctx, opener) { vctx = { ...ctx }; vwOpener = opener || null; paintViewer(); vw.showModal(); }
   const stepViewer = (k) => {
@@ -356,7 +409,7 @@
 
   /* ============================================================ 5 · suggestions */
   const sg = { city: 'istanbul', interests: ['electronic'], when: 'weekend', budget: 'any' };
-  const INTERESTS = [['electronic', 'Elektronik müzik'], ['jazz', 'Caz'], ['theatre', 'Tiyatro'], ['workshop', 'Atölyeler'], ['festival', 'Festivaller'], ['comedy', 'Komedi']];
+  const INTERESTS = STR.interests;
   const segHtml = (name, opts, cur) => opts.map(([v, l]) => `<label><input type="radio" name="${name}" value="${v}"${v === cur ? ' checked' : ''}><span>${esc(l)}</span></label>`).join('');
   $('[data-pref="city"]').innerHTML = segHtml('sg-city', Object.entries(D.CITY_NAMES), sg.city);
   $('[data-pref="interests"]').innerHTML = INTERESTS.map(([v, l]) => `<label><input type="checkbox" name="sg-int" value="${v}"${sg.interests.includes(v) ? ' checked' : ''}><span>${esc(l)}</span></label>`).join('');
@@ -370,7 +423,7 @@
   });
   const list = $('#ph-list');
   function cardHtml(e) {
-    return `<div class="ph-thumb">${eventPoster(e)}</div><div class="ph-info"><div class="ph-row1"><span class="ph-cat">${esc(D.CATS[e.cat].label)}</span><span class="ph-match">%${e.match} uyum</span></div><div class="ph-row2"><p class="ph-title">${esc(e.t)}</p><span class="ph-price">${esc(D.fmtLira(e.price))}</span></div><p class="ph-meta">${esc(e.label)} · ${esc(e.time.replace(':', '.'))}<br>${esc(e.venue)}, ${esc(e.district)}</p></div><p class="ph-why"><i aria-hidden="true">✦</i><span>${esc(e.reason)}</span></p>`;
+    return `<div class="ph-thumb">${eventPoster(e)}</div><div class="ph-info"><div class="ph-row1"><span class="ph-cat">${esc(D.CATS[e.cat].label)}</span><span class="ph-match">${esc(STR.match(e.match))}</span></div><div class="ph-row2"><p class="ph-title">${esc(e.t)}</p><span class="ph-price">${esc(D.fmtLira(e.price))}</span></div><p class="ph-meta">${esc(e.label)} · ${esc(STR.time(e.time))}<br>${esc(e.venue)}, ${esc(e.district)}</p></div><p class="ph-why"><i aria-hidden="true">✦</i><span>${esc(e.reason)}</span></p>`;
   }
   function renderSuggest(animate = false) {
     const r = D.recommend(sg, TODAY);
@@ -390,9 +443,9 @@
         else { const dy = first.get(li.dataset.id) - li.getBoundingClientRect().top; if (dy) li.animate([{ transform: `translateY(${dy}px)` }, { transform: 'none' }], { duration: 480, easing: 'cubic-bezier(.2,.7,.2,1)' }); }
       });
     }
-    const ints = sg.interests.length ? `${sg.interests.length} ilgi alanı` : 'Tüm türler';
+    const ints = STR.ints(sg.interests.length);
     $('#ph-sum').textContent = `${D.CITY_NAMES[sg.city]} · ${D.WHEN[sg.when].label} · ${D.BUDGET[sg.budget].label} · ${ints}`;
-    $('#ph-foot').textContent = `Demo verisi · ${D.CITY_NAMES[sg.city]} için ${r.total} kurgusal etkinlik puanlandı${r.strictCount < 3 ? ` · tam uyan: ${r.strictCount}` : ''}`;
+    $('#ph-foot').textContent = STR.foot(D.CITY_NAMES[sg.city], r.total, r.strictCount);
   }
   $('#sg-count').textContent = String(D.EVENTS.length);
 
@@ -407,7 +460,7 @@
     $('#fs-ptitle').textContent = c.title;
     $('#fs-cthumb').innerHTML = K.render(specFor(st.sel, 'poster'));
     $('#fs-ctitle').textContent = c.title;
-    $('#fs-why').textContent = `✦ ${D.CATS[cat].interest} ilginize ve hafta sonu tercihinize uygun.`;
+    $('#fs-why').textContent = STR.flowWhy(D.CATS[cat].interest);
     paintFlowFormats();
     if (!typingDone) $('#fs-typing').textContent = reduce ? D.SAMPLES[st.sample].text : '';
     else $('#fs-typing').textContent = D.SAMPLES[st.sample].text;
@@ -453,6 +506,12 @@
     else if (e.key === 'End') { e.preventDefault(); go(stops.length - 1); }
   });
 
+  // The language switch opens the same section in the other language.
+  $$('[data-lang-link]').forEach((a) => a.addEventListener('click', () => {
+    const stop = stops[nearest()]; const id = stop.id || (stop.closest('.slide') || {}).id;
+    a.href = `${a.getAttribute('href').split('#')[0]}${id && id !== 's1' ? `#${id}` : ''}`;
+  }));
+
   /* ============================================================ start */
   function paintAll() {
     paintHero(); paintIdeas(); renderStudio(); paintFlow(); paintFan(); renderSuggest(false);
@@ -464,8 +523,8 @@
   loadEdSample(0, false);
   ed.draft = D.draft(E.text.value, { venue: E.venue.value, org: E.org.value, price: E.price.value }, D.SAMPLES[0], TODAY);
   fillDraft(ed.draft);
-  E.note.textContent = '7 alan önerildi: başlık, açıklama, kategori, etiketler, program, biletler, SSS';
-  E.goLabel.textContent = 'Taslağı Yeniden Oluştur';
+  E.note.textContent = STR.suggested;
+  E.goLabel.textContent = STR.regen;
   paintAll();
   setCurrent(0);
   K.ready().then(paintAll);

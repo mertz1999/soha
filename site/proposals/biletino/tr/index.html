@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Biletino'nun Geleceği, Yapay Zekâ ile · SOHA'dan Biletino'ya bir öneri</title>
+  <meta name="description" content="SOHA'nın Biletino için hazırladığı bağımsız öneri: etkinlik sayfası oluşturma, afiş tasarımı ve kişisel etkinlik önerileri için üç yapay zekâ fikri. İnteraktif prototip.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="author" content="SOHA">
+  <meta name="theme-color" content="#131313">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="SOHA">
+  <meta property="og:locale" content="tr_TR">
+  <meta property="og:locale:alternate" content="en_US">
+  <meta property="og:title" content="Biletino'nun Geleceği, Yapay Zekâ ile · SOHA × Biletino">
+  <meta property="og:description" content="Etkinlik oluşturma, tasarım ve keşif deneyimi için 3 yeni fikir. SOHA'dan bağımsız, interaktif bir öneri.">
+  <meta property="og:url" content="https://mertz1999.github.io/soha/proposals/biletino/tr/">
+  <meta property="og:image" content="https://mertz1999.github.io/soha/proposals/biletino/assets/og-image-tr.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Üç özgün etkinlik afişi ve başlık: Biletino'nun Geleceği, Yapay Zekâ ile.">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://mertz1999.github.io/soha/proposals/biletino/tr/">
+  <link rel="alternate" hreflang="en" href="https://mertz1999.github.io/soha/proposals/biletino/">
+  <link rel="alternate" hreflang="tr" href="https://mertz1999.github.io/soha/proposals/biletino/tr/">
+  <link rel="alternate" hreflang="x-default" href="https://mertz1999.github.io/soha/proposals/biletino/">
+  <link rel="icon" href="../../../assets/img/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="../../../assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/nunito@5/index.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/bricolage-grotesque@5/index.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/big-shoulders-display@5/index.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/unbounded@5/index.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/space-grotesk@5/index.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/fraunces@5/opsz.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/fraunces@5/opsz-italic.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/syne@5/index.css">
+  <link rel="stylesheet" href="../assets/biletino.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body data-ui="dark">
+  <a class="skip" href="#studio">Afiş stüdyosuna geç</a>
+
+  <header class="topbar">
+    <a class="tb-brand" href="#s1" aria-label="SOHA'dan Biletino'ya öneri, başa dön">
+      <img src="../../../assets/img/logo-mark.png" alt="" width="281" height="256">
+      <span class="tb-soha">SOHA</span>
+      <span class="tb-x" aria-hidden="true">×</span>
+      <span class="tb-client">Biletino</span>
+    </a>
+    <div class="tb-right">
+      <nav class="tb-lang" aria-label="Dil">
+        <a href="../" lang="en" hreflang="en" data-lang-link>EN</a>
+        <a href="./" lang="tr" hreflang="tr" aria-current="page">TR</a>
+      </nav>
+      <span class="tb-count" aria-hidden="true"><b id="slide-now">01</b> / 07</span>
+      <a class="tb-cta" href="#s7">Görüşme planla</a>
+    </div>
+    <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
+  </header>
+
+  <nav class="dots" aria-label="Bölümler">
+    <a href="#s1" aria-label="1. Giriş" aria-current="true"></a>
+    <a href="#s2" aria-label="2. Üç fikir"></a>
+    <a href="#s3" aria-label="3. Akıllı Etkinlik Oluşturma Stüdyosu"></a>
+    <a href="#s4" aria-label="4. AI Afiş Tasarım Stüdyosu"></a>
+    <a href="#s5" aria-label="5. Sana Özel Etkinlik Önerileri"></a>
+    <a href="#s6" aria-label="6. Tek bir deneyim"></a>
+    <a href="#s7" aria-label="7. Görüşme"></a>
+  </nav>
+
+  <main id="main">
+    <!-- 1 · HERO -->
+    <section class="slide hero" id="s1" data-theme="dark" aria-labelledby="h1" data-stop>
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="brand-pill"><b>SOHA</b><span aria-hidden="true">×</span><b class="o">Biletino</b></p>
+          <h1 id="h1">Biletino'nun Geleceği, <em>Yapay Zekâ ile.</em></h1>
+          <p class="lede">Etkinlik oluşturma, tasarım ve keşif deneyimi için 3 yeni fikir.</p>
+          <div class="hero-ctas">
+            <a class="btn btn--orange btn--lg" href="#s2">Fikirleri Keşfet <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4v12m0 0l-5-5m5 5l5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a class="btn btn--ghost btn--lg" href="#studio">Afiş stüdyosunu aç</a>
+          </div>
+          <ol class="hero-index">
+            <li><a href="#s3"><span>01</span>Akıllı etkinlik sayfası</a></li>
+            <li><a href="#s4"><span>02</span>AI afiş tasarımı</a></li>
+            <li><a href="#s5"><span>03</span>Sana özel öneriler</a></li>
+          </ol>
+        </div>
+        <div class="hero-stage" aria-hidden="true">
+          <div class="hs-poster hs-p1" data-hero="1"></div>
+          <div class="hs-poster hs-p2" data-hero="2"></div>
+          <div class="hs-poster hs-p0" data-hero="0"></div>
+          <div class="hs-card">
+            <div class="hs-cover" id="hs-cover"></div>
+            <div class="hs-body">
+              <p class="hs-date">15 Aralık Salı · 21.00</p>
+              <p class="hs-title">Sinyal: Elektronik Kış Gecesi</p>
+              <p class="hs-place">Liman Depo · Karaköy, İstanbul</p>
+              <div class="hs-row"><span class="hs-price">₺520'den başlayan</span><span class="hs-buy">Bilet Al</span></div>
+            </div>
+          </div>
+          <div class="hs-chip hs-chip--match"><i>✦</i>Sana özel · %96 uyum</div>
+          <div class="hs-chip hs-chip--draft"><i>✓</i>Sayfa taslağı hazır</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 · THREE IDEAS -->
+    <section class="slide ideas" id="s2" data-theme="light" aria-labelledby="h2" data-stop>
+      <div class="wrap">
+        <header class="sec-head center">
+          <p class="eyebrow">Üç fikir</p>
+          <h2 id="h2">Üç Fikir. <em>Daha Güçlü</em> Bir Deneyim.</h2>
+          <p class="sec-lede">Biletino'nun bugünkü deneyimine eklenebilecek üç yapay zekâ katmanı.</p>
+        </header>
+        <div class="idea-cards">
+          <a class="idea idea--1" href="#s3">
+            <div class="idea-vis iv-studio" aria-hidden="true">
+              <div class="iv-note">İstanbul'da, <mark>15 Aralık</mark>'ta, <mark class="m2">elektronik müzik</mark> temalı bir gece… Saat <mark class="m3">21.00</mark></div>
+              <div class="iv-arrow"></div>
+              <div class="iv-page">
+                <div class="iv-cover" id="iv-cover"></div>
+                <div class="iv-lines"><b>Sinyal: Elektronik Kış Gecesi</b><span></span><span></span><span class="s"></span></div>
+              </div>
+            </div>
+            <div class="idea-txt">
+              <span class="idea-n">01</span>
+              <h3>AI Event Studio</h3>
+              <p class="idea-tr">Akıllı Etkinlik Oluşturma Stüdyosu</p>
+              <p class="idea-one">Anlat, sayfan hazır olsun.</p>
+            </div>
+            <span class="idea-foot"><span class="idea-for">Organizatörler için</span><span class="idea-go">Demoyu aç <i aria-hidden="true">→</i></span></span>
+          </a>
+          <a class="idea idea--2" href="#s4">
+            <div class="idea-vis iv-posters" aria-hidden="true">
+              <div class="ivp" data-ivp="1"></div><div class="ivp" data-ivp="2"></div><div class="ivp" data-ivp="0"></div>
+            </div>
+            <div class="idea-txt">
+              <span class="idea-n">02</span>
+              <h3>AI Poster Creator</h3>
+              <p class="idea-tr">AI Afiş Tasarım Stüdyosu</p>
+              <p class="idea-one">Tek tıkla üç özgün afiş.</p>
+            </div>
+            <span class="idea-foot"><span class="idea-for">Organizatörler için</span><span class="idea-go">Demoyu aç <i aria-hidden="true">→</i></span></span>
+          </a>
+          <a class="idea idea--3" href="#s5">
+            <div class="idea-vis iv-suggest" aria-hidden="true">
+              <div class="ivs-phone">
+                <p class="ivs-h">Sana Özel</p>
+                <div class="ivs-card" id="ivs-0"></div><div class="ivs-card" id="ivs-1"></div><div class="ivs-card" id="ivs-2"></div>
+              </div>
+            </div>
+            <div class="idea-txt">
+              <span class="idea-n">03</span>
+              <h3>AI Event Suggestions</h3>
+              <p class="idea-tr">Sana Özel Etkinlik Önerileri</p>
+              <p class="idea-one">Aradığın etkinlik seni bulsun.</p>
+            </div>
+            <span class="idea-foot"><span class="idea-for">Bilet alıcılar için</span><span class="idea-go">Demoyu aç <i aria-hidden="true">→</i></span></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 · AI EVENT STUDIO -->
+    <section class="slide evstudio" id="s3" data-theme="light" aria-labelledby="h3" data-stop>
+      <div class="wrap">
+        <header class="sec-head split">
+          <div>
+            <p class="eyebrow"><span class="num">01</span>Akıllı Etkinlik Oluşturma Stüdyosu</p>
+            <h2 id="h3">Anlat. <em>Sayfan hazır.</em></h2>
+          </div>
+          <p class="sec-lede">Organizatör etkinliğini kendi cümleleriyle yazar. Taslak sayfa hazırlanır; organizatör düzenler, onaylar, yayınlar.</p>
+        </header>
+        <div class="app">
+          <div class="app-bar">
+            <span class="app-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="app-title"><b>biletino</b>Etkinlik Yönetimi</span>
+            <span class="app-crumb">Yeni etkinlik</span>
+          </div>
+          <div class="app-body">
+            <form class="ed" id="ed" autocomplete="off">
+              <div class="ed-samples" role="radiogroup" aria-label="Örnek etkinlik" id="ed-samples"></div>
+              <label class="ed-label" for="ed-text">Etkinliğini anlat</label>
+              <textarea id="ed-text" rows="5" maxlength="600" spellcheck="false"></textarea>
+              <div class="ed-found" id="ed-found" aria-live="polite"></div>
+              <div class="ed-fields">
+                <label class="fld"><span>Mekân</span><input id="ed-venue" maxlength="40"></label>
+                <label class="fld"><span>Organizatör</span><input id="ed-org" maxlength="40"></label>
+                <label class="fld fld--s"><span>Fiyat (₺)</span><input id="ed-price" inputmode="numeric" maxlength="5" aria-label="Genel giriş fiyatı, lira"></label>
+              </div>
+              <button type="submit" class="btn btn--orange btn--block" id="ed-go"><span aria-hidden="true">✦</span> <span id="ed-go-label">Sayfa Taslağını Oluştur</span></button>
+              <p class="honest"><b>Kural tabanlı demo.</b> Tarih, saat, şehir ve tür metinden tarayıcıda okunur; metinler hazır şablonlardan gelir. Model çağrılmaz.</p>
+            </form>
+            <div class="ep-wrap">
+              <div class="ep-status">
+                <span class="ep-badge">Taslak</span>
+                <span class="ep-note" id="ep-note">Önerilen alanlar yayından önce gözden geçirilir</span>
+                <button type="button" class="btn btn--dark btn--sm" id="ep-preview">Yayın önizlemesi</button>
+              </div>
+              <article class="ep" id="ep" aria-busy="false" aria-label="Etkinlik sayfası taslağı">
+                <div class="ep-top">
+                  <div class="ep-info">
+                    <p class="ep-date" data-f="date"></p>
+                    <h3 class="ep-title" data-f="title" contenteditable="true" spellcheck="false" aria-label="Etkinlik başlığı, düzenlenebilir"></h3>
+                    <p class="ep-org"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#E04307"/><path d="M4.6 8.2l2.2 2.2 4.6-4.8" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-f="org"></span></p>
+                    <p><span class="ep-pill" data-f="cat"></span></p>
+                    <p class="ep-loc" data-f="loc"></p>
+                    <p class="ep-price" data-f="price"></p>
+                    <button type="button" class="ep-buy" id="ep-buy">BİLETLERİ GÖR</button>
+                  </div>
+                  <div class="ep-cover" data-f="cover"></div>
+                </div>
+                <div class="ep-tabs" role="tablist" aria-label="Sayfa bölümleri">
+                  <button type="button" role="tab" id="ept-details" aria-controls="epp-details" aria-selected="true">Detaylar</button>
+                  <button type="button" role="tab" id="ept-program" aria-controls="epp-program" aria-selected="false" tabindex="-1">Program</button>
+                  <button type="button" role="tab" id="ept-tickets" aria-controls="epp-tickets" aria-selected="false" tabindex="-1">Biletler</button>
+                  <button type="button" role="tab" id="ept-faq" aria-controls="epp-faq" aria-selected="false" tabindex="-1">SSS</button>
+                </div>
+                <div class="ep-panels">
+                  <div class="ep-panel" role="tabpanel" id="epp-details" aria-labelledby="ept-details">
+                    <div class="ep-desc" data-f="desc" contenteditable="true" spellcheck="false" aria-label="Etkinlik açıklaması, düzenlenebilir"></div>
+                    <ul class="ep-tags" data-f="tags" aria-label="Etiketler"></ul>
+                  </div>
+                  <div class="ep-panel" role="tabpanel" id="epp-program" aria-labelledby="ept-program" hidden><ol class="ep-sched" data-f="sched"></ol></div>
+                  <div class="ep-panel" role="tabpanel" id="epp-tickets" aria-labelledby="ept-tickets" hidden><ul class="ep-tix" data-f="tix"></ul></div>
+                  <div class="ep-panel" role="tabpanel" id="epp-faq" aria-labelledby="ept-faq" hidden><div class="ep-faq" data-f="faq"></div></div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 · AI POSTER STUDIO -->
+    <section class="slide posters" id="s4" data-theme="dark" aria-labelledby="h4">
+      <div class="pz-show" data-stop>
+        <div class="wrap">
+          <header class="sec-head center">
+            <p class="eyebrow"><span class="num">02</span>AI Afiş Tasarım Stüdyosu</p>
+            <h2 id="h4">Bir etkinlik. <em>Üç özgün afiş.</em></h2>
+            <p class="sec-lede">Etkinlik bilgisini gir, tarzını seç; birbirinden farklı afiş önerileri tek tıkla hazır.</p>
+          </header>
+          <div class="show-row" id="show-row"></div>
+        </div>
+      </div>
+      <div class="pz-studio" id="studio" data-stop data-theme="dark" aria-label="Afiş stüdyosu">
+        <div class="wrap">
+          <div class="studio">
+            <form class="st-ctrl" id="st-form" autocomplete="off">
+              <fieldset class="st-samples">
+                <legend>Örnek etkinlik</legend>
+                <div class="st-sample-row" id="st-samples" role="radiogroup" aria-label="Örnek etkinlik"></div>
+              </fieldset>
+              <label class="fld"><span>Etkinlik adı</span><input id="st-title" maxlength="36"></label>
+              <div class="fld-row">
+                <label class="fld"><span>Tarih</span><input type="date" id="st-date" min="2026-01-01" max="2028-12-31"></label>
+                <label class="fld fld--s"><span>Saat</span><input id="st-time" inputmode="numeric" maxlength="5" placeholder="21:00"></label>
+              </div>
+              <div class="fld-row">
+                <label class="fld"><span>Mekân</span><input id="st-venue" maxlength="28"></label>
+                <label class="fld"><span>Semt, şehir</span><input id="st-city" maxlength="30"></label>
+              </div>
+              <label class="fld"><span>Kategori</span><select id="st-cat"></select></label>
+              <fieldset class="st-styles">
+                <legend>Tarz</legend>
+                <div class="st-style-row" id="st-styles"></div>
+              </fieldset>
+              <div class="st-uploads">
+                <label class="up"><input type="file" accept="image/png,image/jpeg,image/svg+xml,image/webp" id="st-logo"><span class="up-b" id="st-logo-b">Logo ekle</span></label>
+                <label class="up"><input type="file" accept="image/png,image/jpeg,image/webp" id="st-ref"><span class="up-b" id="st-ref-b">Referans görsel</span></label>
+              </div>
+              <p class="up-note" id="up-note">İsteğe bağlı. Dosyalar yalnızca tarayıcında kullanılır, hiçbir yere yüklenmez.</p>
+              <button class="btn btn--orange btn--block" id="st-gen" type="submit"><span aria-hidden="true">✦</span> <span id="st-gen-label">3 Varyasyon Üret</span></button>
+            </form>
+            <div class="st-stage">
+              <div class="st-top">
+                <div class="fmt-tabs" role="radiogroup" aria-label="Çıktı formatı" id="fmt-tabs"></div>
+                <button type="button" class="btn btn--glass btn--sm" id="st-full"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 8V3h5M17 8V3h-5M3 12v5h5M17 12v5h-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Tam ekran</button>
+              </div>
+              <div class="st-canvas" id="st-canvas">
+                <button type="button" class="st-poster" id="st-poster" aria-label="Seçili afişi tam ekran aç"></button>
+                <div class="st-gen" aria-hidden="true"><span class="st-scan"></span><p>Varyasyonlar hazırlanıyor…</p></div>
+              </div>
+              <div class="st-bottom">
+                <div class="refine" role="group" aria-label="Seçili afişe ince ayar">
+                  <button type="button" data-r="palette">Palet <span id="pal-name"></span></button>
+                  <button type="button" data-r="less">Daha sade</button>
+                  <button type="button" data-r="more">Daha cesur</button>
+                  <button type="button" data-r="layout">Yerleşim</button>
+                  <button type="button" data-r="reset" class="ghost">Sıfırla</button>
+                </div>
+                <p class="fmt-meta" id="fmt-meta"></p>
+              </div>
+            </div>
+            <div class="st-vars" id="st-vars" role="radiogroup" aria-label="Varyasyonlar"></div>
+          </div>
+          <p class="honest honest--dark"><b>İnteraktif konsept.</b> Afişler SOHA'nın önceden tasarladığı özgün sanat sistemlerinden, tarayıcıda kural tabanlı olarak oluşturulur; metinler düzenlenebilir katmanlardır. Görüntü üreten bir model çağrılmaz.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 · AI EVENT SUGGESTIONS -->
+    <section class="slide suggest" id="s5" data-theme="light" aria-labelledby="h5" data-stop>
+      <div class="wrap sg-grid">
+        <div class="sg-copy">
+          <p class="eyebrow"><span class="num">03</span>Sana Özel Etkinlik Önerileri</p>
+          <h2 id="h5">Aradığın etkinlik <em>seni bulsun.</em></h2>
+          <p class="sec-lede">Tercihini seç; öneriler ve nedenleri anında değişir.</p>
+          <div class="prefs" id="prefs">
+            <fieldset class="pref"><legend>Şehir</legend><div class="seg" data-pref="city"></div></fieldset>
+            <fieldset class="pref"><legend>İlgi alanların</legend><div class="chips" data-pref="interests"></div></fieldset>
+            <fieldset class="pref"><legend>Ne zaman?</legend><div class="seg" data-pref="when"></div></fieldset>
+            <fieldset class="pref"><legend>Bütçe</legend><div class="seg" data-pref="budget"></div></fieldset>
+          </div>
+          <p class="honest"><b>Demo verisi.</b> <span id="sg-count">33</span> kurgusal etkinlik; puan ilgi alanı, tarih, bütçe ve yakınlıktan hesaplanır. Gerçek Biletino hesaplarına, geçmişine veya API'lerine erişilmez.</p>
+        </div>
+        <div class="phone-wrap">
+          <div class="phone">
+            <div class="ph-screen">
+              <div class="ph-status" aria-hidden="true"><span>21:04</span><span class="ph-isl"></span><span class="ph-ic"><i></i><i></i><i></i></span></div>
+              <div class="ph-head">
+                <p class="ph-brand">biletino</p>
+                <h3 class="ph-h">Sana Özel</h3>
+                <p class="ph-sum" id="ph-sum"></p>
+              </div>
+              <ul class="ph-list" id="ph-list" aria-live="polite" aria-label="Önerilen etkinlikler"></ul>
+              <div class="ph-tabbar" aria-hidden="true"><span class="on"></span><span></span><span></span><span></span></div>
+            </div>
+          </div>
+          <span class="demo-tag" id="ph-foot">Demo verisi · kurgusal etkinlikler</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 · ONE CONNECTED EXPERIENCE -->
+    <section class="slide flow" id="s6" data-theme="dark" aria-labelledby="h6" data-stop>
+      <div class="wrap">
+        <header class="sec-head center">
+          <p class="eyebrow">Hepsi bir arada</p>
+          <h2 id="h6">Oluşturmadan <em>Keşfe.</em></h2>
+          <p class="sec-lede">Tek bir akıllı deneyim.</p>
+        </header>
+        <ol class="flow-steps" id="flow">
+          <li class="fs">
+            <div class="fs-vis fs-1" aria-hidden="true"><div class="fs-bubble"><span class="fs-typing" id="fs-typing"></span></div></div>
+            <span class="fs-n">01</span><h3>Organizatör anlatır</h3><p>Birkaç cümle yeter.</p>
+          </li>
+          <li class="fs">
+            <div class="fs-vis fs-2" aria-hidden="true"><div class="fs-page"><div class="fs-pcover" id="fs-pcover"></div><b id="fs-ptitle"></b><span></span><span></span><span class="s"></span></div></div>
+            <span class="fs-n">02</span><h3>AI sayfayı hazırlar</h3><p>Başlık, açıklama, program, SSS.</p>
+          </li>
+          <li class="fs">
+            <div class="fs-vis fs-3" aria-hidden="true"><div class="fs-fmt fs-f1" id="fs-f1"></div><div class="fs-fmt fs-f2" id="fs-f2"></div><div class="fs-fmt fs-f3" id="fs-f3"></div></div>
+            <span class="fs-n">03</span><h3>AI afişleri üretir</h3><p>Kapak, gönderi ve hikâye.</p>
+          </li>
+          <li class="fs">
+            <div class="fs-vis fs-4" aria-hidden="true"><div class="fs-phone"><div class="fs-card"><div class="fs-cthumb" id="fs-cthumb"></div><div><b id="fs-ctitle"></b><span class="fs-match">%96 uyum</span></div></div><p class="fs-why" id="fs-why"></p></div></div>
+            <span class="fs-n">04</span><h3>AI doğru kişilere önerir</h3><p>İlgisi olanlar etkinliği bulur.</p>
+          </li>
+        </ol>
+        <p class="flow-human"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2l6 2.5v5c0 4-2.6 6.8-6 8.5-3.4-1.7-6-4.5-6-8.5v-5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M7 10l2 2 4-4.2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Her adımda son karar organizatörde. Hiçbir şey onaysız yayınlanmaz.</p>
+      </div>
+    </section>
+
+    <!-- 7 · CTA -->
+    <section class="slide closing" id="s7" data-theme="orange" aria-labelledby="h7" data-stop>
+      <div class="wrap closing-in">
+        <div class="fan" id="fan" aria-hidden="true"></div>
+        <h2 id="h7">Birlikte Tasarlayalım.</h2>
+        <p class="sec-lede">Biletino için bu fikirleri birlikte değerlendirelim.</p>
+        <div class="closing-actions">
+          <a class="btn btn--dark btn--lg" id="cta-call" href="mailto:reza.tz780210@gmail.com?subject=Biletino%20%C3%97%20SOHA%3A%2015%20dakikal%C4%B1k%20g%C3%B6r%C3%BC%C5%9Fme&amp;body=Merhaba%20SOHA%20ekibi%2C%0D%0A%0D%0ABiletino%20i%C3%A7in%20haz%C4%B1rlad%C4%B1%C4%9F%C4%B1n%C4%B1z%20yapay%20zek%C3%A2%20%C3%B6nerilerini%20konu%C5%9Fmak%20%C3%BCzere%2015%20dakikal%C4%B1k%20bir%20g%C3%B6r%C3%BC%C5%9Fme%20planlayal%C4%B1m.%0D%0A%0D%0AUygun%20oldu%C4%9Fum%20zamanlar%3A%0D%0A"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="2.5" y="4.5" width="15" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3 6l7 5 7-5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>15 Dakikalık Görüşme</a>
+          <a class="btn btn--line btn--lg" id="cta-cal" href="https://calendly.com/reza-tanakizadeh/soha" target="_blank" rel="noopener">Takvimden saat seç<span class="sr-only"> (Calendly, yeni sekmede açılır)</span></a>
+        </div>
+        <p class="closing-meta"><a href="mailto:reza.tz780210@gmail.com">reza.tz780210@gmail.com</a><span class="sep" aria-hidden="true">·</span><a href="../../../tr/">mertz1999.github.io/soha</a></p>
+        <p class="disclosure">Bu sayfa SOHA'nın Biletino için hazırladığı bağımsız bir öneridir; Biletino tarafından onaylanmış bir iş birliği veya ortaklık değildir. Biletino adı yalnızca öneriyi anlatmak için kullanılmıştır. Sayfadaki tüm etkinlikler, mekânlar, kurumlar ve fiyatlar kurgusaldır.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- full-screen poster viewer -->
+  <dialog class="viewer" id="viewer" aria-labelledby="viewer-title">
+    <div class="vw-bar">
+      <p class="vw-title" id="viewer-title"></p>
+      <div class="fmt-tabs fmt-tabs--sm" role="radiogroup" aria-label="Çıktı formatı" id="vw-fmt"></div>
+      <button type="button" class="vw-x" id="vw-close" aria-label="Kapat">×</button>
+    </div>
+    <div class="vw-body">
+      <button type="button" class="vw-nav" id="vw-prev" aria-label="Önceki afiş">‹</button>
+      <div class="vw-poster" id="vw-poster"></div>
+      <button type="button" class="vw-nav" id="vw-next" aria-label="Sonraki afiş">›</button>
+    </div>
+    <p class="vw-meta" id="vw-meta"></p>
+  </dialog>
+
+  <!-- publish preview -->
+  <dialog class="pub" id="pub" aria-labelledby="pub-title">
+    <div class="pub-bar">
+      <p id="pub-title"><b>Yayın önizlemesi</b> · Katılımcıların göreceği sayfa. Henüz yayınlanmadı.</p>
+      <button type="button" class="btn btn--dark btn--sm" id="pub-close">Düzenlemeye dön</button>
+    </div>
+    <div class="pub-page" id="pub-page"></div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="../assets/posterkit.js"></script>
+  <script src="../assets/demo-data.js"></script>
+  <script src="../assets/proposal.js"></script>
+</body>
+</html>

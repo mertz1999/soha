@@ -25,9 +25,38 @@
     cond: 'Big Shoulders Display Variable', wide: 'Unbounded Variable', grot: 'Space Grotesk Variable',
     serif: 'Fraunces Variable', syne: 'Syne Variable',
   };
-  const MONTHS = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
-  const DAYS = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'];
-  const SEASONS = ['Kış', 'Kış', 'İlkbahar', 'İlkbahar', 'İlkbahar', 'Yaz', 'Yaz', 'Yaz', 'Sonbahar', 'Sonbahar', 'Sonbahar', 'Kış'];
+  // Poster wording per language. Event names, venues and areas keep their own
+  // casing rules (Turkish names use Turkish capitals on the English page too).
+  const TXT = {
+    tr: {
+      locale: 'tr-TR', timeSep: '.', months: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'],
+      days: ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'],
+      seasons: ['Kış', 'Kış', 'İlkbahar', 'İlkbahar', 'İlkbahar', 'Yaz', 'Yaz', 'Yaz', 'Sonbahar', 'Sonbahar', 'Sonbahar', 'Kış'],
+      date: 'TARİH', time: 'SAAT', venue: 'MEKÂN', start: 'BAŞLANGIÇ', tickets: "BİLETLER BİLETİNO'DA",
+      evening: (c) => `${c.d} ${c.month} · ${c.wd} akşamı`, dateSub: (c) => `${c.wd}, ${c.y}`,
+      noTitle: 'Etkinlik adı', noVenue: 'Mekân', noKicker: 'Etkinlik',
+      aria: (t, st, v, f) => `${t} afişi: ${st} tarzı, ${v} varyasyonu, ${f} formatı`,
+      formats: { poster: ['Afiş', 'Baskı ve paylaşım afişi'], cover: ['Etkinlik kapağı', 'Biletino etkinlik sayfası kapağı'], post: ['Instagram gönderisi', 'Instagram akışı'], story: ['Hikâye', 'Instagram ve WhatsApp hikâyesi'] },
+      styles: { electronic: ['Elektronik', 'Dev tipografi, turuncu ve siyah', ['Spektrum', 'Tipografik duvar', 'Kırık ızgara']], jazz: ['Editoryal', 'Zarif serif, sıcak kâğıt dokusu', ['Plak', 'Mavi saat', 'Kolaj']], workshop: ['Geometrik', 'Cesur biçimler, canlı renkler', ['Izgara', 'Harfler', 'Diyagonal']] },
+      palettes: { electronic: ['Gece', 'Turuncu', 'Şeftali'], jazz: ['Kâğıt', 'Mavi saat', 'Bordo'], workshop: ['Kâğıt', 'Gece', 'Kobalt'] },
+    },
+    en: {
+      locale: 'en-US', timeSep: ':', months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+      days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+      seasons: ['Winter', 'Winter', 'Spring', 'Spring', 'Spring', 'Summer', 'Summer', 'Summer', 'Autumn', 'Autumn', 'Autumn', 'Winter'],
+      date: 'DATE', time: 'TIME', venue: 'VENUE', start: 'STARTS', tickets: 'TICKETS ON BILETINO',
+      evening: (c) => `${c.wd} evening · ${c.d} ${c.month}`, dateSub: (c) => `${c.wd}, ${c.y}`,
+      noTitle: 'Event name', noVenue: 'Venue', noKicker: 'Event',
+      aria: (t, st, v, f) => `${t} poster: ${st} style, ${v} variation, ${f} format`,
+      formats: { poster: ['Poster', 'Print and social poster'], cover: ['Event cover', 'Biletino event page cover'], post: ['Instagram post', 'Instagram feed'], story: ['Story', 'Instagram and WhatsApp story'] },
+      styles: { electronic: ['Electronic', 'Huge type, orange and black', ['Spectrum', 'Type wall', 'Broken grid']], jazz: ['Editorial', 'Elegant serif, warm paper', ['Record', 'Blue hour', 'Collage']], workshop: ['Geometric', 'Bold shapes, vivid colour', ['Grid', 'Letters', 'Diagonal']] },
+      palettes: { electronic: ['Night', 'Orange', 'Peach'], jazz: ['Paper', 'Blue hour', 'Bordeaux'], workshop: ['Paper', 'Night', 'Cobalt'] },
+    },
+  };
+  let LANG = 'tr';
+  let T = TXT.tr;
+  const TX = () => T;
+  const MONTHS = TXT.tr.months; const DAYS = TXT.tr.days;
 
   // Three curated palettes per art system. Index 0 is the default unless a
   // variant prefers another one (see DEFAULT_PAL).
@@ -53,7 +82,10 @@
   /* ------------------------------------------------------------ small utils */
   const r = (n) => Math.round(n * 10) / 10;
   const esc = (s) => String(s).replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
-  const up = (s) => String(s).toLocaleUpperCase('tr-TR');
+  const up = (s) => String(s).toLocaleUpperCase(T.locale);
+  const TR_CHARS = /[ıİşŞğĞçÇöÖüÜ]/;
+  // Capitals for names: Turkish rules for Turkish names (or a locale the caller sets).
+  const upName = (s, loc) => String(s).toLocaleUpperCase(loc || (LANG === 'tr' || TR_CHARS.test(s) ? 'tr-TR' : 'en-US'));
   const pad = (n) => String(n).padStart(2, '0');
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const hash = (str) => { let h = 2166136261; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; };
@@ -143,14 +175,20 @@
   function normContent(c0 = {}) {
     const iso = /^\d{4}-\d{2}-\d{2}$/.test(c0.date || '') ? c0.date : '2026-12-15';
     const [y, mo, d] = iso.split('-').map(Number);
-    const wd = DAYS[new Date(Date.UTC(y, mo - 1, d)).getUTCDay()];
-    const time = String(c0.time || '21:00').slice(0, 5).replace(':', '.');
-    return {
-      title: String(c0.title || '').trim() || 'Etkinlik adı', kicker: String(c0.kicker || 'Etkinlik').trim(),
-      d: String(d), dd: pad(d), mm: pad(mo), yy: String(y).slice(2), y, month: MONTHS[mo - 1], wd, time,
-      venue: String(c0.venue || '').trim() || 'Mekân', city: String(c0.city || '').trim(), org: String(c0.org || '').trim(),
-      logo: c0.logo || null, season: SEASONS[mo - 1],
+    const wd = T.days[new Date(Date.UTC(y, mo - 1, d)).getUTCDay()];
+    const time = String(c0.time || '21:00').slice(0, 5).replace(':', T.timeSep);
+    const loc = c0.locale || {};
+    const c = {
+      title: String(c0.title || '').trim() || T.noTitle, kicker: String(c0.kicker || T.noKicker).trim(),
+      d: String(d), dd: pad(d), mm: pad(mo), yy: String(y).slice(2), y, month: T.months[mo - 1], wd, time,
+      venue: String(c0.venue || '').trim() || T.noVenue, city: String(c0.city || '').trim(), org: String(c0.org || '').trim(),
+      logo: c0.logo || null, season: T.seasons[mo - 1],
     };
+    Object.assign(c, {
+      TITLE: upName(c.title, loc.title), VENUE: upName(c.venue, loc.venue), CITY: upName(c.city, loc.city), ORG: upName(c.org, loc.org),
+      KICKER: up(c.kicker), MONTH: up(c.month), WD: up(c.wd), SEASON: up(c.season),
+    });
+    return c;
   }
   const kindOf = (W, H) => { const a = H / W; return a >= 1.6 ? 'tall' : a >= 1.15 ? 'portrait' : a >= 0.87 ? 'square' : 'wide'; };
   function makeCtx(spec) {
@@ -181,7 +219,7 @@
     const { c, u } = X;
     if (c.logo) { const h = size * 2.6; return `<image href="${esc(c.logo)}" x="${r(xr - h * 3.2)}" y="${r(yTop - h * 0.2)}" width="${r(h * 3.2)}" height="${r(h)}" preserveAspectRatio="xMaxYMid meet"/>`; }
     if (!c.org) return '';
-    return line(c.org, f, xr, yTop + size * 0.74, size, u * 34, { fill: color, anchor: 'end', upper: true, opacity: 0.85 });
+    return line(c.ORG, f, xr, yTop + size * 0.74, size, u * 34, { fill: color, anchor: 'end', opacity: 0.85 });
   }
   const grain = (X, op, blend) => `<rect width="${X.W}" height="${X.H}" fill="url(#pk-grain)" opacity="${op}" style="mix-blend-mode:${blend}"/>`;
 
@@ -189,16 +227,16 @@
   const E_TOP = { k: 'grot', w: 600, ls: 0.14 };
   function eTop(X, pal) {
     const { u, m, sTop, W, c } = X; const sz = u * 2.1;
-    return line(c.kicker, E_TOP, m, sTop + sz * 0.74, sz, W * 0.5, { fill: pal.fg, upper: true }) + orgMark(X, pal, W - m, sTop, sz, E_TOP, pal.fg);
+    return line(c.KICKER, E_TOP, m, sTop + sz * 0.74, sz, W * 0.5, { fill: pal.fg }) + orgMark(X, pal, W - m, sTop, sz, E_TOP, pal.fg);
   }
   // Three-column info strip: date · venue · time.
   function eMeta(X, pal, x, y, w, o = {}) {
     const { u, c } = X; const fg = o.fg || pal.fg;
     const big = { k: 'wide', w: 700, ls: -0.01 }; const small = { k: 'grot', w: 600, ls: 0.1 };
     const cols = [
-      [`${c.d} ${up(c.month)}`, `${up(c.wd)} · ${c.y}`],
-      [up(c.venue), up(c.city)],
-      [c.time, 'BAŞLANGIÇ'],
+      [`${c.d} ${c.MONTH}`, `${c.WD} · ${c.y}`],
+      [c.VENUE, c.CITY],
+      [c.time, TX().start],
     ];
     const ws = [0.38, 0.42, 0.2]; const gap = u * 2.4; const inner = w - gap * 2;
     let s = o.noRule ? '' : `<rect x="${r(x)}" y="${r(y)}" width="${r(w)}" height="${r(u * 0.3)}" fill="${fg}" opacity=".9"/>`;
@@ -247,11 +285,11 @@
     s += `<path d="${ticks}" stroke="${pal.fg}" stroke-width="${r(u * 0.22)}" opacity=".5"/>`;
     s += grain(X, pal.dark ? 0.16 : 0.22, pal.dark ? 'screen' : 'multiply');
     if (kind === 'portrait' || kind === 'tall') {
-      const rep = `${up(c.title)} ● ${c.d} ${up(c.month)} ● ${up(c.venue)} ● `;
+      const rep = `${c.TITLE} ● ${c.d} ${c.MONTH} ● ${c.VENUE} ● `;
       s += `<text transform="translate(${r(W - m * 0.42)} ${r(sTop)}) rotate(90)" ${fontAttrs({ k: 'grot', w: 500, ls: 0.16 }, u * 1.5)} fill="${pal.fg}" opacity=".45">${esc(rep.repeat(8))}</text>`;
     }
     const f = { k: 'cond', w: 900, ls: -0.005 };
-    const T = block(c.title, f, tb, { upper: true, maxLines: 2, lh: 0.86, capH: 0.74, maxSize: kind === 'wide' ? H * 0.25 : W * 0.25, anchor, valign: kind === 'wide' ? 'middle' : 'top' });
+    const T = block(c.TITLE, f, tb, { maxLines: 2, lh: 0.86, capH: 0.74, maxSize: kind === 'wide' ? H * 0.25 : W * 0.25, anchor, valign: kind === 'wide' ? 'middle' : 'top' });
     const off = T.F.size * 0.035;
     s += drawFit(T.F, T.x + off, T.y + off, f, { anchor, stroke: pal.echo, sw: T.F.size * 0.012 });
     s += T.svg.replace('fill="none"', `fill="${pal.fg}"`);
@@ -264,7 +302,7 @@
     const { W, H, kind, u, m, sTop, c, rnd, inten, alt, id } = X;
     const my = kind === 'tall' ? H * 0.775 : H - m - u * 10.5;
     const top = sTop + u * 6; const bottom = my - u * 3.5; const regionH = bottom - top;
-    const f = { k: 'cond', w: 900, ls: 0 }; const TU = up(c.title);
+    const f = { k: 'cond', w: 900, ls: 0 }; const TU = c.TITLE;
     const wd = w100(TU, f) / 100;
     // Decorative rows fill fixed slots; the real title spans two slots.
     const n = { tall: 9, portrait: 7, square: 5, wide: 5 }[kind];
@@ -290,12 +328,12 @@
     const sx = alt ? m + R * 0.9 : W - m - R * 0.9; const sy = clamp(top + rowH * (sSlot + 0.5), top + R * 0.6, bottom - R * 0.6);
     const Rt = R * 0.8;
     X.defs.push(`<path id="${id}-sp" d="M${r(sx - Rt)} ${r(sy)}a${r(Rt)} ${r(Rt)} 0 1 1 ${r(2 * Rt)} 0a${r(Rt)} ${r(Rt)} 0 1 1 ${r(-2 * Rt)} 0"/>`);
-    const ring = `${up(c.wd)} · ${c.time} · ${up(c.venue)} · `;
+    const ring = `${c.WD} · ${c.time} · ${c.VENUE} · `;
     let ringTxt = ring; while (ringTxt.length < 44) ringTxt += ring;
     s += `<g transform="rotate(-11 ${r(sx)} ${r(sy)})"><circle cx="${r(sx)}" cy="${r(sy)}" r="${r(R)}" fill="${pal.fg}"/>`;
     s += `<text ${fontAttrs({ k: 'grot', w: 700, ls: 0.06 }, R * 0.12)} fill="${pal.bg}"><textPath href="#${id}-sp" textLength="${r(2 * Math.PI * Rt * 0.985)}" lengthAdjust="spacing">${esc(ringTxt.slice(0, 60))}</textPath></text>`;
     s += line(c.d, { k: 'wide', w: 800, ls: -0.04 }, sx, sy + R * 0.16, R * 0.58, R * 1.15, { fill: pal.bg, anchor: 'middle' });
-    s += line(up(c.month), { k: 'grot', w: 700, ls: 0.12 }, sx, sy + R * 0.42, R * 0.15, R * 1.05, { fill: pal.bg, anchor: 'middle' });
+    s += line(c.MONTH, { k: 'grot', w: 700, ls: 0.12 }, sx, sy + R * 0.42, R * 0.15, R * 1.05, { fill: pal.bg, anchor: 'middle' });
     s += '</g>';
     s += grain(X, pal.dark ? 0.14 : 0.2, pal.dark ? 'screen' : 'multiply');
     s += eTop(X, pal) + eMeta(X, pal, m, my, W - 2 * m);
@@ -328,13 +366,13 @@
       const th = u * (5 + rnd() * 8); const yy = art.y + art.h * (0.22 + i * 0.3 + (rnd() - 0.5) * 0.08);
       const col = i === 1 ? pal.fg : pal.acc;
       s += `<g transform="rotate(${ang} ${r(acx)} ${r(acy)})"><rect x="${r(art.x - art.w * 0.4)}" y="${r(yy)}" width="${r(art.w * 1.8)}" height="${r(th)}" fill="${col}"/>`;
-      if (i === 0 && th > u * 6) s += `<text x="${r(art.x - art.w * 0.3)}" y="${r(yy + th * 0.66)}" ${fontAttrs({ k: 'grot', w: 700, ls: 0.18 }, th * 0.42)} fill="${pal.bg}">${esc(`● ${up(c.kicker)} ● ${c.d} ${up(c.month)} `.repeat(6))}</text>`;
+      if (i === 0 && th > u * 6) s += `<text x="${r(art.x - art.w * 0.3)}" y="${r(yy + th * 0.66)}" ${fontAttrs({ k: 'grot', w: 700, ls: 0.18 }, th * 0.42)} fill="${pal.bg}">${esc(`● ${c.KICKER} ● ${c.d} ${c.MONTH} `.repeat(6))}</text>`;
       s += '</g>';
     }
     s += '</g>';
     s += grain(X, pal.dark ? 0.14 : 0.22, pal.dark ? 'screen' : 'multiply');
     const f = { k: 'wide', w: 800, ls: -0.03 };
-    const T = block(c.title, f, tb, { upper: true, maxLines: 3, lh: 0.98, capH: 0.73, maxSize: kind === 'wide' ? H * 0.2 : W * 0.22, anchor, valign: 'bottom' });
+    const T = block(c.TITLE, f, tb, { maxLines: 3, lh: 0.98, capH: 0.73, maxSize: kind === 'wide' ? H * 0.2 : W * 0.22, anchor, valign: 'bottom' });
     s += T.svg.replace('fill="none"', `fill="${pal.fg}"`);
     s += `<rect x="0" y="${r(bandY)}" width="${W}" height="${r(bandH)}" fill="${pal.fg}"/>`;
     s += eMeta(X, pal, m, bandY + u * 0.6, W - 2 * m, { fg: pal.bg, noRule: true });
@@ -346,7 +384,7 @@
   const J_CAP = { k: 'serif', w: 600, ls: 0.2 };
   function jTop(X, pal) {
     const { u, m, sTop, W, c } = X; const sz = u * 1.65; const yLine = sTop + u * 3.4;
-    let s = line(`${c.kicker} — ${c.season} ${c.y}`, J_CAP, m, sTop + sz * 0.74, sz, W * 0.58, { fill: pal.fg, upper: true });
+    let s = line(`${c.KICKER} — ${c.SEASON} ${c.y}`, J_CAP, m, sTop + sz * 0.74, sz, W * 0.58, { fill: pal.fg });
     s += orgMark(X, pal, W - m, sTop, sz, J_CAP, pal.fg);
     s += `<rect x="${r(m)}" y="${r(yLine)}" width="${r(W - 2 * m)}" height="${r(u * 0.14)}" fill="${pal.fg}" opacity=".75"/>`;
     return s;
@@ -354,7 +392,7 @@
   function jMeta(X, pal, x, y, w) {
     const { u, c } = X;
     const val = { k: 'serif', w: 420, ls: -0.005 }; const sub = { k: 'serif', w: 400, i: true, ls: 0 };
-    const cols = [['TARİH', `${c.d} ${c.month}`, c.wd], ['SAAT', c.time, ''], ['MEKÂN', c.venue, c.city]];
+    const cols = [[TX().date, `${c.d} ${c.month}`, c.wd], [TX().time, c.time, ''], [TX().venue, c.venue, c.city]];
     const ws = [0.36, 0.2, 0.44]; const gap = u * 2.4; const inner = w - gap * 2;
     let s = `<rect x="${r(x)}" y="${r(y)}" width="${r(w)}" height="${r(u * 0.14)}" fill="${pal.fg}" opacity=".75"/>`;
     let cx = x;
@@ -396,8 +434,8 @@
     s += `<circle cx="${r(cx)}" cy="${r(cy)}" r="${r(R)}" fill="url(#${id}-sh)"/>`;
     if (pal.dark) s += `<circle cx="${r(cx)}" cy="${r(cy)}" r="${r(R)}" fill="none" stroke="${pal.fg}" stroke-opacity=".22" stroke-width="${r(u * 0.2)}"/>`;
     s += `<circle cx="${r(cx)}" cy="${r(cy)}" r="${r(R * 0.31)}" fill="${pal.acc}"/>`;
-    s += `<text ${fontAttrs({ k: 'serif', w: 600, ls: 0.12 }, R * 0.05)} fill="${pal.disc}"><textPath href="#${id}-lp" textLength="${r(2 * Math.PI * R * 0.235 * 0.98)}" lengthAdjust="spacing">${esc(`${up(c.title)} · ${up(c.kicker)} · ${up(c.season)} ${c.y} · `)}</textPath></text>`;
-    s += line(c.title.length > 14 ? 'A' : up(c.title), { k: 'serif', w: 500, i: true, ls: 0 }, cx, cy + R * 0.1, R * 0.12, R * 0.36, { fill: pal.disc, anchor: 'middle' });
+    s += `<text ${fontAttrs({ k: 'serif', w: 600, ls: 0.12 }, R * 0.05)} fill="${pal.disc}"><textPath href="#${id}-lp" textLength="${r(2 * Math.PI * R * 0.235 * 0.98)}" lengthAdjust="spacing">${esc(`${c.TITLE} · ${c.KICKER} · ${c.SEASON} ${c.y} · `)}</textPath></text>`;
+    s += line(c.title.length > 14 ? 'A' : c.TITLE, { k: 'serif', w: 500, i: true, ls: 0 }, cx, cy + R * 0.1, R * 0.12, R * 0.36, { fill: pal.disc, anchor: 'middle' });
     s += `<circle cx="${r(cx)}" cy="${r(cy)}" r="${r(R * 0.022)}" fill="${pal.bg}"/>`;
     // tonearm
     const px = cx + dir * R * 1.02; const py = cy - R * 0.86;
@@ -456,7 +494,7 @@
     const T = block(c.title, f, tb, { maxLines: 2, lh: 0.95, capH: 0.7, desc: 0.1, maxSize: kind === 'wide' ? H * 0.19 : W * 0.17, anchor, valign: kind === 'wide' || kind === 'square' ? 'bottom' : 'top' });
     s += T.svg.replace('fill="none"', `fill="${pal.fg}"`);
     const ax = anchor === 'middle' ? tb.x + tb.w / 2 : anchor === 'end' ? tb.x + tb.w : tb.x;
-    s += line(`${c.d} ${c.month} · ${c.wd} akşamı`, { k: 'serif', w: 400, i: true, ls: 0 }, ax, T.bottom + u * 4.6, u * 2.8, tb.w, { fill: pal.acc, anchor });
+    s += line(TX().evening(c), { k: 'serif', w: 400, i: true, ls: 0 }, ax, T.bottom + u * 4.6, u * 2.8, tb.w, { fill: pal.acc, anchor });
     s += jTop(X, pal) + jMeta(X, pal, mb.x, mb.y, mb.w);
     return s;
   }
@@ -498,7 +536,7 @@
     s += paper(X, pal);
     const anchor = 'start';
     const T = block(c.title, J_TITLE, tb, { maxLines: kind === 'tall' ? 2 : 4, lh: 0.92, capH: 0.7, desc: 0.12, maxSize: kind === 'wide' ? H * 0.2 : W * 0.17, anchor, valign: kind === 'tall' ? 'top' : 'middle' });
-    s += line(c.kicker, { k: 'serif', w: 600, ls: 0.2 }, tb.x, T.y - u * 2.6, u * 1.6, tb.w, { fill: pal.acc, upper: true });
+    s += line(c.KICKER, { k: 'serif', w: 600, ls: 0.2 }, tb.x, T.y - u * 2.6, u * 1.6, tb.w, { fill: pal.acc });
     s += T.svg.replace('fill="none"', `fill="${pal.fg}"`);
     s += jTop(X, pal) + jMeta(X, pal, mb.x, mb.y, mb.w);
     return s;
@@ -508,7 +546,7 @@
   const W_LAB = { k: 'grot', w: 600, ls: 0.1 };
   function wTop(X, pal) {
     const { u, m, sTop, W, c } = X; const sz = u * 1.9;
-    const label = up(c.kicker); const f = { k: 'grot', w: 700, ls: 0.08 };
+    const label = c.KICKER; const f = { k: 'grot', w: 700, ls: 0.08 };
     const tw = Math.min(W * 0.5, (w100(label, f) / 100) * sz); const ph = sz * 2;
     let s = `<rect x="${r(m)}" y="${r(sTop - sz * 0.35)}" width="${r(tw + sz * 1.6)}" height="${r(ph)}" rx="${r(ph / 2)}" fill="${pal.fg}"/>`;
     s += line(label, f, m + sz * 0.8, sTop - sz * 0.35 + ph * 0.5 + sz * 0.36, sz, W * 0.5, { fill: pal.bg });
@@ -518,7 +556,7 @@
   function wMeta(X, pal, x, y, w) {
     const { u, c } = X;
     const val = { k: 'syne', w: 700, ls: -0.01 }; const sub = { k: 'grot', w: 500, ls: 0.02 };
-    const cols = [['TARİH', `${c.d} ${c.month}`, `${c.wd}, ${c.y}`], ['SAAT', c.time, ''], ['MEKÂN', c.venue, c.city]];
+    const cols = [[TX().date, `${c.d} ${c.month}`, TX().dateSub(c)], [TX().time, c.time, ''], [TX().venue, c.venue, c.city]];
     const ws = [0.38, 0.18, 0.44]; const gap = u * 2.4; const inner = w - gap * 2;
     let s = ''; let cx = x;
     cols.forEach(([lab, a, b], i) => {
@@ -580,7 +618,7 @@
   // C2 · Letters: the event's initials set inside big playful shapes.
   function wLetters(X, pal) {
     const { u, c, rnd, inten, alt, id } = X; const L = wLayout(X); const A = L.art;
-    const words = up(c.title).replace(/[^A-ZÇĞİÖŞÜ0-9\s&]/g, ' ').split(/\s+/).filter((w) => /[A-ZÇĞİÖŞÜ0-9]/.test(w));
+    const words = c.TITLE.replace(/[^A-ZÇĞİÖŞÜ0-9\s&]/g, ' ').split(/\s+/).filter((w) => /[A-ZÇĞİÖŞÜ0-9]/.test(w));
     const letters = words.length >= 2 ? [words[0][0], words[1][0] === '&' ? (words[2] || words[0])[0] : words[1][0]] : [(words[0] || 'A')[0], (words[0] || 'AB')[1] || '•'];
     const vertical = A.h > A.w * 1.05;
     if (alt && !vertical) letters.reverse(); // mirrored: the square (first letter) sits on the left
@@ -631,7 +669,7 @@
     const R = Math.min(A.w, A.h) * 0.2; const sx = alt ? A.x + R * 0.95 : A.x + A.w - R * 0.95; const sy = A.y + A.h - R * 0.95;
     s += `<g transform="rotate(${alt ? -12 : 12} ${r(sx)} ${r(sy)})"><circle cx="${r(sx)}" cy="${r(sy)}" r="${r(R)}" fill="${pal.fg}"/>`;
     s += line(c.d, { k: 'syne', w: 800, ls: -0.03 }, sx, sy + R * 0.12, R * 0.68, R * 1.3, { fill: pal.bg, anchor: 'middle' });
-    s += line(up(c.month), { k: 'grot', w: 700, ls: 0.1 }, sx, sy + R * 0.42, R * 0.17, R * 1.2, { fill: pal.bg, anchor: 'middle' });
+    s += line(c.MONTH, { k: 'grot', w: 700, ls: 0.1 }, sx, sy + R * 0.42, R * 0.17, R * 1.2, { fill: pal.bg, anchor: 'middle' });
     s += line(c.time, { k: 'grot', w: 600, ls: 0.06 }, sx, sy - R * 0.5, R * 0.15, R, { fill: pal.bg, anchor: 'middle', opacity: 0.75 });
     s += '</g>';
     s += grain(X, pal.dark ? 0.12 : 0.16, pal.dark ? 'screen' : 'multiply');
@@ -641,7 +679,7 @@
   // Stories get a ticket prompt inside the safe area.
   function storyPill(X, pal) {
     if (X.kind !== 'tall') return '';
-    const { W, H, u } = X; const f = { k: 'grot', w: 700, ls: 0.14 }; const t = "BİLETLER BİLETİNO'DA"; const sz = u * 1.75;
+    const { W, H, u } = X; const f = { k: 'grot', w: 700, ls: 0.14 }; const t = TX().tickets; const sz = u * 1.75;
     const tw = (w100(t, f) / 100) * sz; const ph = sz * 2.7; const y = H * 0.848;
     return `<rect x="${r((W - tw) / 2 - sz * 1.6)}" y="${r(y)}" width="${r(tw + sz * 3.2)}" height="${r(ph)}" rx="${r(ph / 2)}" fill="none" stroke="${pal.fg}" stroke-opacity=".55" stroke-width="${r(u * 0.2)}"/>`
       + line(t, f, W / 2 + sz * 0.07, y + ph / 2 + sz * 0.36, sz, 0, { fill: pal.fg, anchor: 'middle' });
@@ -655,7 +693,7 @@
     if (!DRAW[sp.style]) sp.style = 'electronic';
     const X = makeCtx(sp); const pal = palFor(sp);
     const body = DRAW[sp.style][((sp.variant % 3) + 3) % 3](X, pal) + storyPill(X, pal);
-    const label = `${X.c.title} afişi: ${STYLES[sp.style].name} tarzı, ${STYLES[sp.style].variants[sp.variant % 3]} varyasyonu, ${FORMATS[sp.format] ? FORMATS[sp.format].label : 'Afiş'} formatı`;
+    const label = T.aria(X.c.title, STYLES[sp.style].name, STYLES[sp.style].variants[sp.variant % 3], (FORMATS[sp.format] || FORMATS.poster).label);
     return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${X.W} ${X.H}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="${esc(label)}"><defs>${X.defs.join('')}</defs><rect width="${X.W}" height="${X.H}" fill="${pal.bg}"/>${body}</svg>`;
   }
 
@@ -688,7 +726,16 @@
     return readyP;
   };
 
+  // Switch the poster wording (and the format, style and palette names) to a language.
+  function setLang(lang) {
+    LANG = TXT[lang] ? lang : 'tr'; T = TXT[LANG];
+    Object.entries(T.formats).forEach(([k, [label, use]]) => { FORMATS[k].label = label; FORMATS[k].use = use; });
+    Object.entries(T.styles).forEach(([k, [name, desc, variants]]) => { Object.assign(STYLES[k], { name, desc, variants }); });
+    Object.entries(T.palettes).forEach(([k, names]) => names.forEach((n, i) => { PALETTES[k][i].name = n; }));
+    mcache.clear();
+  }
+
   const dateParts = (iso) => { const c = normContent({ date: iso }); return { d: c.d, month: c.month, wd: c.wd, y: c.y, season: c.season }; };
 
-  window.PosterKit = { FORMATS, STYLES, PALETTES, DEFAULT_PAL, MONTHS, DAYS, render, ready, installDefs, dateParts, up, util: { contrast, mix, onColor, hash } };
+  window.PosterKit = { FORMATS, STYLES, PALETTES, DEFAULT_PAL, MONTHS, DAYS, render, ready, installDefs, dateParts, up, setLang, lang: () => LANG, util: { contrast, mix, onColor, hash } };
 })();
