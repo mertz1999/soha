@@ -94,7 +94,7 @@ const file = CertKit.render(spec, { standalone: true }).svg;  // self-contained 
 - **Certificate wording (EN/TR):** the `COPY` object in `certkit.js`.
 - **Demo brands:** `PRESETS` and `PAIRINGS` in `certkit.js`.
 - **Default demo data and per-purpose default titles:** `defaultsData()` and `DEFAULT_TITLES` in `proposal.js`.
-- **Contact email:** `#cta-mail` in `index.html`.
+- **Contact:** in the closing section of `index.html`, `#cta-call` is the Calendly booking link (`https://calendly.com/reza-tanakizadeh/soha`) and `#cta-mail` is the email button, which shows the address.
 
 ## Checks done before hand-off
 

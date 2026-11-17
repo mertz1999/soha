@@ -445,9 +445,13 @@ select { background: var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http:/
 .closing h2 { font-size: clamp(40px, 5.4vw, 76px); }
 .closing h2 em { color: #7FE0AE; }
 .closing .sec-lede { margin-left: auto; margin-right: auto; }
-.closing-actions { display: flex; align-items: center; gap: 22px; margin-top: 34px; flex-wrap: wrap; justify-content: center; }
+.closing-actions { display: flex; align-items: center; gap: 14px; margin-top: 34px; flex-wrap: wrap; justify-content: center; }
+.btn--ghost { background: rgba(255, 255, 255, .05); color: var(--on-dark); box-shadow: 0 0 0 1px rgba(255, 255, 255, .28) inset; }
+.btn--ghost:hover { background: rgba(255, 255, 255, .1); box-shadow: 0 0 0 1px var(--on-dark) inset; transform: translateY(-1px); }
+.btn--ghost svg { color: #7FE0AE; }
+.closing-meta { margin-top: 14px; font-size: 14px; color: var(--on-dark-muted); display: flex; flex-wrap: wrap; align-items: center; justify-content: center; column-gap: 8px; }
 .link-soft { color: var(--on-dark); font-weight: 550; text-underline-offset: 4px; min-height: 44px; display: inline-flex; align-items: center; }
-.disclosure { margin-top: clamp(36px, 5vw, 64px); font-size: 12.5px; color: var(--on-dark-muted); max-width: 66ch; line-height: 1.55; }
+.disclosure { margin-top: clamp(28px, 4vw, 48px); font-size: 12.5px; color: var(--on-dark-muted); max-width: 66ch; line-height: 1.55; }
 
 /* ---------------------------------------------------------------- preview dialog */
 .preview { width: min(1240px, 94vw); max-width: none; max-height: 94vh; padding: 0; border: 0; border-radius: 18px; background: #1A1F1D; color: #fff; box-shadow: 0 40px 120px -20px rgba(0, 0, 0, .6); overflow: hidden; }
@@ -528,7 +532,10 @@ select { background: var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http:/
   .fields { grid-template-columns: 1fr; }
   .bc-grid { grid-template-columns: 1fr; }
   .results { padding: 14px; border-radius: 20px; }
-  .closing-actions { flex-direction: column; gap: 10px; }
+  .closing-actions { flex-direction: column; align-items: stretch; gap: 10px; width: min(340px, 100%); }
+  .closing-actions .btn { justify-content: center; }
+  .closing-meta { font-size: 13px; }
+  .closing-meta .sep { display: none; }
   .fan-card { width: 56%; }
   .fan-card[data-i="0"] { transform: translate(-50%, -50%) translateX(-38%) rotate(-7deg) scale(.86); }
   .fan-card[data-i="2"] { transform: translate(-50%, -50%) translateX(38%) rotate(7deg) scale(.86); }
