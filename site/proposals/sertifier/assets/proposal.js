@@ -22,7 +22,7 @@
   const TITLE_LABEL = { course: 'Course or program', achievement: 'Achievement', recognition: 'Contribution', event: 'Event name' };
   const DESIGN_ORDER = ['heritage', 'editorial', 'future'];
   const LAYOUT_SETS = [[0, 0, 0], [1, 2, 1], [2, 1, 2], [0, 1, 2], [1, 0, 1], [2, 2, 0]];
-  const SOHA_SITE = new URL('../../en/', document.baseURI).href;
+  const SOHA_SITE = new URL('../../', document.baseURI).href;
   // Sertifier's public brand values, typed in by SOHA so the founder can try
   // their own domain. Shown as demo mode: nothing is read from sertifier.com.
   const KNOWN = {

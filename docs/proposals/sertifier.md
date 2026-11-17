@@ -26,7 +26,7 @@ One feature, proposed to Sertifier's founder: an **AI Brand-Aware Certificate De
 
 - **No AI model is called.** CertKit (`assets/certkit.js`) is a deterministic layout engine that runs in the browser, and the page says so next to the generator. The short "generating" animation is a transition, not a model call.
 - **Demo presets** (Meridian Academy, Northwind Labs, Atelier Verde) are fictional and use reserved `.example` domains. The brand card is labelled **Demo preset** and says no website was read.
-- **SOHA → "Read live"** genuinely fetches SOHA's public English page (`/soha/en/`) from the same site. It extracts the name, logo, colour values and fonts with a simple heuristic, and labels the result **Read live** with what it found.
+- **SOHA → "Read live"** genuinely fetches SOHA's public English page (the site root, `/soha/`) from the same site. It extracts the name, logo, colour values and fonts with a simple heuristic, and labels the result **Read live** with what it found.
 - **Any other address** is first fetched directly from the visitor's browser. If the site allows that (CORS), its brand is read live. If not, which is most sites, the card switches to **Demo mode** and explains that the starting colours come from the domain name.
 - **`sertifier.com`** is a special case. Its public colours and type (forest `#092C25`, green `#00A356`, Inter) are entered by SOHA, so the founder can try their own brand. The **Try it with Sertifier's brand** buttons (opening and demo) apply the same values in one tap and generate the designs; the button itself says "Demo values entered by SOHA · nothing is fetched". It is labelled **Demo mode … entered by SOHA … Nothing was fetched**, and the page does not use Sertifier's logo file; it shows an "S" monogram instead.
 - **Benefits are expected, not measured.** Section 2 says so under the three benefits and names a pilot as the way to measure them. No figures are claimed.
@@ -44,7 +44,7 @@ python3 -m http.server 4321 --directory site
 
 Open <http://localhost:4321/proposals/sertifier/>. In the Claude app, the `ensa-site` preview in `.claude/launch.json` does the same thing.
 
-- **Live brand reading:** it needs the SOHA English page (`site/en/`) to be served from the same server, which the command above does.
+- **Live brand reading:** it needs the SOHA English page (`site/index.html`) to be served from the same server, which the command above does.
 - **Fonts:** the certificate fonts load from the jsDelivr CDN, so the first load needs internet access.
 
 ## Publish

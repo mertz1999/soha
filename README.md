@@ -15,7 +15,7 @@ ENSA AI proactively finds websites, SaaS platforms, mobile apps and business sof
 | [`docs/`](docs/README.md) | Strategy, Business Model Canvas, go-to-market, commercial model, operations, execution plans, templates |
 | [`docs/discovery/`](docs/discovery/README.md) | Discovery agent data: companies, product analyses, AI opportunities, segment research, run logs |
 | [`docs/references/source/`](docs/references/source/ENSA_AI_Business_Model_Canvas_and_Operating_Playbook_v1.0.md) | The original v1.0 playbook, kept unchanged |
-| [`site/`](site/index.html) | Landing page — static HTML/CSS/JS, Persian (RTL) first; English to follow in `site/en/` |
+| [`site/`](site/index.html) | Landing page — static HTML/CSS/JS. English is the default at the site root; Persian (the source) is in `site/fa/`, Turkish in `site/tr/`. Run `python3 tools/i18n/build.py` after editing the Persian page |
 
 ## Run the landing page locally
 

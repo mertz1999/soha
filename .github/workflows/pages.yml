@@ -25,12 +25,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # The English and Turkish pages are generated from the Persian one;
-      # fail if someone edited site/index.html without rebuilding them.
+      # The English (site root) and Turkish pages are generated from the Persian
+      # one in site/fa/; fail if someone edited it without rebuilding them.
       - name: Check translations are up to date
         run: |
           python3 tools/i18n/build.py
-          git diff --exit-code -- site/en site/tr
+          git diff --exit-code -- site/index.html site/en site/tr
 
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
