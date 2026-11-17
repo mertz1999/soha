@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>AI Brand-Aware Certificate Designer — a SOHA proposal for Sertifier</title>
+  <meta name="description" content="An independent SOHA proposal for Sertifier: an AI certificate designer that turns a company's website into three beautiful, brand-consistent, editable certificate designs. Try the interactive demo.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="author" content="SOHA">
+  <meta name="theme-color" content="#F8F8F7">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="SOHA">
+  <meta property="og:title" content="What if certificates designed themselves? — SOHA for Sertifier">
+  <meta property="og:description" content="An independent SOHA proposal: from your website to three beautifully branded, editable certificates.">
+  <meta property="og:url" content="https://mertz1999.github.io/soha/proposals/sertifier/">
+  <meta property="og:image" content="https://mertz1999.github.io/soha/proposals/sertifier/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Three certificate designs generated for a fictional brand, with the headline: What if certificates designed themselves?">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="../../assets/img/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="../../assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/inter@5/index.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/instrument-serif@5/index.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/instrument-serif@5/400-italic.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/cormorant@5/index.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/cormorant@5/wght-italic.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/fraunces@5/index.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/fraunces@5/wght-italic.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/dm-sans@5/index.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/space-grotesk@5/index.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/jetbrains-mono@5/index.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/mrs-saint-delafield@5/index.css">
+  <link rel="stylesheet" href="assets/sertifier.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body data-ui="light">
+  <a class="skip" href="#s3">Skip to the demo</a>
+
+  <header class="topbar">
+    <a class="tb-brand" href="#s1" aria-label="SOHA proposal for Sertifier, back to start">
+      <img src="../../assets/img/logo-mark.png" alt="" width="281" height="256">
+      <span class="tb-soha">SOHA</span>
+      <span class="tb-arrow" aria-hidden="true">→</span>
+      <span class="tb-client">Sertifier</span>
+    </a>
+    <div class="tb-right">
+      <span class="tb-count" aria-hidden="true"><b id="slide-now">01</b> / 06</span>
+      <a class="tb-try" href="#s3">Try the demo</a>
+    </div>
+    <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
+  </header>
+
+  <nav class="dots" aria-label="Sections">
+    <a href="#s1" aria-label="1. Opening" aria-current="true"></a>
+    <a href="#s2" aria-label="2. The idea"></a>
+    <a href="#s3" aria-label="3. Try the generator"></a>
+    <a href="#s4" aria-label="4. Showcase"></a>
+    <a href="#s5" aria-label="5. Ready for Sertifier"></a>
+    <a href="#s6" aria-label="6. Let's talk"></a>
+  </nav>
+
+  <main>
+    <!-- 1 · Opening -->
+    <section id="s1" class="slide hero" data-theme="light" aria-labelledby="h1">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="label"><span>SOHA</span><span aria-hidden="true">→</span><span>Sertifier</span></p>
+          <h1 id="h1">What if certificates <em>designed themselves?</em></h1>
+          <p class="lede">From your website to a beautifully branded certificate.</p>
+          <a class="btn btn--green" href="#s2">Explore the concept
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4v12M5 11l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <div class="hero-stage">
+          <div class="float">
+            <div class="cert-stack" id="hero-stack" aria-live="off">
+              <div class="layer is-on" data-design="heritage"></div>
+              <div class="layer" data-design="editorial"></div>
+              <div class="layer" data-design="future"></div>
+            </div>
+          </div>
+          <div class="hero-chips" role="group" aria-label="Design style shown">
+            <button type="button" data-i="0" aria-pressed="true">Heritage</button>
+            <button type="button" data-i="1" aria-pressed="false">Editorial</button>
+            <button type="button" data-i="2" aria-pressed="false">Future</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 · The idea -->
+    <section id="s2" class="slide idea" data-theme="light" aria-labelledby="h2">
+      <div class="wrap">
+        <header class="sec-head">
+          <p class="kicker">The idea</p>
+          <h2 id="h2">Your brand. Your certificate. <em>Instantly.</em></h2>
+        </header>
+        <ol class="pipeline" id="pipeline">
+          <li class="stage st-1">
+            <div class="stage-card">
+              <div class="browser" aria-hidden="true">
+                <div class="browser-bar"><i></i><i></i><i></i><span class="addr"><span class="typed">meridian.example</span></span></div>
+                <div class="site">
+                  <div class="site-nav"><span class="site-mark"></span><b></b><b></b><b></b></div>
+                  <div class="site-hero"><span class="h l1"></span><span class="h l2"></span><span class="p"></span><span class="p short"></span><span class="cta"></span></div>
+                  <div class="site-img"></div>
+                </div>
+              </div>
+            </div>
+            <p class="st-step">01 · Website</p>
+            <h3>Understand your brand</h3>
+          </li>
+          <li class="stage st-2">
+            <div class="stage-card">
+              <div class="analysis" aria-hidden="true">
+                <div class="scan"><span class="scan-mark"></span><i></i><i></i><i></i><i></i></div>
+                <div class="swatches">
+                  <span style="--c:#1F2E55"><em>#1F2E55</em></span>
+                  <span style="--c:#B08A3E"><em>#B08A3E</em></span>
+                  <span style="--c:#FBF8F1"><em>#FBF8F1</em></span>
+                  <span style="--c:#161D33"><em>#161D33</em></span>
+                </div>
+                <div class="specimen"><span class="sp-serif">Aa</span><span class="sp-sans">Aa</span><small>Cormorant · Inter</small></div>
+                <span class="purpose-chip">Course completion</span>
+              </div>
+            </div>
+            <p class="st-step">02 · Brand analysis</p>
+            <h3>Choose the purpose</h3>
+          </li>
+          <li class="stage st-3">
+            <div class="stage-card">
+              <div class="minis" aria-hidden="true">
+                <div class="mini" data-design="heritage"></div>
+                <div class="mini" data-design="editorial"></div>
+                <div class="mini" data-design="future"></div>
+              </div>
+            </div>
+            <p class="st-step">03 · AI design</p>
+            <h3>Generate unique designs</h3>
+          </li>
+          <li class="stage st-4">
+            <div class="stage-card">
+              <div class="editable" aria-hidden="true">
+                <div class="edit-cert" id="edit-cert"></div>
+                <span class="sel" id="edit-sel"><i></i><i></i><i></i><i></i></span>
+                <span class="toolbar"><b>Aa</b><b class="dot"></b><b class="al"></b></span>
+                <svg class="cursor" viewBox="0 0 24 24"><path d="M5 3l14 8-6 1.6L10 19z" fill="#111" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg>
+              </div>
+            </div>
+            <p class="st-step">04 · Editable certificate</p>
+            <h3>Refine and publish</h3>
+          </li>
+        </ol>
+        <button type="button" class="replay" id="replay">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10a6 6 0 1 0 2-4.5M4 3v3.5h3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Replay
+        </button>
+      </div>
+    </section>
+
+    <!-- 3 · Interactive generator -->
+    <section id="s3" class="slide demo" data-theme="light" aria-labelledby="h3">
+      <div class="wrap">
+        <header class="sec-head sec-head--row">
+          <div>
+            <p class="kicker">Try it</p>
+            <h2 id="h3">From a website to <em>three designs.</em></h2>
+          </div>
+          <p class="honest"><span class="pill-demo">Demo</span> A deterministic layout engine runs in your browser. No AI model is called and nothing is sent anywhere.</p>
+        </header>
+
+        <div class="studio">
+          <form class="panel" id="studio" novalidate autocomplete="off">
+            <fieldset class="step">
+              <legend><span class="step-n">A</span>Your website</legend>
+              <div class="url-row">
+                <label class="sr-only" for="url">Your website</label>
+                <input id="url" name="url" type="text" inputmode="url" spellcheck="false" placeholder="https://yourcompany.com" value="https://meridian.example">
+                <button type="button" class="btn-dark" id="analyze">Analyze</button>
+              </div>
+              <div class="presets" role="radiogroup" aria-label="Demo brands">
+                <label class="preset"><input type="radio" name="preset" value="meridian" checked><span class="pr-mark" data-mark="meridian"></span><span class="pr-text"><b>Meridian Academy</b><small>Education · demo</small></span></label>
+                <label class="preset"><input type="radio" name="preset" value="northwind"><span class="pr-mark" data-mark="northwind"></span><span class="pr-text"><b>Northwind Labs</b><small>Software · demo</small></span></label>
+                <label class="preset"><input type="radio" name="preset" value="verde"><span class="pr-mark" data-mark="verde"></span><span class="pr-text"><b>Atelier Verde</b><small>Studio · demo</small></span></label>
+                <label class="preset"><input type="radio" name="preset" value="soha"><span class="pr-mark pr-mark--img"><img src="../../assets/img/logo-mark.png" alt="" width="281" height="256"></span><span class="pr-text"><b>SOHA</b><small>Read live from site</small></span></label>
+              </div>
+
+              <div class="brand-card" id="brand-card" aria-live="polite">
+                <div class="bc-head">
+                  <span class="bc-logo" id="bc-logo"></span>
+                  <div class="bc-id"><p class="bc-name" id="bc-name">Meridian Academy</p><p class="bc-url" id="bc-url">meridian.example</p></div>
+                  <span class="bc-source" id="bc-source" data-kind="preset">Demo preset</span>
+                </div>
+                <p class="bc-note" id="bc-note">Predefined demo brand. No website was read.</p>
+                <div class="bc-grid">
+                  <label class="swatch"><input type="color" id="c-primary" value="#1F2E55"><span><b>Primary</b><code id="c-primary-hex">#1F2E55</code></span></label>
+                  <label class="swatch"><input type="color" id="c-accent" value="#B08A3E"><span><b>Accent</b><code id="c-accent-hex">#B08A3E</code></span></label>
+                  <label class="field field--select"><span>Typography</span>
+                    <select id="pairing">
+                      <option value="classic">Cormorant + Inter</option>
+                      <option value="warm">Fraunces + DM Sans</option>
+                      <option value="technical">Instrument Serif + Space Grotesk</option>
+                      <option value="neutral">Instrument Serif + Inter</option>
+                    </select>
+                  </label>
+                  <div class="logo-field">
+                    <input type="file" id="logo-file" class="sr-only" accept="image/png,image/jpeg,image/webp,image/svg+xml">
+                    <label for="logo-file" class="btn-line">Upload logo</label>
+                    <button type="button" class="btn-text" id="logo-clear" hidden>Remove</button>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="step">
+              <legend><span class="step-n">B</span>Certificate details</legend>
+              <div class="group">
+                <p class="group-label" id="purpose-label">Purpose</p>
+                <div class="choices choices--purpose" role="radiogroup" aria-labelledby="purpose-label">
+                  <label><input type="radio" name="purpose" value="course" checked><span>Course completion</span></label>
+                  <label><input type="radio" name="purpose" value="achievement"><span>Professional achievement</span></label>
+                  <label><input type="radio" name="purpose" value="recognition"><span>Employee recognition</span></label>
+                  <label><input type="radio" name="purpose" value="event"><span>Event participation</span></label>
+                </div>
+              </div>
+              <div class="group">
+                <p class="group-label" id="style-label">Preferred style</p>
+                <div class="choices choices--style" role="radiogroup" aria-labelledby="style-label">
+                  <label><input type="radio" name="style" value="minimal"><span>Minimal</span></label>
+                  <label><input type="radio" name="style" value="elegant" checked><span>Elegant</span></label>
+                  <label><input type="radio" name="style" value="modern"><span>Modern</span></label>
+                  <label><input type="radio" name="style" value="classic"><span>Classic</span></label>
+                </div>
+              </div>
+              <div class="fields">
+                <label class="field"><span>Recipient name</span><input id="f-recipient" type="text" value="Deniz Yılmaz" maxlength="80"></label>
+                <label class="field"><span id="title-label">Course or achievement</span><input id="f-title" type="text" value="Advanced Product Design" maxlength="90"></label>
+                <label class="field"><span>Organization</span><input id="f-org" type="text" value="Meridian Academy" maxlength="60"></label>
+                <label class="field"><span>Date</span><input id="f-date" type="date" value="2026-11-16"></label>
+              </div>
+              <div class="group group--inline">
+                <p class="group-label" id="lang-label">Certificate language</p>
+                <div class="choices choices--lang" role="radiogroup" aria-labelledby="lang-label">
+                  <label><input type="radio" name="lang" value="en" checked><span>English</span></label>
+                  <label><input type="radio" name="lang" value="tr"><span>Türkçe</span></label>
+                </div>
+              </div>
+              <details class="more">
+                <summary>Signature and verification</summary>
+                <div class="fields">
+                  <label class="field"><span>Signer</span><input id="f-signer" type="text" value="Elif Aksoy" maxlength="40"></label>
+                  <label class="field"><span>Signer role</span><input id="f-role" type="text" value="Program Director" maxlength="40"></label>
+                </div>
+                <label class="check"><input type="checkbox" id="f-sign" checked><span>Show signatures</span></label>
+                <label class="check"><input type="checkbox" id="f-verify" checked><span>Show credential ID and demo QR</span></label>
+              </details>
+            </fieldset>
+
+            <div class="step step--go">
+              <button type="button" class="btn btn--green btn--lg" id="generate">
+                <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.5l1.7 4.3 4.3 1.7-4.3 1.7L10 14.5l-1.7-4.3L4 8.5l4.3-1.7zM15.5 13l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z" fill="currentColor"/></svg>
+                <span id="generate-label">Generate 3 Designs</span>
+              </button>
+            </div>
+          </form>
+
+          <div class="results" id="results">
+            <div class="res-empty" id="res-empty">
+              <div class="ghosts" aria-hidden="true"><span></span><span></span><span></span></div>
+              <p><b>Your three designs appear here.</b> Pick a brand and adjust the details, or generate right away with the sample data.</p>
+              <button type="button" class="btn btn--green" data-generate>
+                <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.5l1.7 4.3 4.3 1.7-4.3 1.7L10 14.5l-1.7-4.3L4 8.5l4.3-1.7zM15.5 13l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z" fill="currentColor"/></svg>
+                Generate 3 Designs
+              </button>
+            </div>
+            <div class="res-live" id="res-live" hidden>
+              <div class="res-stage">
+                <figure class="res-main">
+                  <button type="button" class="res-main-btn" id="res-main" aria-label="Open a larger preview"></button>
+                </figure>
+                <div class="res-side" id="res-side"></div>
+              </div>
+              <div class="res-meta">
+                <div class="res-title"><b id="res-name">Heritage Elegance</b><span class="badge" id="res-badge">Best match for Elegant</span></div>
+                <ul class="checks" id="res-checks" aria-label="Layout validation"></ul>
+                <div class="res-actions">
+                  <button type="button" class="btn-line" id="res-enlarge">Enlarge</button>
+                  <a class="btn-line" href="#s4">Refine in the showcase ↓</a>
+                </div>
+              </div>
+            </div>
+            <div class="gen-overlay" id="gen-overlay" hidden>
+              <ol>
+                <li>Reading brand tokens</li>
+                <li>Composing three layouts</li>
+                <li>Checking fit, contrast and margins</li>
+              </ol>
+              <span class="gen-bar"><i></i></span>
+            </div>
+            <p class="sr-only" id="res-status" aria-live="polite"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 · Showcase -->
+    <section id="s4" class="slide showcase" data-theme="dark" aria-labelledby="h4">
+      <div class="wrap">
+        <header class="sec-head sec-head--center">
+          <p class="kicker">Showcase</p>
+          <h2 id="h4">Three directions. <em>One identity.</em></h2>
+        </header>
+        <div class="gallery" id="gallery" aria-label="Generated designs">
+          <button type="button" class="g-card" data-i="0"><span class="g-svg"></span><span class="g-cap">Heritage Elegance</span></button>
+          <button type="button" class="g-card" data-i="1"><span class="g-svg"></span><span class="g-cap">Modern Editorial</span></button>
+          <button type="button" class="g-card" data-i="2"><span class="g-svg"></span><span class="g-cap">Future Minimal</span></button>
+        </div>
+        <div class="g-dots" id="g-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="refine">
+          <p class="refine-now"><b id="refine-name">Heritage Elegance</b> <span id="refine-params">Layout 1 · Ornament 2 · Elegance 2 · Brand colours</span></p>
+          <div class="refine-btns" role="group" aria-label="Refine the selected design">
+            <button type="button" data-refine="minimal">Make it more minimal</button>
+            <button type="button" data-refine="elegant">Make it more elegant</button>
+            <button type="button" data-refine="layout">Try another layout</button>
+            <button type="button" data-refine="brand" aria-pressed="true">Use brand colors</button>
+            <button type="button" class="btn-text" data-refine="reset">Reset</button>
+          </div>
+          <p class="refine-log" id="refine-log" aria-live="polite"></p>
+          <div class="export" role="group" aria-label="Export the selected design">
+            <button type="button" id="x-svg">Download SVG</button>
+            <button type="button" id="x-json">Export design JSON</button>
+            <button type="button" id="x-link">Copy demo link</button>
+            <button type="button" id="x-print">Print or save PDF</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 · Ready for Sertifier -->
+    <section id="s5" class="slide ready" data-theme="light" aria-labelledby="h5">
+      <div class="wrap">
+        <header class="sec-head">
+          <p class="kicker">Ready for Sertifier</p>
+          <h2 id="h5">Designed for your <em>existing workflow.</em></h2>
+          <p class="sec-lede">Sertifier’s AI already drafts credential details, campaign settings and emails. SOHA proposes adding the design layer, integrated with your certificate design process.</p>
+        </header>
+        <ol class="arch" aria-label="Proposed architecture">
+          <li><span class="a-n">01</span><span class="a-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.6 2.4 2.6 14.6 0 17M12 3.5c-2.6 2.4-2.6 14.6 0 17"/></svg></span><b>Website / brand URL</b><small>The customer’s public site</small><span class="a-viz a-url">meridian.example</span></li>
+          <li><span class="a-n">02</span><span class="a-ico"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="3.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1"/><path d="M14 17h6M17 14v6"/></svg></span><b>AI brand analysis</b><small>Logo, palette, type, tone</small><span class="a-viz a-sw"><i style="--c:#1F2E55"></i><i style="--c:#B08A3E"></i><i style="--c:#FBF8F1"></i><i style="--c:#161D33"></i></span></li>
+          <li><span class="a-n">03</span><span class="a-ico"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M7 9.5h10M8.5 13h7M10 16h4"/></svg></span><b>Certificate design generator</b><small>Structured, editable design spec</small><span class="a-viz a-code">{ "system": "heritage",<br>&nbsp;&nbsp;"layout": 1 }</span></li>
+          <li><span class="a-n">04</span><span class="a-ico"><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5 11-11"/></svg></span><b>Layout validation</b><small>Fit, contrast, safe margins</small><span class="a-viz a-ok"><i>fit</i><i>AA</i><i>margins</i></span></li>
+          <li class="a-end"><span class="a-n">05</span><span class="a-ico"><svg viewBox="0 0 24 24"><path d="M14.5 4.5l5 5L9 20H4v-5z"/><path d="M12.5 6.5l5 5"/></svg></span><b>Editable Sertifier certificate</b><small>Dynamic fields, ready to issue</small><span class="a-viz a-fields"><i>{{recipient.name}}</i><i>{{issue.date}}</i></span><span class="tag">Concept</span></li>
+        </ol>
+        <p class="arch-note">Conceptual architecture. Integration points depend on Sertifier’s editor and API and would be validated together before any build.</p>
+        <ul class="qualities">
+          <li><span class="q-ico"><svg viewBox="0 0 24 24"><circle cx="8.5" cy="12" r="5"/><circle cx="15.5" cy="12" r="5"/></svg></span><b>Brand consistency</b><p>Designs reflect the organization’s identity.</p></li>
+          <li><span class="q-ico"><svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg></span><b>Editable by design</b><p>Users can refine text, colors and layout.</p></li>
+          <li><span class="q-ico"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M8 10h3M8 14h8M14.5 10h1.5"/></svg></span><b>Issuance ready</b><p>Dynamic recipient fields and safe layouts.</p></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 6 · Closing -->
+    <section id="s6" class="slide closing" data-theme="dark" aria-labelledby="h6">
+      <div class="wrap closing-wrap">
+        <div class="fan" id="fan" aria-hidden="true">
+          <div class="fan-card" data-i="0"></div>
+          <div class="fan-card" data-i="1"></div>
+          <div class="fan-card" data-i="2"></div>
+        </div>
+        <h2 id="h6">Let’s bring this to <em>Sertifier.</em></h2>
+        <p class="sec-lede">A smarter way to create certificates, designed around every customer’s brand.</p>
+        <div class="closing-actions">
+          <a class="btn btn--green" id="cta-mail" href="mailto:reza.tz780210@gmail.com?subject=Sertifier%20%C3%97%20SOHA%20%E2%80%94%20AI%20certificate%20designer&amp;body=Hi%20SOHA%20team%2C%0A%0AWe%20saw%20the%20AI%20certificate%20designer%20proposal%20and%20would%20like%20to%20discuss%20it.%0A">Let’s discuss the idea</a>
+          <a class="link-soft" href="../../">mertz1999.github.io/soha</a>
+        </div>
+        <p class="disclosure">An independent proposal by SOHA. It is not an official Sertifier collaboration, and it does not imply endorsement or partnership. The demo brands, people and credential IDs are fictional, and the QR codes are placeholders.</p>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="preview" id="preview" aria-labelledby="pv-title">
+    <div class="pv-bar">
+      <p class="pv-title" id="pv-title">Heritage Elegance</p>
+      <div class="pv-tools">
+        <button type="button" id="pv-prev" aria-label="Previous design">‹</button>
+        <button type="button" id="pv-next" aria-label="Next design">›</button>
+        <button type="button" id="pv-rotate" class="pv-rotate">Rotate</button>
+        <button type="button" id="pv-svg">SVG</button>
+        <button type="button" id="pv-print">Print</button>
+        <button type="button" id="pv-close" aria-label="Close preview">✕</button>
+      </div>
+    </div>
+    <div class="pv-body"><div class="pv-cert" id="pv-cert"></div></div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div id="print-root" aria-hidden="true"></div>
+
+  <script src="assets/certkit.js" defer></script>
+  <script src="assets/proposal.js" defer></script>
+</body>
+</html>
