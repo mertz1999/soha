@@ -36,7 +36,7 @@
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body data-ui="light">
-  <a class="skip" href="#s3">Skip to the demo</a>
+  <a class="skip" href="#s4">Skip to the demo</a>
 
   <header class="topbar">
     <a class="tb-brand" href="#s1" aria-label="SOHA proposal for Sertifier, back to start">
@@ -46,19 +46,20 @@
       <span class="tb-client">Sertifier</span>
     </a>
     <div class="tb-right">
-      <span class="tb-count" aria-hidden="true"><b id="slide-now">01</b> / 06</span>
-      <a class="tb-try" href="#s3">Try the demo</a>
+      <span class="tb-count" aria-hidden="true"><b id="slide-now">01</b> / 07</span>
+      <a class="tb-try" href="#s4">Try the demo</a>
     </div>
     <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
   </header>
 
   <nav class="dots" aria-label="Sections">
     <a href="#s1" aria-label="1. Opening" aria-current="true"></a>
-    <a href="#s2" aria-label="2. The idea"></a>
-    <a href="#s3" aria-label="3. Try the generator"></a>
-    <a href="#s4" aria-label="4. Showcase"></a>
-    <a href="#s5" aria-label="5. Ready for Sertifier"></a>
-    <a href="#s6" aria-label="6. Let's talk"></a>
+    <a href="#s2" aria-label="2. The opportunity"></a>
+    <a href="#s3" aria-label="3. The idea"></a>
+    <a href="#s4" aria-label="4. Try the generator"></a>
+    <a href="#s5" aria-label="5. Showcase"></a>
+    <a href="#s6" aria-label="6. Ready for Sertifier"></a>
+    <a href="#s7" aria-label="7. Next steps"></a>
   </nav>
 
   <main>
@@ -66,12 +67,15 @@
     <section id="s1" class="slide hero" data-theme="light" aria-labelledby="h1">
       <div class="wrap hero-grid">
         <div class="hero-copy">
-          <p class="label"><span>SOHA</span><span aria-hidden="true">→</span><span>Sertifier</span></p>
+          <p class="label">A proposal for <b>Sertifier</b><span aria-hidden="true">·</span>by SOHA</p>
           <h1 id="h1">What if certificates <em>designed themselves?</em></h1>
-          <p class="lede">From your website to a beautifully branded certificate.</p>
-          <a class="btn btn--green" href="#s2">Explore the concept
-            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4v12M5 11l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
+          <p class="lede">An AI design layer for Sertifier: from a customer’s website to three on-brand, editable certificates.</p>
+          <div class="hero-ctas">
+            <a class="btn btn--green" href="#s2">See the proposal
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4v12M5 11l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a class="btn btn--outline" href="#s4" data-try-sertifier>Try it with Sertifier’s brand</a>
+          </div>
         </div>
         <div class="hero-stage">
           <div class="float">
@@ -90,12 +94,55 @@
       </div>
     </section>
 
-    <!-- 2 · The idea -->
-    <section id="s2" class="slide idea" data-theme="light" aria-labelledby="h2">
+    <!-- 2 · The opportunity -->
+    <section id="s2" class="slide opportunity" data-theme="dark" aria-labelledby="h2">
+      <div class="wrap">
+        <div class="opp-grid">
+          <header class="sec-head opp-head">
+            <p class="kicker">The opportunity</p>
+            <h2 id="h2">The next layer on Sertifier’s AI: <em>design.</em></h2>
+            <p class="sec-lede">Sertifier’s AI Certificate Maker already drafts the credential details, campaign settings and emails. SOHA proposes a design layer that works alongside it, so every customer starts with certificates that look like their own brand.</p>
+          </header>
+          <div class="opp-stack">
+            <article class="opp-card">
+              <p class="opp-tag">Already in Sertifier</p>
+              <h3>AI Certificate Maker</h3>
+              <ul>
+                <li>Drafts the credential name, description and criteria</li>
+                <li>Suggests campaign settings and emails</li>
+              </ul>
+              <p class="opp-src">As described on Sertifier’s website</p>
+            </article>
+            <span class="opp-plus" aria-hidden="true">+</span>
+            <article class="opp-card opp-card--new">
+              <p class="opp-tag">Proposed by SOHA</p>
+              <h3>AI design layer</h3>
+              <ul>
+                <li>Reads the brand from the customer’s website</li>
+                <li>Proposes three on-brand, editable designs</li>
+                <li>Checks the layout for every recipient before issuing</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+        <div class="opp-why">
+          <h3 class="opp-why-title">Why it could matter for Sertifier</h3>
+          <ul class="benefits">
+            <li><span class="b-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="7.5"/><path d="M12 9v4l2.5 2M9.5 3h5"/></svg></span><b>A faster first certificate</b><p>New customers could see their own brand on a finished certificate in their first session.</p></li>
+            <li><span class="b-ico"><svg viewBox="0 0 24 24"><path d="M4 18h4v-4h4v-4h4V6h4"/></svg></span><b>Smoother onboarding</b><p>Ready, on-brand directions could help more new accounts reach their first issued credential.</p></li>
+            <li><span class="b-ico"><svg viewBox="0 0 24 24"><path d="M12 3l2.2 5.4L20 9.3l-4.4 3.9 1.3 5.8L12 16l-4.9 3 1.3-5.8L4 9.3l5.8-.9z"/></svg></span><b>A clear differentiator</b><p>Brand-aware design extends Sertifier’s AI story and is easy to show in a sales demo.</p></li>
+          </ul>
+          <p class="opp-note">Expected benefits, not measured results. A pilot would measure them on real customer brands.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 · The idea -->
+    <section id="s3" class="slide idea" data-theme="light" aria-labelledby="h3">
       <div class="wrap">
         <header class="sec-head">
           <p class="kicker">The idea</p>
-          <h2 id="h2">Your brand. Your certificate. <em>Instantly.</em></h2>
+          <h2 id="h3">Your brand. Your certificate. <em>Instantly.</em></h2>
         </header>
         <ol class="pipeline" id="pipeline">
           <li class="stage st-1">
@@ -160,13 +207,13 @@
       </div>
     </section>
 
-    <!-- 3 · Interactive generator -->
-    <section id="s3" class="slide demo" data-theme="light" aria-labelledby="h3">
+    <!-- 4 · Interactive generator -->
+    <section id="s4" class="slide demo" data-theme="light" aria-labelledby="h4">
       <div class="wrap">
         <header class="sec-head sec-head--row">
           <div>
             <p class="kicker">Try it</p>
-            <h2 id="h3">From a website to <em>three designs.</em></h2>
+            <h2 id="h4">From a website to <em>three designs.</em></h2>
           </div>
           <p class="honest"><span class="pill-demo">Demo</span> A deterministic layout engine runs in your browser. No AI model is called and nothing is sent anywhere.</p>
         </header>
@@ -175,6 +222,11 @@
           <form class="panel" id="studio" novalidate autocomplete="off">
             <fieldset class="step">
               <legend><span class="step-n">A</span>Your website</legend>
+              <button type="button" class="try-own" id="try-sertifier" aria-pressed="false">
+                <span class="to-mark" id="to-mark" aria-hidden="true"></span>
+                <span class="to-text"><b>Try it with Sertifier’s brand</b><small>Demo values entered by SOHA · nothing is fetched</small></span>
+                <span class="to-go" aria-hidden="true">→</span>
+              </button>
               <div class="url-row">
                 <label class="sr-only" for="url">Your website</label>
                 <input id="url" name="url" type="text" inputmode="url" spellcheck="false" placeholder="https://yourcompany.com" value="https://meridian.example">
@@ -287,7 +339,7 @@
                 <ul class="checks" id="res-checks" aria-label="Layout validation"></ul>
                 <div class="res-actions">
                   <button type="button" class="btn-line" id="res-enlarge">Enlarge</button>
-                  <a class="btn-line" href="#s4">Refine in the showcase ↓</a>
+                  <a class="btn-line" href="#s5">Refine in the showcase ↓</a>
                 </div>
               </div>
             </div>
@@ -305,12 +357,12 @@
       </div>
     </section>
 
-    <!-- 4 · Showcase -->
-    <section id="s4" class="slide showcase" data-theme="dark" aria-labelledby="h4">
+    <!-- 5 · Showcase -->
+    <section id="s5" class="slide showcase" data-theme="dark" aria-labelledby="h5">
       <div class="wrap">
         <header class="sec-head sec-head--center">
           <p class="kicker">Showcase</p>
-          <h2 id="h4">Three directions. <em>One identity.</em></h2>
+          <h2 id="h5">Three directions. <em>One identity.</em></h2>
         </header>
         <div class="gallery" id="gallery" aria-label="Generated designs">
           <button type="button" class="g-card" data-i="0"><span class="g-svg"></span><span class="g-cap">Heritage Elegance</span></button>
@@ -338,13 +390,13 @@
       </div>
     </section>
 
-    <!-- 5 · Ready for Sertifier -->
-    <section id="s5" class="slide ready" data-theme="light" aria-labelledby="h5">
+    <!-- 6 · Ready for Sertifier -->
+    <section id="s6" class="slide ready" data-theme="light" aria-labelledby="h6">
       <div class="wrap">
         <header class="sec-head">
           <p class="kicker">Ready for Sertifier</p>
-          <h2 id="h5">Designed for your <em>existing workflow.</em></h2>
-          <p class="sec-lede">Sertifier’s AI already drafts credential details, campaign settings and emails. SOHA proposes adding the design layer, integrated with your certificate design process.</p>
+          <h2 id="h6">Designed for your <em>existing workflow.</em></h2>
+          <p class="sec-lede">The design layer could sit in the existing create-credential flow, next to the AI Certificate Maker, and hand over a normal, editable certificate.</p>
         </header>
         <ol class="arch" aria-label="Proposed architecture">
           <li><span class="a-n">01</span><span class="a-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.6 2.4 2.6 14.6 0 17M12 3.5c-2.6 2.4-2.6 14.6 0 17"/></svg></span><b>Website / brand URL</b><small>The customer’s public site</small><span class="a-viz a-url">meridian.example</span></li>
@@ -362,16 +414,24 @@
       </div>
     </section>
 
-    <!-- 6 · Closing -->
-    <section id="s6" class="slide closing" data-theme="dark" aria-labelledby="h6">
+    <!-- 7 · Closing -->
+    <section id="s7" class="slide closing" data-theme="dark" aria-labelledby="h7">
       <div class="wrap closing-wrap">
         <div class="fan" id="fan" aria-hidden="true">
           <div class="fan-card" data-i="0"></div>
           <div class="fan-card" data-i="1"></div>
           <div class="fan-card" data-i="2"></div>
         </div>
-        <h2 id="h6">Let’s bring this to <em>Sertifier.</em></h2>
+        <h2 id="h7">Let’s bring this to <em>Sertifier.</em></h2>
         <p class="sec-lede">A smarter way to create certificates, designed around every customer’s brand.</p>
+        <div class="next">
+          <h3 class="next-title">Proposed next steps</h3>
+          <ol class="next-steps">
+            <li><span class="ns-n" aria-hidden="true">1</span><b>A short call</b><p>Walk through the idea and how it could fit Sertifier.</p></li>
+            <li><span class="ns-n" aria-hidden="true">2</span><b>A small pilot</b><p>Try it on a few real customer brands, with their permission, and review the designs together.</p></li>
+            <li><span class="ns-n" aria-hidden="true">3</span><b>Decide together</b><p>Choose the integration route and whether to build it.</p></li>
+          </ol>
+        </div>
         <div class="closing-actions">
           <a class="btn btn--green" id="cta-call" href="https://calendly.com/reza-tanakizadeh/soha" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>

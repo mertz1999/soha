@@ -6,18 +6,21 @@
 
 One feature, proposed to Sertifier's founder: an **AI Brand-Aware Certificate Designer**. It takes a company website and a few answers, and produces three beautiful, brand-consistent, editable certificate designs. The page is English, with Turkish certificate text available in the demo.
 
-**Positioning.** Sertifier already has an "AI Certificate Maker". According to its public page and FAQ, that tool drafts the certificate name, description and criteria, campaign settings and emails, while the customer still designs the certificate. The proposal therefore presents AI *design* as the next layer on top of what Sertifier already has: website-to-brand extraction, context-aware design, several editable variations and automated layout validation. It does not claim Sertifier lacks AI.
+**Positioning.** Sertifier already has an "AI Certificate Maker". According to its public page and FAQ, that tool drafts the certificate name, description and criteria, campaign settings and emails, while the customer still designs the certificate. The proposal therefore presents AI *design* as the next layer on top of what Sertifier already has: website-to-brand extraction, context-aware design, several editable variations and automated layout validation. It does not claim Sertifier lacks AI, and the page shows the AI Certificate Maker as "Already in Sertifier" next to the proposed design layer rather than describing a gap.
 
-## The six sections
+**Structure.** The page reads as a pitch to Sertifier, like the Aposkal proposal: it names Sertifier and the proposal at the top, explains why the idea matters to Sertifier before the demo, and ends with concrete next steps and a booking link.
+
+## The seven sections
 
 | # | Section | Shows |
 |---|---|---|
-| 1 | Opening | "What if certificates designed themselves?" with a floating certificate that cycles through the three design styles |
-| 2 | The idea | Animated four-step sequence: website → brand analysis → three designs → an editable certificate with selection handles |
-| 3 | Try it | The working generator: website or demo brand, certificate details, **Generate 3 Designs**, results with live validation |
-| 4 | Showcase | The three generated designs in an overlapping gallery (a swipe carousel on phones). Refinements, enlarged preview and exports |
-| 5 | Ready for Sertifier | Conceptual five-step architecture and three qualities. Clearly marked as a concept |
-| 6 | Closing | The user's three designs in a fan, a `mailto:` button, the SOHA site link and the independence disclosure |
+| 1 | Opening | "A proposal for Sertifier · by SOHA", "What if certificates designed themselves?", a floating certificate cycling through the three styles, and two buttons: **See the proposal** and **Try it with Sertifier's brand** |
+| 2 | The opportunity | "The next layer on Sertifier's AI: design." The AI Certificate Maker ("Already in Sertifier") + the proposed AI design layer, then three expected benefits for Sertifier, labelled as expected rather than measured |
+| 3 | The idea | Animated four-step sequence: website → brand analysis → three designs → an editable certificate with selection handles |
+| 4 | Try it | The working generator: a one-tap **Try it with Sertifier's brand** button, website or demo brand, certificate details, **Generate 3 Designs**, results with live validation |
+| 5 | Showcase | The three generated designs in an overlapping gallery (a swipe carousel on phones). Refinements, enlarged preview and exports |
+| 6 | Ready for Sertifier | Conceptual five-step architecture and three qualities. Clearly marked as a concept |
+| 7 | Next steps | The visitor's three designs in a fan, three proposed next steps (a short call, a small pilot, decide together), the Calendly button, the email button showing the address, the SOHA site link and the independence disclosure |
 
 ## How the demo stays honest
 
@@ -25,9 +28,10 @@ One feature, proposed to Sertifier's founder: an **AI Brand-Aware Certificate De
 - **Demo presets** (Meridian Academy, Northwind Labs, Atelier Verde) are fictional and use reserved `.example` domains. The brand card is labelled **Demo preset** and says no website was read.
 - **SOHA → "Read live"** genuinely fetches SOHA's public English page (`/soha/en/`) from the same site. It extracts the name, logo, colour values and fonts with a simple heuristic, and labels the result **Read live** with what it found.
 - **Any other address** is first fetched directly from the visitor's browser. If the site allows that (CORS), its brand is read live. If not, which is most sites, the card switches to **Demo mode** and explains that the starting colours come from the domain name.
-- **`sertifier.com`** is a special case. Its public colours and type (forest `#092C25`, green `#00A356`, Inter) are entered by SOHA, so the founder can try their own brand. It is labelled **Demo mode … entered by SOHA … Nothing was fetched**, and the page does not use Sertifier's logo file; it shows an "S" monogram instead.
+- **`sertifier.com`** is a special case. Its public colours and type (forest `#092C25`, green `#00A356`, Inter) are entered by SOHA, so the founder can try their own brand. The **Try it with Sertifier's brand** buttons (opening and demo) apply the same values in one tap and generate the designs; the button itself says "Demo values entered by SOHA · nothing is fetched". It is labelled **Demo mode … entered by SOHA … Nothing was fetched**, and the page does not use Sertifier's logo file; it shows an "S" monogram instead.
+- **Benefits are expected, not measured.** Section 2 says so under the three benefits and names a pilot as the way to measure them. No figures are claimed.
 - **Credential IDs and QR codes are placeholders.** IDs are marked "Demo placeholder". The QR is a deliberately non-scannable pattern with a "DEMO" tag and the caption "Demo QR · not scannable".
-- **Sertifier integration is conceptual.** Section 5 says integration points depend on Sertifier's editor and API and would be validated together.
+- **Sertifier integration is conceptual.** Section 6 says integration points depend on Sertifier's editor and API and would be validated together.
 - **Independence:** the footer says the page is an independent SOHA proposal with no endorsement or partnership. The page is `noindex, nofollow`.
 
 ## Run it locally
@@ -51,7 +55,7 @@ The Pages workflow publishes `site/` on every push to `main`, so any later chang
 
 | File | Purpose |
 |---|---|
-| `site/proposals/sertifier/index.html` | The six sections, the generator form, the preview dialog |
+| `site/proposals/sertifier/index.html` | The seven sections, the generator form, the preview dialog |
 | `site/proposals/sertifier/assets/certkit.js` | **Certificate renderer.** Design spec → editable SVG; text fitting, contrast control, validation report. No dependencies |
 | `site/proposals/sertifier/assets/proposal.js` | Page logic: slides, brand reading and demo mode, generator, showcase and refinements, preview, exports, shared links |
 | `site/proposals/sertifier/assets/sertifier.css` | Page design in Sertifier's visual language (Inter, `#111` ink, `#F8F8F7`, green pills, forest `#092C25`) |
@@ -99,8 +103,8 @@ const file = CertKit.render(spec, { standalone: true }).svg;  // self-contained 
 ## Checks done before hand-off
 
 - **Viewports:**
-  - Desktop at 1440×900 and 1920×1080: each section fits one screen, except the generator, whose results panel stays fixed while the form scrolls.
-  - Phones at 390×844 and 375×812: no horizontal overflow, the rotated full-screen preview fits the screen, and closing links are 44px tall.
+  - Desktop at 1440×900 and 1920×1080: all seven sections fit one screen, except the generator, whose results panel stays fixed while the form scrolls. (The showcase and "Ready for Sertifier" were trimmed by a few pixels on 2026-11-17 so they fit 1440×900 too.)
+  - Phones at 390×844 and 375×812: no horizontal overflow, the rotated full-screen preview fits the screen, the opening label stays on one line, the opening buttons and closing buttons stack at full width, and closing links are 44px tall.
 - **Generator flow:**
   - Brand changes update the colours, logo and organization across the results, showcase and closing.
   - Name, title, purpose, style and language changes update every preview live.
@@ -110,6 +114,6 @@ const file = CertKit.render(spec, { standalone: true }).svg;  // self-contained 
 - **Refinements:** "more minimal", "more elegant", "try another layout", "use brand colors" and reset all change the actual design, and the buttons disable at their limits.
 - **Exports and sharing:** SVG export produces valid XML, design JSON follows `soha.certificate-design/0.1`, and a shared link restores the brand, data and refinements.
 - **Validation sweep:** 2,160 combinations, covering 5 brands (including a deliberately pale one) × 3 designs × 3 layouts × ornament × elegance × colour mode × purpose × short, medium and very long names. All of them pass the fit, contrast and safe-margin checks.
-- **Reduced motion:** no animation, instant results, the opening certificate stays still, and refinements still work.
+- **Reduced motion:** no animation, instant results (the one-tap Sertifier button shows designs in about 0.15 s), the opportunity section is visible without its entrance, the opening certificate stays still, and refinements still work.
 - **Keyboard:** arrow keys, Page Up/Down and Home/End move between sections; radio groups, buttons, the gallery and the dialog (Esc) are keyboard reachable; focus rings are visible.
 - **Console and images:** no console errors on a fresh load, and no broken images.

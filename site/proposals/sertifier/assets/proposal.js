@@ -100,6 +100,9 @@
     signer: $('#f-signer'), role: $('#f-role'), sign: $('#f-sign'), verify: $('#f-verify'),
     generate: $('#generate'), generateLabel: $('#generate-label'),
   };
+  const SERTIFIER_HOST = 'sertifier.com'; const SERTIFIER_URL = 'https://sertifier.com/';
+  const trySBtn = $('#try-sertifier'); const trySGo = $('.to-go', trySBtn);
+  $('#to-mark').innerHTML = K.markSvg({ name: KNOWN[SERTIFIER_HOST].name, mark: { type: 'monogram' }, fonts: { sans: 'Inter Variable' } }, KNOWN[SERTIFIER_HOST].colors.primary);
   // preset marks in the radio cards
   $$('.pr-mark[data-mark]').forEach((el) => { const b = K.brandFromPreset(el.dataset.mark); el.innerHTML = K.markSvg(b, b.colors.primary); });
 
@@ -116,6 +119,8 @@
     els.accent.value = b.colors.accent.toLowerCase(); els.accentHex.textContent = b.colors.accent.toUpperCase();
     els.pairing.value = b.pairing || 'classic';
     els.logoClear.hidden = !(b.mark && b.mark.type === 'image' && b.mark.uploaded);
+    const isSertifier = hostOf(b.url || '') === SERTIFIER_HOST;
+    trySBtn.setAttribute('aria-pressed', String(isSertifier)); trySGo.textContent = isSertifier ? '✓' : '→';
   };
   const setPresetRadio = (key) => $$('input[name="preset"]').forEach((r) => { r.checked = r.value === key; });
 
@@ -218,7 +223,7 @@
     const text = known
       ? `Demo mode. This page can’t read ${host}, so SOHA entered its public colours and type for this demo. Nothing was fetched.`
       : `Demo mode. This page can’t read ${host} (the site doesn’t allow it), so the starting colours come from the domain name. Adjust them below.`;
-    applyBrand(brand, { kind: 'demo', badge: 'Demo mode', text }, null);
+    return applyBrand(brand, { kind: 'demo', badge: 'Demo mode', text }, null);
   }
   const normaliseUrl = (v) => { let s = v.trim(); if (!s) return null; if (!/^https?:\/\//i.test(s)) s = `https://${s}`; try { const u = new URL(s); return /\./.test(u.host) || u.host.startsWith('localhost') ? u.href : null; } catch (e) { return null; } };
   const analyze = () => {
@@ -231,6 +236,15 @@
     readLive(url, null);
   };
   els.analyze.addEventListener('click', analyze);
+
+  // --- one tap: Sertifier's own brand (demo values entered by SOHA, nothing fetched)
+  const trySertifier = async ({ scroll = false } = {}) => {
+    if (scroll) $('#s4').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    await demoMode(SERTIFIER_URL);
+    if (!state.generated) els.generate.click();
+  };
+  trySBtn.addEventListener('click', () => trySertifier());
+  $$('[data-try-sertifier]').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); trySertifier({ scroll: true }); }));
   els.url.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); analyze(); } });
 
   // --- manual brand edits
@@ -548,6 +562,6 @@
   paintAll();
   setCurrent(0);
   watchSnap();
-  Promise.all([K.loadFonts(SAMPLE.brand), K.loadFonts(state.brand)]).then(() => { paintAll(); if (restored) setTimeout(() => $('#s3').scrollIntoView({ behavior: 'auto' }), 60); });
+  Promise.all([K.loadFonts(SAMPLE.brand), K.loadFonts(state.brand)]).then(() => { paintAll(); if (restored) setTimeout(() => $('#s4').scrollIntoView({ behavior: 'auto' }), 60); });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(paintAll);
 })();
