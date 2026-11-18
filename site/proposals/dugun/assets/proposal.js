@@ -46,6 +46,9 @@
     ivOf: (i) => `Tasarım ${i} / 3`, bride: 'Gelin', groom: 'Damat', venueDefault: 'Mekân', slug: 'davetiye',
     svgWait: 'SVG hazırlanıyor…', svgOk: 'SVG indirildi', pngWait: 'PNG hazırlanıyor…', pngOk: 'PNG indirildi', pngFail: 'PNG oluşturulamadı; SVG indirmeyi deneyin',
     example: (o) => `Örnek: ${o}`, demoVenue: 'Defne Köşkü, İstanbul',
+    handBadge: 'Firma aktarımı', handTitle: 'Davetiyeyi bir firmaya gönderin',
+    handList: ["Çift, tasarımı Düğün.com'daki davetiye firmalarına baskı veya dijital davetiye siparişi olarak gönderir.", 'Firma, düzenlenebilir dosyayı hazır alır; çift teklifleri karşılaştırır.', 'Davetiye firmaları devre dışı kalmaz: bu akışın son adımıdır.'],
+    handLink: "Düğün.com'da davetiye firmalarına göz atın", handNote: 'Demo: hiçbir sipariş veya dosya gönderilmez.',
   }, {
     venue: { original: 'Original', classic: 'Classic Luxury', minimal: 'Modern Minimal', boho: 'Bohemian Garden' },
     model: { a: 'Model A', b: 'Model B' },
@@ -79,6 +82,9 @@
     ivOf: (i) => `Design ${i} / 3`, bride: 'Bride', groom: 'Groom', venueDefault: 'Venue', slug: 'invitation',
     svgWait: 'Preparing SVG…', svgOk: 'SVG downloaded', pngWait: 'Preparing PNG…', pngOk: 'PNG downloaded', pngFail: "Couldn't create the PNG; try the SVG download",
     example: (o) => `Example: ${o}`, demoVenue: 'Defne Köşkü, İstanbul',
+    handBadge: 'Vendor handoff', handTitle: 'Send the design to a vendor',
+    handList: ["The couple sends the design to Düğün.com's invitation vendors as a print or digital order.", 'The vendor receives a ready, editable file; the couple compares quotes.', 'Invitation companies are not bypassed: they are the last step of the flow.'],
+    handLink: 'Browse invitation vendors on Düğün.com', handNote: 'Demo: no order or file is sent.',
   });
   const VENUE_NAME = STR.venue; const MODEL_NAME = STR.model;
 
@@ -354,6 +360,15 @@
   $('#ivv-type').addEventListener('click', (e) => { const b = e.target.closest('[data-v]'); if (b) refine('type', +b.dataset.v); });
   $('#ivv-format').addEventListener('click', (e) => { const b = e.target.closest('[data-v]'); if (b) refine('format', b.dataset.v); });
   view.addEventListener('close', () => { iv.view = null; });
+  $('#ivv-vendor').addEventListener('click', () => {
+    openDrawer(`<div class="dr">
+      <div class="dr-hero dr-hero--inv">${I.render({ ...iv.view, format: 'print', ...form() })}<span class="demo-badge">${STR.handBadge}</span></div>
+      <h3 id="dr-title">${STR.handTitle}</h3>
+      <ul>${STR.handList.map((t) => `<li>${t}</li>`).join('')}</ul>
+      <div class="dr-match"><a href="https://dugun.com/dugun-davetiyesi/istanbul" target="_blank" rel="noopener">${STR.handLink} <span>dugun.com ↗</span></a></div>
+      <p class="note">${STR.handNote}</p>
+    </div>`);
+  });
   const slug = () => { const f = form(); return `${STR.slug}-${f.bride}-${f.groom}`.toLocaleLowerCase('tr-TR').replace(/ı/g, 'i').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); };
   const download = (blob, name) => { const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000); };
   $('#ivv-svg').addEventListener('click', async () => { toast(STR.svgWait); const svg = await I.embedFonts(I.render({ ...iv.view, ...form() })); download(new Blob([svg], { type: 'image/svg+xml' }), `${slug()}-${iv.view.format}.svg`); toast(STR.svgOk); });

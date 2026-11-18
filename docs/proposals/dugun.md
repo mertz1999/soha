@@ -23,6 +23,11 @@ An interactive proposal for Düğün.com's founders. It presents two AI products
 - Everything script-generated is translated too: catalogue labels, song reasons, budget categories and currency format (₺664,000 / ₺664.000), toasts, drawers and the invitation copy and dates.
 - Couple, venue and city names keep Turkish casing on the English page ("DEFNE KÖŞKÜ", "İSTANBUL").
 
+**Vendor-friendly framing.** Every tool ends at Düğün.com's vendors:
+- "Mağazayı İncele" and the concept-matching drawer link to real category pages.
+- The invitation viewer has "Send to an invitation vendor", which explains the print/digital handoff and links to Düğün.com's invitation category.
+- Section 8 spells out what each vendor group gains, so the AI tools add business for paying vendors instead of replacing them.
+
 **Positioning.** Every idea is presented as an extension of what Düğün.com already has: the dress catalogue, vendor profiles, the Bütçem budget tool, the music articles and the invitation vendors. The page never claims Düğün.com lacks a feature and says nothing about its roadmap. The music panel is framed as personalisation ("Size Göre"), not as Düğün.com's first music feature.
 
 ## Research notes (2026-11-18)
@@ -50,7 +55,7 @@ An interactive proposal for Düğün.com's founders. It presents two AI products
   - **Invitations:** vendors and Web Sitem exist. The designer is a design layer that could hand off to them.
   - **Try-on and venue visualisation:** no public evidence was found either way. Both are presented as proposals.
 
-## The eight sections
+## The nine sections
 
 | # | Section | Shows |
 |---|---|---|
@@ -61,7 +66,8 @@ An interactive proposal for Düğün.com's founders. It presents two AI products
 | 5 | Music & budget | Moment tabs and preference chips with three songs and a reason for each. City, guests, style, venue type and budget give a donut, breakdown and tip |
 | 6 | Invitations | Names, date, time, venue, style and colour lead to three designs. The viewer refines layout, palette, typography and format, and downloads PNG or SVG |
 | 7 | One experience | "Hayalden Gerçeğe. Tek Bir Deneyim.": five steps that show the visitor's own choices, ending at real Düğün.com category pages |
-| 8 | Closing | "Düğün.com'un Geleceğini Birlikte Tasarlayalım.", a "15 Dakikalık Görüşme" mailto to `reza.tz780210@gmail.com`, Calendly, the SOHA site link and the independence disclosure |
+| 8 | How we would start | "Start Small. Measure Everything." On the left, four vendor groups and the business each tool sends them (fitting requests, concept-based quote requests, print and digital invitation orders, couples arriving with a budget and a playlist). On the right, SOHA's published process (Free preview → Discovery 1–2 weeks → Pilot 2–4 weeks → Launch 4–10 weeks). The pilot is Invitation Designer + Smart Budget, measured by quote requests to vendors, invitations finished and return visits. Then try-on with partner boutiques, then venue design |
+| 9 | Closing | "Düğün.com'un Geleceğini Birlikte Tasarlayalım.", a "15 Dakikalık Görüşme" mailto to `reza.tz780210@gmail.com`, Calendly, the SOHA site link and the independence disclosure. It also has one credibility line naming the clients listed on SOHA's site (Next Trend Realty, HITAI, AgentFa) |
 
 ## Visual assets: photos, with illustrations as fallback
 
