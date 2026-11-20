@@ -2,7 +2,7 @@
 
 Where every visual on `site/proposals/shopier/` comes from, and what it may be used for.
 
-**Status (2026-11-20):** the products and their scenes are **photographic**. The 11 Part A images from [shopier-image-prompts.md](shopier-image-prompts.md) are in. The try-on (models, garments, results) still uses **code-drawn illustrations** until Part B arrives.
+**Status (2026-11-20):** the products and their scenes are **photographic**. The 11 Part A images from [shopier-image-prompts.md](shopier-image-prompts.md) are in. The try-on (models, garments, results) stays **code-drawn illustrations** by decision.
 
 ## Third-party brand assets
 

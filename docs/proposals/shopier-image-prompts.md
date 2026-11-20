@@ -2,7 +2,7 @@
 
 > **Purpose:** photo-realistic images for the Shopier proposal page (`site/proposals/shopier/`).
 >
-> **Status (2026-11-20):** Part A (11 images) delivered and published. Part B (try-on, 15 images) is still to come; the try-on uses its illustrations until then.
+> **Status (2026-11-20):** Part A (11 images) delivered and published. Part B (try-on) is on hold: the try-on stays illustrated. If it is picked up again, make the 9 try-on results in a dedicated try-on tool (FASHN or Kling) rather than a general image model, which tends to change the face or the garment. Real photos from the internet won't work: no source has the same garments on several people with matching product shots, and the try-on research datasets (VITON-HD, Dress Code) are non-commercial only.
 
 **26 images in total, and only 9 of them need input images.** The page builds the rest itself:
 

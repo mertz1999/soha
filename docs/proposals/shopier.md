@@ -1,6 +1,6 @@
 # Proposal: Shopier (SOHA → Shopier)
 
-> **Status:** Published with product photos (try-on photos pending) · **Updated:** 2026-11-20
+> **Status:** Published with product photos; the try-on stays illustrated · **Updated:** 2026-11-20
 > **Pages:**
 > - English (default): `site/proposals/shopier/` → <https://mertz1999.github.io/soha/proposals/shopier/>
 > - Turkish: `site/proposals/shopier/tr/` → <https://mertz1999.github.io/soha/proposals/shopier/tr/>
@@ -71,7 +71,7 @@ shopier.com and appstore.shopier.com sit behind a Cloudflare bot check that auto
 
 ## Images
 
-The products and their scenes use photos (Part A is in). The try-on still uses illustrations until its photos arrive. The illustrations stay as the fallback (see [shopier-assets.md](shopier-assets.md)):
+The products and their scenes use photos (Part A is in). The try-on deliberately stays illustrated (decided 2026-11-20): generated try-ons weren't accurate enough, and no internet source can supply a consistent, licensed set (see [shopier-image-prompts.md](shopier-image-prompts.md)). The illustrations stay as the fallback (see [shopier-assets.md](shopier-assets.md)):
 - `art-products.js`: three products (the earrings hang on a small brass stand) and their 8 scenes plus the phone-photo original.
 - `art-people.js`: three models and three garments, adapted from the Düğün.com people drawings.
 
