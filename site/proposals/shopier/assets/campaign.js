@@ -71,14 +71,15 @@
   /* ---------------------------------------------------------------- shared pieces */
   const disc = (n) => (n ? L(`%${n}`, `${n}%`) : '');
   const discWord = () => L('İNDİRİM', 'OFF');
-  const RATIO = { bag: 1.03, earrings: 1.6, serum: 0.41 }; // product cutout width / height
+  const RATIO = { bag: 1.03, earrings: 1.07, serum: 0.41 }; // illustrated cut-out width / height (photos pass their own as img.ratio)
   // The product cutout in a box whose bottom centre is (cx, by). The image keeps its own proportions.
   function product(c, cx, by, h, opt = {}) {
-    const w = h * 2.2; const pw = Math.min(w, h * (RATIO[c.kind] || 1));
+    const w = h * 2.2; const pw = Math.min(w, h * (c.img.ratio || RATIO[c.kind] || 1));
     const sh = opt.shadow === false ? '' : `<ellipse cx="${f1(cx)}" cy="${f1(by + h * 0.012)}" rx="${f1(pw * 0.5)}" ry="${f1(Math.max(6, h * 0.035))}" fill="${opt.shadowCol || '#000'}" opacity="${opt.shadowOp || 0.28}" filter="url(#${c.u}soft)"/>`;
     return `${sh}<image href="${c.img.cut}" x="${f1(cx - w / 2)}" y="${f1(by - h)}" width="${f1(w)}" height="${f1(h)}" preserveAspectRatio="xMidYMax meet" data-field="product"/>`;
   }
-  const scene = (c, x, y, w, h, align = 'xMidYMid') => `<image href="${c.img.scene}" x="${x}" y="${y}" width="${w}" height="${h}" preserveAspectRatio="${align} slice" data-field="product"/>`;
+  // `ad` picks the version of the scene with the product raised above a bottom headline, when there is one.
+  const scene = (c, x, y, w, h, align = 'xMidYMid', ad = false) => `<image href="${(ad && c.img.sceneAd) || c.img.scene}" x="${x}" y="${y}" width="${w}" height="${h}" preserveAspectRatio="${align} slice" data-field="product"/>`;
   // Brand: the uploaded logo if there is one, otherwise the brand name set in type.
   function brand(c, x, y, o, boxH) {
     if (c.s.logo) {
@@ -107,7 +108,7 @@
     const d = disc(s.discount);
     if (fmt === 'post' || fmt === 'portrait') {
       defs += scrim('st', 0, H * 0.34, 0.55, 0) + scrim('sb', H * 0.5, H, 0, 0.68);
-      b += scene(c, 0, 0, W, H) + `<rect width="${W}" height="${H}" fill="url(#${c.u}st)"/><rect width="${W}" height="${H}" fill="url(#${c.u}sb)"/>`;
+      b += scene(c, 0, 0, W, H, 'xMidYMid', true) + `<rect width="${W}" height="${H}" fill="url(#${c.u}st)"/><rect width="${W}" height="${H}" fill="url(#${c.u}sb)"/>`;
       b += mast(W / 2, fmt === 'post' ? 150 : 170, W - 160, fmt === 'post' ? 118 : 128, '#FFFFFF');
       b += `<path d="M${W / 2 - 60},${fmt === 'post' ? 196 : 220}H${W / 2 + 60}" stroke="#FFFFFF" stroke-opacity=".7" stroke-width="2"/>`;
       const t = wrap(s.title, { ...serif, style: 'italic', size: fmt === 'post' ? 86 : 96, min: 46 }, W - 150, 2);
@@ -236,7 +237,7 @@
 
   const LAYOUT = { editorial, bold, minimal };
   let n = 0;
-  /* spec: { direction, format, kind, brand, title, message, discount, cta, logo, palette, color, img: { cut, scene } } */
+  /* spec: { direction, format, kind, brand, title, message, discount, cta, logo, palette, color, img: { cut, scene, sceneAd, ratio } } */
   function render(spec) {
     const F = FORMATS[spec.format]; const base = PALETTES.find((p) => p.id === spec.palette) || PALETTES[0];
     const P = spec.color ? { ...base, strong: spec.color } : base;

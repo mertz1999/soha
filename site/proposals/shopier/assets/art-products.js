@@ -1,5 +1,5 @@
 /* Shopier proposal · product and scene artwork
-   Three fictional demo products (the Hilal handbag, the Damla earrings and the Gül serum) and the scenes
+   Three fictional demo products (the Hilal handbag, the Damla earrings on their stand and the Gül serum) and the scenes
    they are photographed in. Every scene draws the *same* product drawing, so shape, colour, material and
    hardware stay identical across all variations; only the set, light and props change.
    These drawings are the fallback for the photos in assets/photos/. Canvas: 1200 × 1200. */
@@ -21,7 +21,7 @@
      h = drawing height, w = footprint width, real = height relative to the handbag (for scene scale). */
   const PRODUCTS = {
     bag: { h: 330, w: 340, real: 1, zoom: 1 },
-    earrings: { h: 150, w: 230, real: 0.19, zoom: 3.3 },
+    earrings: { h: 226, w: 120, real: 0.42, zoom: 2 },
     serum: { h: 345, w: 128, real: 0.58, zoom: 1.55 },
   };
 
@@ -74,7 +74,14 @@
       defs: lg(`${u}pgold`, GOLD, 1, 1)
         + rg(`${u}ppearl`, [[0, '#FFFFFF'], [0.45, '#F6F0E6'], [0.8, '#E3D8C8'], [1, '#C7BAA6']], 0.38, 0.32, 0.7)
         + lg(`${u}piris`, [[0, '#F5D3DA', 0.35], [0.5, '#D9E6F2', 0], [1, '#E8DCC0', 0.4]], 1, 1),
-      svg: one(-64, -98, 1) + one(68, -95, 1.02),
+      // A small brass T-bar stand; each earring hangs from the bar on its ear wire.
+      svg: `<ellipse cx="0" cy="-2" rx="50" ry="10" fill="url(#${u}pgold)" stroke="#6E5014" stroke-width="1.2"/>
+        <path d="M-50,-2v-6a50,10 0 0 0 100,0v6" fill="url(#${u}pgold)" opacity=".85"/><ellipse cx="0" cy="-8" rx="50" ry="10" fill="url(#${u}pgold)" stroke="#6E5014" stroke-width="1"/>
+        <rect x="-4" y="-214" width="8" height="208" rx="3" fill="url(#${u}pgold)" stroke="#6E5014" stroke-width=".8"/>
+        <rect x="-118" y="-219" width="236" height="8" rx="4" fill="url(#${u}pgold)" stroke="#6E5014" stroke-width=".8"/>
+        <circle cx="-120" cy="-215" r="7" fill="url(#${u}pgold)" stroke="#6E5014" stroke-width=".8"/><circle cx="120" cy="-215" r="7" fill="url(#${u}pgold)" stroke="#6E5014" stroke-width=".8"/>
+        ${[-66, 66].map((x) => `<path d="M${x},-192C${x},-206 ${x - 3},-219 ${x + 5},-222C${x + 13},-224 ${x + 15},-213 ${x + 9},-207" fill="none" stroke="#B88F38" stroke-width="3" stroke-linecap="round"/>`).join('')}
+        ${one(-66, -150, 1)}${one(66, -150, 1)}`,
     };
   }
 
@@ -106,7 +113,7 @@
   const DRAW = { bag, earrings, serum };
 
   /* The product alone on a transparent background (used by the campaign layouts). */
-  const BOX = { bag: [-182, -340, 364, 352], earrings: [-128, -152, 256, 160], serum: [-72, -350, 144, 356] };
+  const BOX = { bag: [-182, -340, 364, 352], earrings: [-130, -230, 260, 244], serum: [-72, -350, 144, 356] };
   A.product = function (kind) {
     const u = `cut${kind}`; const p = DRAW[kind](u); const b = BOX[kind];
     const defs = blur(`${u}pb4`, 4) + A.filters(u) + pgrain(u) + p.defs;
@@ -134,20 +141,6 @@
     }
     return s;
   };
-  const leafShadow = (x, y, len, ang, op) => {
-    let s = `<g transform="translate(${x},${y}) rotate(${ang})" fill="#4E3A26" opacity="${op}">`;
-    s += `<path d="M0,0L${len},6L${len},-6Z" />`;
-    for (let i = 1; i <= 9; i++) {
-      const t = (i / 10) * len; const l = len * 0.42 * Math.sin((i / 10) * Math.PI) + 40;
-      s += `<path d="M${f1(t)},0C${f1(t + l * 0.3)},${f1(-l * 0.22)} ${f1(t + l * 0.75)},${f1(-l * 0.6)} ${f1(t + l * 0.95)},${f1(-l * 0.95)}C${f1(t + l * 0.55)},${f1(-l * 0.5)} ${f1(t + l * 0.2)},${f1(-l * 0.1)} ${f1(t + 14)},0Z"/>`;
-      s += `<path d="M${f1(t)},0C${f1(t + l * 0.3)},${f1(l * 0.22)} ${f1(t + l * 0.75)},${f1(l * 0.6)} ${f1(t + l * 0.95)},${f1(l * 0.95)}C${f1(t + l * 0.55)},${f1(l * 0.5)} ${f1(t + l * 0.2)},${f1(l * 0.1)} ${f1(t + 14)},0Z"/>`;
-    }
-    return s + '</g>';
-  };
-  const lemon = (u, x, y, r, rot) => `<g transform="translate(${x},${y}) rotate(${rot})"><ellipse rx="${r}" ry="${f1(r * 0.78)}" fill="url(#${u}lem)"/>
-    <path d="M${r},0q${f1(r * 0.16)},-${f1(r * 0.06)} ${f1(r * 0.2)},0q-${f1(r * 0.04)},${f1(r * 0.08)} -${f1(r * 0.2)},0Z" fill="#D2A421"/>
-    <ellipse cx="${f1(-r * 0.3)}" cy="${f1(-r * 0.32)}" rx="${f1(r * 0.3)}" ry="${f1(r * 0.14)}" fill="#FFF6C4" opacity=".55"/>
-    ${A.leaf(-r * 0.9, -r * 0.2, r * 1.1, 200, '#4E7A3A', r * 0.45)}</g>`;
   const ornament = (u, x, y, r) => `<g transform="translate(${x},${y})"><circle r="${r}" fill="url(#${u}orn)"/><circle cx="${f1(-r * 0.35)}" cy="${f1(-r * 0.35)}" r="${f1(r * 0.22)}" fill="#FFF6D2" opacity=".8"/>
     <rect x="${f1(-r * 0.22)}" y="${f1(-r * 1.18)}" width="${f1(r * 0.44)}" height="${f1(r * 0.26)}" rx="2" fill="url(#${u}gld)"/></g>`;
   const pine = (x, y, len, ang, rnd) => A.sprig(x, y, len, ang, { rnd, fill: '#2E5B43', fills: ['#2E5B43', '#3F7458', '#24493A'], n: 26, leaf: len * 0.16, round: 0.12, sw: 3, stem: '#3A2A1E', bend: 0.08 });
@@ -193,18 +186,6 @@
     };
   };
 
-  S['studio-3'] = (u) => ({
-    defs: lg(`${u}w`, [[0, '#EBDDC8'], [1, '#DCC9AE']]) + lg(`${u}lg`, [[0, '#DECDB3'], [1, '#CDB898']]) + lg(`${u}bk`, [[0, '#EADCC6'], [1, '#DCCAB0']], 1, 0),
-    bg: `<rect width="${W}" height="${W}" fill="url(#${u}w)"/>
-      <path d="M200,-100H1300V600L640,900Z" fill="#FFF3DA" opacity=".35" filter="url(#${u}b40)"/>
-      <g filter="url(#${u}b6)">${leafShadow(1260, -60, 760, 132, 0.16)}${leafShadow(1320, 220, 620, 150, 0.12)}</g>
-      <rect y="880" width="${W}" height="320" fill="url(#${u}lg)"/><rect y="878" width="${W}" height="4" fill="#F4E9D8"/>
-      <rect x="400" y="806" width="400" height="80" fill="url(#${u}bk)"/><rect x="400" y="804" width="400" height="5" fill="#F6ECDD"/>
-      <path d="M800,806L900,880H800Z" fill="#6B5640" opacity=".18"/>`,
-    fg: '', over: '',
-    place: { x: 600, y: 808, h: 440 }, shadow: 'soft',
-  });
-
   S['lifestyle-1'] = (u) => {
     const rnd = A.rng(5);
     return {
@@ -245,27 +226,6 @@
     };
   };
 
-  S['lifestyle-3'] = (u) => {
-    const rnd = A.rng(13); let grain = '';
-    for (let i = 0; i < 14; i++) grain += `<path d="M0,${f1(900 + i * 22 + rnd() * 10)}C300,${f1(895 + i * 22 + rnd() * 20)} 800,${f1(905 + i * 22 + rnd() * 20)} 1200,${f1(900 + i * 22)}" stroke="#4A2C1A" stroke-width="1.5" fill="none" opacity=".3"/>`;
-    let stems = ''; for (let i = 0; i < 7; i++) stems += A.pampas(330 + (i - 3) * 8, 640, 230 + rnd() * 80, -90 + (i - 3) * 9, '#CDB48E', rnd, 1.1);
-    return {
-      defs: lg(`${u}w`, [[0, '#E7DCCE'], [1, '#D9CAB7']]) + lg(`${u}top`, [[0, '#8A5A3A'], [1, '#6B4229']]) + lg(`${u}fr`, [[0, '#5E3A25'], [1, '#4A2C1B']])
-        + lg(`${u}vase`, [[0, '#B9A58C'], [0.4, '#E8DCCB'], [1, '#A8937A']], 1, 0),
-      bg: `<rect width="${W}" height="${W}" fill="url(#${u}w)"/>
-        <path d="M120,-80H620L980,880H400Z" fill="#FFF6E6" opacity=".42" filter="url(#${u}b40)"/>
-        <g filter="url(#${u}b6)"><rect x="760" y="150" width="300" height="380" fill="#CDB89D"/><rect x="784" y="174" width="252" height="332" fill="#E9DDCB"/>
-          <circle cx="880" cy="300" r="70" fill="#B7795C"/><rect x="900" y="330" width="100" height="140" fill="#8E9A82"/></g>
-        <rect y="858" width="${W}" height="44" fill="url(#${u}top)"/><rect y="900" width="${W}" height="300" fill="url(#${u}fr)"/>${grain}
-        <path d="M0,858H1200" stroke="#B07E58" stroke-width="2" opacity=".7"/>
-        <g transform="translate(150,0)"><rect x="40" y="806" width="300" height="52" fill="#E8DECC"/><rect x="40" y="806" width="300" height="6" fill="#F6EFE3"/>
-          <rect x="56" y="760" width="270" height="46" fill="#8E9A80"/><rect x="30" y="716" width="290" height="44" fill="#C9A27E"/>
-          ${stems}<path d="M140,716C130,690 134,660 150,640H210C226,660 230,690 220,716Z" fill="url(#${u}vase)"/></g>`,
-      fg: '', over: '',
-      place: { x: 730, y: 862, h: 470 }, shadow: 'soft',
-    };
-  };
-
   S['luxury-1'] = (u) => ({
     defs: rg(`${u}bg`, [[0, '#262C78'], [0.45, '#0B0F34'], [1, '#04051A']], 0.5, 0.25, 0.8) + lg(`${u}ped`, [[0, '#0B0D22'], [0.3, '#2A2F5C'], [0.42, '#3A4078'], [0.6, '#181B3C'], [1, '#07081A']], 1, 0)
       + rg(`${u}vi`, [[0, '#7A2BFF', 0.38], [1, '#7A2BFF', 0]]) + lg(`${u}fade`, [[0, '#FFFFFF', 0.5], [0.5, '#FFFFFF', 0]]),
@@ -295,21 +255,6 @@
       place: { x: 600, y: 886, h: 480 }, shadow: 'soft',
     };
   };
-
-  S['luxury-3'] = (u) => ({
-    defs: lg(`${u}w`, [[0, '#C9704F'], [1, '#B05C3D']]) + lg(`${u}sky`, [[0, '#F3D5B8'], [1, '#EBC09B']]) + lg(`${u}bk`, [[0, '#EBD3B0'], [1, '#D9BC94']])
-      + lg(`${u}bk2`, [[0, '#D8B98E'], [1, '#C7A57A']]) + rg(`${u}sph`, [[0, '#F2DCBB'], [0.7, '#D7B88E'], [1, '#B8966B']], 0.35, 0.3, 0.75),
-    bg: `<rect width="${W}" height="${W}" fill="url(#${u}w)"/>
-      <path d="M380,880V420A220,220 0 0 1 820,420V880Z" fill="url(#${u}sky)"/>
-      <path d="M380,880V420A220,220 0 0 1 820,420V880" fill="none" stroke="#9E4E32" stroke-width="10" opacity=".45"/>
-      <rect x="120" y="760" width="260" height="440" fill="url(#${u}bk2)"/><rect x="120" y="756" width="260" height="8" fill="#E9D2AE"/>
-      <circle cx="1000" cy="800" r="90" fill="url(#${u}sph)"/>
-      <rect x="290" y="866" width="660" height="340" fill="url(#${u}bk)"/><rect x="290" y="862" width="660" height="8" fill="#F5E3C6"/>
-      <path d="M380,760L520,866H380Z" fill="#5E2A16" opacity=".26"/><path d="M950,866L1200,1060V866Z" fill="#5E2A16" opacity=".22"/>
-      <path d="M1000,890L1200,980V840Z" fill="#5E2A16" opacity=".2"/>`,
-    fg: '', over: '',
-    place: { x: 640, y: 868, h: 470 }, shadow: 'sun',
-  });
 
   S['seasonal-1'] = (u) => {
     const rnd = A.rng(31);
@@ -341,20 +286,6 @@
       fg: `<path d="M-40,1150C200,1060 380,1180 600,1130C820,1080 960,1170 1240,1100L1240,1140C960,1210 820,1120 600,1170C380,1220 200,1100 -40,1190Z" fill="url(#${u}rib)" opacity=".95"/>${petals}${roses}`,
       over: '',
       place: { x: 600, y: 880, h: 480 }, shadow: 'soft',
-    };
-  };
-
-  S['seasonal-3'] = (u) => {
-    const sl = `<g transform="translate(1000,1050)"><circle r="78" fill="#F4D24A"/><circle r="70" fill="#FBEA9A"/>
-      ${Array.from({ length: 10 }, (_, i) => `<path d="M0,0L${f1(Math.cos((i * 36 * Math.PI) / 180) * 64)},${f1(Math.sin((i * 36 * Math.PI) / 180) * 64)}" stroke="#F7F1D6" stroke-width="4"/>`).join('')}<circle r="8" fill="#F7F1D6"/></g>`;
-    return {
-      defs: lg(`${u}w`, [[0, '#2B67A6'], [1, '#245891']]) + lg(`${u}ld`, [[0, '#FBF8F2'], [0.1, '#F1EBE0'], [0.12, '#DCD3C4'], [1, '#CFC5B4']]) + lg(`${u}lem`, [[0, '#F8DA4E'], [0.6, '#F2C230'], [1, '#D3A01E']], 1, 1),
-      bg: `<rect width="${W}" height="${W}" fill="url(#${u}w)"/>
-        <path d="M-100,-100H700L1300,600V-100Z" fill="#FFFFFF" opacity=".1"/>
-        <rect y="870" width="${W}" height="330" fill="url(#${u}ld)"/><path d="M0,870H1200" stroke="#FFFFFF" stroke-width="4"/>`,
-      fg: `${lemon(u, 210, 960, 76, -14)}${lemon(u, 330, 1030, 62, 18)}${lemon(u, 140, 1080, 70, 6)}${sl}`,
-      over: '',
-      place: { x: 640, y: 878, h: 480 }, shadow: 'sun',
     };
   };
 

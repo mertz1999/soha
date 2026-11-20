@@ -2,7 +2,7 @@
 
 Where every visual on `site/proposals/shopier/` comes from, and what it may be used for.
 
-**Status (2026-11-20):** all product, scene, people and garment visuals are **code-drawn illustrations** made for this proposal. Photo-realistic replacements are specified in [shopier-image-prompts.md](shopier-image-prompts.md) and have not been generated yet.
+**Status (2026-11-20):** the products and their scenes are **photographic**. The 11 Part A images from [shopier-image-prompts.md](shopier-image-prompts.md) are in. The try-on (models, garments, results) still uses **code-drawn illustrations** until Part B arrives.
 
 ## Third-party brand assets
 
@@ -35,16 +35,16 @@ Every visual below is an original, code-drawn illustration (SVG generated in the
 
 | Visual | Drawn by | Photo slot (file name) | Photo status |
 |---|---|---|---|
-| Hilal handbag, Damla earrings, Gül serum (products) | `assets/art-products.js` `A.product()` | `<product>-cutout` | Not generated |
-| Phone-photo originals | `art-products.js` scene `original` | `<product>-original` | Not generated |
-| 12 scenes per product (studio, lifestyle, luxury campaign, seasonal × 3) | `art-products.js` `A.scene()` | `<product>-<style>-<1–3>` | Not generated |
+| Phone-photo originals: Hilal handbag, Damla earrings on their stand, Gül serum | `assets/art-products.js` scene `original` | `<product>-original` (generated) | Delivered |
+| Product cut-outs (campaign layouts, scenes) | `art-products.js` `A.product()` | `<product>-cutout` (cut from the original on a Mac with `tools/proposals/cutout.swift`, not generated) | Made |
+| 8 scenes per product (studio, lifestyle, luxury campaign, seasonal × 2) | `art-products.js` `A.scene()` | Composited in the browser: `<product>-cutout` on `bg-<style>-<1–2>` (8 generated empty backgrounds shared by all products) | Backgrounds delivered |
 | Models Ada, Nil, Mira ("before") | `assets/art-people.js` `A.person(id, 'before')` | `model-<id>-before` | Not generated |
-| Garments: blazer, dress, jacket, co-ord (catalogue) | `art-people.js` `A.garment()` | `garment-<id>` | Not generated |
-| Try-on results (3 models × 4 garments) | `art-people.js` `A.person(id, garment)` | `tryon-<id>-<garment>` | Not generated |
+| Garments: blazer, dress, jacket (catalogue) | `art-people.js` `A.garment()` | `garment-<id>` | Not generated |
+| Try-on results (3 models × 3 garments) | `art-people.js` `A.person(id, garment)` | `tryon-<id>-<garment>` | Not generated |
 | Campaign creatives (3 directions × 4 formats) | `assets/campaign.js` `render()` | — (always rendered live: editable text over the product image) | n/a |
-| Social preview images `og-image.png`, `og-image-tr.png` | Rendered with headless Chrome from the illustrations above | — | Re-render once photos exist |
+| Social preview images `og-image.png`, `og-image-tr.png` | Rendered with headless Chrome from the bag photo, two composites and a campaign layout | — | Rendered from photos |
 
-**Product preservation.** In the illustrations, every scene uses one shared product drawing, so the product is identical by construction. The photo prompts require each scene to be an edit of the product's original photo, and the check list rejects any image where the product changes.
+**Product preservation.** In the illustrations, every scene uses one shared product drawing. With photos, every scene draws the cut-out taken from the product's own phone photo onto an empty background. Either way the product is identical by construction: no image model ever redraws it.
 
 **People.** The three models are fictional illustrations. They share one pose, so each before/after pair lines up. None depicts a real person.
 
@@ -53,4 +53,4 @@ Every visual below is an original, code-drawn illustration (SVG generated in the
 ## Not used
 
 - No stock photos, no images copied from Shopier or any other site, and no image collages.
-- No AI-generated images yet.
+- The phone photos and backgrounds are AI-generated example images made from the prompts, with fictional products. The page labels every result a prepared example.

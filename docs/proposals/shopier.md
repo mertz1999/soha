@@ -1,6 +1,6 @@
 # Proposal: Shopier (SOHA → Shopier)
 
-> **Status:** Published with illustrations (photos pending) · **Updated:** 2026-11-20
+> **Status:** Published with product photos (try-on photos pending) · **Updated:** 2026-11-20
 > **Pages:**
 > - English (default): `site/proposals/shopier/` → <https://mertz1999.github.io/soha/proposals/shopier/>
 > - Turkish: `site/proposals/shopier/tr/` → <https://mertz1999.github.io/soha/proposals/shopier/tr/>
@@ -54,9 +54,9 @@ shopier.com and appstore.shopier.com sit behind a Cloudflare bot check that auto
 |---|---|---|
 | 1 | Opening: "Bir Ürün Fotoğrafından Sınırsız Yaratıcılık." | The Hilal handbag wipes from phone photo → studio → lifestyle → campaign. Auto-advances, pauses on hover/focus, and is manual with reduced motion. A "same product" badge and a store-card chip. |
 | 2 | "Bir Fotoğraf. Üç Akıllı Deneyim." | Three large visual cards linking to the demos. A swipeable row on mobile. |
-| 3 | AI Product Studio: "Stüdyo Çekimi Olmadan, Stüdyo Kalitesinde." | Seller-panel frame. **Original** (3 demo products, local-only upload) · **Controls** (4 styles, 3 backgrounds per style, lighting, mood, format, the live brief line) · **Results** (compare slider, 3 variations, full size, reset). |
+| 3 | AI Product Studio: "Stüdyo Çekimi Olmadan, Stüdyo Kalitesinde." | Seller-panel frame. **Original** (3 demo products, local-only upload) · **Controls** (4 styles with 2 backgrounds each, lighting, mood, format, the live brief line) · **Results** (compare slider, 2 variations, full size, reset). |
 | 4 | AI Campaign Studio: "Üründen Kampanyaya. Tek Bir Akışta." | Product, brand name, palette or custom colour, logo upload, campaign name, message, discount, button. 3 directions × 4 formats rendered live. Click text in the preview to edit it. "The full set" shows all four formats at once. PNG/SVG export. |
-| 5 | AI Virtual Try-On: "Satın Almadan Önce Üzerinizde Görün." | 4 garments, 3 models, before/after slider, results-on-this-model strip, full size, reset. The upload card states the photo was not processed. |
+| 5 | AI Virtual Try-On: "Satın Almadan Önce Üzerinizde Görün." | 3 garments, 3 models, before/after slider, results-on-this-model strip, full size, reset. The upload card states the photo was not processed. |
 | 6 | "Tek Ürün. Tüm Görsel İçerikler." | The journey: upload → product photography → campaign → fashion visualisation → storefront (phone mock-up). Five workflow steps. "Shopier App Store için yeni bir AI deneyimi", marked as a possible future flow. |
 | 7 | "Shopier Satıcıları İçin Bir Sonraki Adım." | 15-minute call (mailto), Calendly, SOHA link, clients line, independence disclosure. |
 
@@ -69,20 +69,38 @@ shopier.com and appstore.shopier.com sit behind a Cloudflare bot check that auto
 - The disclosure states: independent proposal, not endorsed or sponsored by Shopier, no partner agreement, logo used only for identification, fictional products, brands, models and prices, images are examples.
 - Nothing claims a feature is missing from Shopier or on its roadmap. The App Store item is "a possible future flow, not an existing integration".
 
-## Images: illustrations now, photos later
+## Images
 
-All visuals are code-drawn (see [shopier-assets.md](shopier-assets.md)):
-- `art-products.js`: three products and 13 scenes.
-- `art-people.js`: three models and four garments, adapted from the Düğün.com people drawings.
+The products and their scenes use photos (Part A is in). The try-on still uses illustrations until its photos arrive. The illustrations stay as the fallback (see [shopier-assets.md](shopier-assets.md)):
+- `art-products.js`: three products (the earrings hang on a small brass stand) and their 8 scenes plus the phone-photo original.
+- `art-people.js`: three models and three garments, adapted from the Düğün.com people drawings.
 
-Every scene draws the same product drawing, so the product is identical across all variations.
+**How the photos work.** The photo set is 26 images, and only the 9 try-on results need input images ([shopier-image-prompts.md](shopier-image-prompts.md)):
+- **Product scenes are composited, not generated one by one.**
+  - Each product has one phone photo, `<product>-original`.
+  - On a Mac, `tools/proposals/cutout.swift` cuts the product out of it with Apple's Vision framework, giving `<product>-cutout`.
+  - The page draws that cut-out on 8 shared empty backgrounds (`bg-<style>-<n>`) in a canvas, with a contact shadow, a cast shadow, an optional reflection or rim light, and a light colour grade.
+  - So the product in every scene is the phone photo's own pixels, the same approach as the production pipeline.
+  - Placement and lighting per background live in `BG` in `assets/proposal.js`, and product size in `FIT`.
+  - The page makes three versions of each scene:
+    - a square one
+    - a 16:9 one for the 16:9 format, with the product at a natural size instead of filling a crop
+    - an `ad` one for the editorial campaign layouts, with the product raised above the headline and the surface mirrored into the strip below
+  - Wide crops (the 16:9 compare, the variation and style thumbnails) centre on the product using `--fy`, set from the same table.
+  - All scenes are built in the background after the page loads, so switching is instant.
+- **Try-on** is 3 models × 3 garments, each result an edit of the model's "before" photo.
 
 To add photos:
-1. Generate them with [shopier-image-prompts.md](shopier-image-prompts.md).
-2. Convert each to WebP: `cwebp -q 82 in.jpg -o site/proposals/shopier/assets/photos/<name>.webp`. Use `-exact` for transparent cut-outs.
-3. Add each base name to `PHOTOS` in `assets/proposal.js`, for example `'bag-studio-1'`.
+1. Cut out each product:
+   ```bash
+   swift tools/proposals/cutout.swift bag-original.jpg /tmp/bag-cutout.png
+   ```
+   Then convert it: `cwebp -q 90 -alpha_q 100 -exact /tmp/bag-cutout.png -o site/proposals/shopier/assets/photos/bag-cutout.webp`.
+2. Convert every other photo to WebP: `cwebp -q 82 in.jpg -o site/proposals/shopier/assets/photos/<name>.webp`.
+3. Add each base name to `PHOTOS` in `assets/proposal.js`, for example `'bag-original'`, `'bag-cutout'`, `'bg-studio-1'`.
+4. Check each background on the page and tune its entry in `BG` (`base` is where the product stands, `x` its centre, `scale` its size, and `cast`, `tint`, `dark`, `reflect` and `rim` set the light).
 
-Missing or broken photos fall back to the illustration automatically. Then re-render the social images (below).
+A scene uses the composite only when both its cut-out and its background are listed. Missing or broken photos fall back to the illustration automatically. Then re-render the social images (below).
 
 ## Run it locally
 
@@ -100,17 +118,19 @@ Open <http://localhost:4321/proposals/shopier/> (Turkish: `/proposals/shopier/tr
 | `site/proposals/shopier/tr/index.html` | Turkish page, generated by `tools/proposals/shopier_tr.py` |
 | `assets/shopier.css` | Design system, layouts, responsive rules |
 | `assets/art-core.js` | Shared drawing helpers (from the Düğün.com proposal, namespace `SArt`) |
-| `assets/art-products.js` | Products, cut-outs and the 13 scenes |
+| `assets/art-products.js` | Products, cut-outs and the 8 scenes (illustrations) |
 | `assets/art-people.js` | Models, garments, try-on and catalogue drawings |
 | `assets/campaign.js` | Campaign layout engine (3 directions × 4 formats), font loading, PNG/SVG export |
-| `assets/proposal.js` | Demo content, all interactions, photo resolver, navigation |
+| `assets/proposal.js` | Demo content, all interactions, photo resolver, scene compositing, navigation |
 | `assets/og-image.png`, `og-image-tr.png` | Social previews, 1200 × 630 |
 | `assets/photos/` | Photo slots (empty for now) |
+| `tools/proposals/cutout.swift` | Cuts a product out of its phone photo (macOS 14 or later, Apple Vision) |
 
 ## Editing
 
 - **English copy:** edit `index.html`, then run `python3 tools/proposals/shopier_tr.py`. It fails loudly if a translated string changed, so update the pair in the script.
 - **Script strings, products, garments and copy defaults:** `PRODUCTS`, `STYLES`, `COPY`, `GARMENTS` and `STR` in `proposal.js`, all written as `L(tr, en)`.
+- **Scene placement and light:** `BG`, `BG0`, `FIT` and `CAST` in `proposal.js`.
 - **Campaign directions:** `editorial()`, `bold()` and `minimal()` in `campaign.js`. Each branches per format.
 - **Social images:** render a 1200 × 717 composition with headless Chrome (`--window-size=1200,717`), then crop the top 1200 × 630 with `ffmpeg -vf crop=1200:630:0:0`.
 
@@ -124,5 +144,11 @@ Open <http://localhost:4321/proposals/shopier/> (Turkish: `/proposals/shopier/tr
   - Try-on: model, garment, looks strip, full size, reset.
 - Keyboard: arrow keys move inside every radio group. Arrow Up/Down, Page Up/Down, Home and End move between slides outside controls. The EN/TR switch keeps the section (`tr/#s4`).
 - Exports: PNG export returns a PNG; SVG export is self-contained (fonts and images inlined, no `blob:` links).
+- Product photos (Part A):
+  - All 24 product × background composites checked at full size, with placement, shadows and grading tuned per background.
+  - Edges checked on dark scenes; the cutout tool now cleans edge colour.
+  - The opening, studio (all four formats), campaign (3 directions × 4 formats for each product), the three cards and the flow section checked at 1440 × 900.
+  - Mobile checked at 375 px, with no horizontal overflow. No console errors.
+- Social images re-rendered from the photos.
 - Turkish: all visible strings, alt text and ARIA labels translated; Turkish casing in campaign copy; brand names keep their spelling.
 - Mobile layouts checked at 390 px and 375 px through fixed-width iframes, because headless Chrome won't render a window under about 500 px.

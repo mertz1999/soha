@@ -137,33 +137,9 @@
     };
   };
 
-  /* Blue and white striped poplin co-ord: an oversized shirt with rolled sleeves and matching wide trousers. */
-  G.coord = (u) => {
-    const shirt = 'M284,156C270,166 244,172 228,178C214,184 207,194 207,208L209,300C211,350 215,392 219,424C250,434 276,436 300,436C324,436 350,434 381,424C385,392 389,350 391,300L393,208C393,194 386,184 372,178C356,172 330,166 316,156C310,166 305,170 300,170C295,170 290,166 284,156Z';
-    const pants = 'M252,420H348C358,450 366,480 370,520C374,600 377,680 380,766C356,770 328,771 304,769L300,520L296,769C272,771 244,770 220,766C223,680 226,600 230,520C234,480 242,450 252,420Z';
-    const [sl, sr] = sleeve([54, 49, 45, 41, 38], 5);
-    const cuffL = limb(ARM.c.slice(3, 5), [42, 40]), cuffR = limb(mirror(ARM.c.slice(3, 5)), [42, 40]);
-    return {
-      defs: `<pattern id="${u}st" width="14" height="14" patternUnits="userSpaceOnUse"><rect width="14" height="14" fill="#F7F8FA"/><rect width="5" height="14" fill="#3E6FAE"/></pattern>
-        <linearGradient id="${u}sh" x1="0" x2="1"><stop offset="0" stop-color="#1C2C44" stop-opacity=".3"/><stop offset=".3" stop-color="#1C2C44" stop-opacity="0"/><stop offset=".7" stop-color="#1C2C44" stop-opacity="0"/><stop offset="1" stop-color="#1C2C44" stop-opacity=".3"/></linearGradient>`,
-      body: `<path d="${pants}" fill="url(#${u}st)"/><path d="${pants}" fill="url(#${u}sh)"/>
-        <path d="M300,520V769M266,450C262,560 258,670 256,766M334,450C338,560 342,670 344,766" stroke="#1C2C44" stroke-width="1.2" fill="none" opacity=".35"/>
-        <path d="${shirt}" fill="url(#${u}st)"/><path d="${shirt}" fill="url(#${u}sh)"/>
-        <rect x="295" y="172" width="10" height="262" fill="#F7F8FA"/><path d="M295,172V434M305,172V434" stroke="#C9D3E2" stroke-width="1"/>
-        <g fill="#FFFFFF" stroke="#B9C4D4" stroke-width=".8">${[204, 248, 292, 336, 380].map((y) => `<circle cx="300" cy="${y}" r="3.2"/>`).join('')}</g>
-        <path d="M219,424C250,434 350,434 381,424" stroke="#1C2C44" stroke-width="1.2" fill="none" opacity=".4"/>`,
-      inner: '<path d="M286,158C292,168 296,171 300,171C304,171 308,168 314,158L300,190Z" fill="#9FB3CF"/>',
-      front: '<path d="M284,156L270,186L298,198L300,172Z" fill="url(#' + u + 'st)" stroke="#9FB0C8" stroke-width="1"/><path d="M316,156L330,186L302,198L300,172Z" fill="url(#' + u + 'st)" stroke="#9FB0C8" stroke-width="1"/>',
-      sleeves: `<path d="${sl}" fill="url(#${u}st)"/><path d="${sr}" fill="url(#${u}st)"/><path d="${sl}" fill="url(#${u}sh)"/><path d="${sr}" fill="url(#${u}sh)"/>
-        <path d="${cuffL}" fill="#F2F4F8" stroke="#B9C4D4" stroke-width="1"/><path d="${cuffR}" fill="#F2F4F8" stroke="#B9C4D4" stroke-width="1"/>`,
-      keepTop: false, keepPants: false, shoes: 'loafers',
-    };
-  };
-
   const SHOES = {
     heels: (b) => b.heels,
     sandals: () => '<path d="M242,764Q250,784 282,782Q288,776 284,766Z" fill="#C9A27F"/><path d="M358,764Q350,784 318,782Q312,776 316,766Z" fill="#C9A27F"/><path d="M252,758L278,770M348,758L322,770" stroke="#A9825F" stroke-width="4"/>',
-    loafers: () => '<path d="M222,764Q222,788 254,788Q284,788 284,772L282,762Z" fill="#F4F2EE" stroke="#CFCAC2" stroke-width="1.2"/><path d="M378,764Q378,788 346,788Q316,788 316,772L318,762Z" fill="#F4F2EE" stroke="#CFCAC2" stroke-width="1.2"/><path d="M224,782H282M376,782H318" stroke="#BDB6AA" stroke-width="2"/>',
   };
 
   /* Folds and sparkle for a skirt that runs from the waist (y0, half-width w0) to the hem (y1, half-width w1). */
@@ -279,13 +255,13 @@
   };
 
   /* A garment on its own, ghost-mannequin style, for the catalogue. */
-  const FRAME = { blazer: [303, 1.3], jacket: [250, 1.45], dress: [405, 1.08], coord: [463, 1.0] };
+  const FRAME = { blazer: [303, 1.3], jacket: [250, 1.45], dress: [405, 1.08] };
   A.garment = function (id) {
     const u = `g${id}`; const gm = G[id](u); const b = base(u); const [cy, k] = FRAME[id];
     const defs = A.filters(u) + backdropDefs(u) + b.defs + gm.defs;
     const sl = id === 'dress' ? shortSleeve(u, `url(#${u}dr)`, '#8E4226') : gm.sleeves;
     const body = backdrop(u, 'catalog') + `<ellipse cx="300" cy="760" rx="170" ry="14" fill="url(#${u}shadow)"/>`
-      + `<g transform="translate(300,${id === 'coord' ? 390 : 400}) scale(${k}) translate(-300,${-cy})">${gm.inner}${gm.body}${sl}${gm.front}</g>`
+      + `<g transform="translate(300,400) scale(${k}) translate(-300,${-cy})">${gm.inner}${gm.body}${sl}${gm.front}</g>`
       + `<rect width="600" height="800" filter="url(#${u}grain)" opacity=".7"/>`;
     return A.svg(600, 800, defs, body, 'aria-hidden="true"');
   };

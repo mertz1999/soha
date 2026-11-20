@@ -138,6 +138,7 @@ Seller catalogue (Products API, OAuth)          Seller brand profile
 
 The prototype already has the right seams:
 - `PHOTOS` / `pic()` in `assets/proposal.js` resolve an image by `(product, style, variation)`. In production this becomes `GET /v1/products/{id}/images?style=…&variation=…`, returning approved or freshly generated assets.
+- The prototype already composites like the production pipeline. It cuts the product out of the phone photo (Apple Vision, offline), places that cut-out on a generated empty background in a canvas, and adds a contact shadow, cast shadow and light grade. Production replaces the fixed backgrounds with backgrounds generated around the mask, plus a learned relighting pass.
 - `campaign.js` `render(spec)` is the template engine. In production the same spec format is filled by the copy model and rendered both in the browser (preview) and on the server (export).
 - The upload controls already keep files local. In production they post to a signed upload URL, only after the consent step for personal photos.
 

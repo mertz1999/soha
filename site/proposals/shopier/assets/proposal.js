@@ -20,22 +20,21 @@
     serum: { name: 'Gül Serum', brand: 'Nemra Skin' },
   };
   const STYLES = [
-    { id: 'studio', name: L('Stüdyo', 'Studio'), vars: [L('Fildişi set', 'Ivory set'), L('Traverten kaide', 'Travertine plinth'), L('Gölge oyunu', 'Light and shadow')] },
-    { id: 'lifestyle', name: L('Yaşam', 'Lifestyle'), vars: [L('Mermer kafe', 'Marble café'), L('Ege terası', 'Aegean terrace'), L('Ev konsolu', 'Home console')] },
-    { id: 'luxury', name: L('Lüks Kampanya', 'Luxury Campaign'), vars: [L('Gece sahnesi', 'Night stage'), L('İpek drape', 'Silk drape'), L('Heykelsi bloklar', 'Sculptural blocks')] },
-    { id: 'seasonal', name: L('Sezonluk', 'Seasonal'), vars: [L('Yılbaşı', 'New Year'), L('Sevgililer Günü', 'Valentine’s Day'), L('Yaz', 'Summer')] },
+    { id: 'studio', name: L('Stüdyo', 'Studio'), vars: [L('Fildişi set', 'Ivory set'), L('Traverten kaide', 'Travertine plinth')] },
+    { id: 'lifestyle', name: L('Yaşam', 'Lifestyle'), vars: [L('Mermer kafe', 'Marble café'), L('Ege terası', 'Aegean terrace')] },
+    { id: 'luxury', name: L('Lüks Kampanya', 'Luxury Campaign'), vars: [L('Gece sahnesi', 'Night stage'), L('İpek drape', 'Silk drape')] },
+    { id: 'seasonal', name: L('Sezonluk', 'Seasonal'), vars: [L('Yılbaşı', 'New Year'), L('Sevgililer Günü', 'Valentine’s Day')] },
   ];
   const STYLE = Object.fromEntries(STYLES.map((s) => [s.id, s]));
   const COPY = {
     bag: { brand: 'Saye Atelier', title: L('Yeni Sezon Koleksiyonu', 'New Season Collection'), message: L('El yapımı deri, zamansız form.', 'Handmade leather, timeless form.'), discount: 20, cta: L('Keşfet', 'Shop now'), palette: 'night', scene: 'lifestyle-1' },
     earrings: { brand: 'Ilgın Jewelry', title: L('Işıltının Yeni Hali', 'A New Kind of Shine'), message: L('Altın kaplama, tatlı su incisi.', 'Gold plated, freshwater pearl.'), discount: 0, cta: L('İncele', 'Discover'), palette: 'sand', scene: 'luxury-1' },
-    serum: { brand: 'Nemra Skin', title: L('Gül Serum Burada', 'Meet Gül Serum'), message: L('Her gün nem ve doğal ışıltı.', 'Daily moisture, natural glow.'), discount: 15, cta: L('Hemen Al', 'Buy now'), palette: 'terra', scene: 'studio-3' },
+    serum: { brand: 'Nemra Skin', title: L('Gül Serum Burada', 'Meet Gül Serum'), message: L('Her gün nem ve doğal ışıltı.', 'Daily moisture, natural glow.'), discount: 15, cta: L('Hemen Al', 'Buy now'), palette: 'terra', scene: 'studio-2' },
   };
   const GARMENTS = [
     { id: 'blazer', name: L('Kruvaze Keten Blazer', 'Double-Breasted Linen Blazer'), price: 3490 },
     { id: 'dress', name: L('Keten Gömlek Elbise', 'Linen Shirt Dress'), price: 2790 },
     { id: 'jacket', name: L('Kısa Süet Ceket', 'Cropped Suede Jacket'), price: 4990 },
-    { id: 'coord', name: L('Çizgili Poplin Takım', 'Striped Poplin Co-ord'), price: 3290 },
   ];
   const GAR = Object.fromEntries(GARMENTS.map((g) => [g.id, g]));
   const MODELS = [{ id: 'ada', name: 'Ada' }, { id: 'nil', name: 'Nil' }, { id: 'mira', name: 'Mira' }];
@@ -69,9 +68,16 @@
 
   /* ------------------------------------------------------------ images
      Photos generated in advance live in assets/photos/ and are listed in PHOTOS once they exist.
+     Product scenes are not separate photos. Each product is cut out of its one phone photo (<product>-cutout,
+     made on a Mac with tools/proposals/cutout.swift) and placed here, in the browser, on a shared empty
+     background (bg-<style>-<n>) with a shadow and a light grade to match the scene. So the product in every
+     scene is the original photo's own pixels, as in the production pipeline.
      Anything not listed uses its code-drawn illustration, and a photo that fails to load falls back too. */
   const PHOTO_DIR = new URL('photos/', document.currentScript.src).href;
-  const PHOTOS = new Set([]);
+  const PHOTOS = new Set([
+    'bag-original', 'earrings-original', 'serum-original', 'bag-cutout', 'earrings-cutout', 'serum-cutout',
+    'bg-studio-1', 'bg-studio-2', 'bg-lifestyle-1', 'bg-lifestyle-2', 'bg-luxury-1', 'bg-luxury-2', 'bg-seasonal-1', 'bg-seasonal-2',
+  ]);
   const fallback = (spec) => {
     const [k, a, b] = spec.split(':');
     if (k === 'p') return A.sceneUrl(a, b);
@@ -86,11 +92,151 @@
     if (k === 'g') return `garment-${a}`;
     return `${a}-cutout`;
   };
-  const pic = (spec) => { const f = fileOf(spec); return PHOTOS.has(f) ? `${PHOTO_DIR}${f}.webp` : fallback(spec); };
-  const setPic = (img, spec) => { img.dataset.fb = spec; delete img.dataset.fell; img.src = pic(spec); };
+  const isScene = (spec) => spec.startsWith('p:') && !spec.endsWith(':original'); // includes the :wide versions
+  const pic = (spec) => { if (isScene(spec)) return scenePic(spec); const f = fileOf(spec); return PHOTOS.has(f) ? `${PHOTO_DIR}${f}.webp` : fallback(spec); };
+  // While a scene is still being composited, the image keeps what it showed before; it updates when ready.
+  const setPic = (img, spec) => {
+    img.dataset.fb = spec; delete img.dataset.fell; const c = focusY(spec);
+    if (c == null) img.style.removeProperty('--fy'); else img.style.setProperty('--fy', c);
+    const u = pic(spec); if (u !== BLANK || !img.getAttribute('src') || img.src === BLANK) img.src = u;
+  };
   document.addEventListener('error', (e) => { const t = e.target; if (t.tagName === 'IMG' && t.dataset.fb && !t.dataset.fell) { t.dataset.fell = '1'; t.src = fallback(t.dataset.fb); } }, true);
+
+  /* Where the product stands in each background (x and base as fractions of the square, scale on top of FIT)
+     and how the scene lights it. The light comes from the left in every background. Tuned per photo. */
+  const BG0 = { x: 0.5, base: 0.78, scale: 1, cast: 'soft', contact: 0.5, lit: 0.06, shade: 0.16, tint: '', ta: 0, dark: 0, reflect: 0, rim: '' };
+  const BG = {
+    'studio-1': { base: 0.84 },
+    'studio-2': { base: 0.82, cast: 'side' },
+    'lifestyle-1': { base: 0.85, cast: 'sun', tint: '#F6E3C6', ta: 0.07, lit: 0.1 },
+    'lifestyle-2': { base: 0.81, cast: 'sun', lit: 0.12, tint: '#FFE2B5', ta: 0.09 },
+    'luxury-1': { base: 0.775, cast: 'none', contact: 0.7, dark: 0.2, reflect: 0.24, rim: 'rgba(178,150,255,.6)' },
+    'luxury-2': { base: 0.85, tint: '#E9C3D6', ta: 0.08, dark: 0.12 },
+    'seasonal-1': { base: 0.86, tint: '#FFC890', ta: 0.1, dark: 0.1 },
+    'seasonal-2': { base: 0.8, tint: '#FFCAD2', ta: 0.08 },
+  };
+  const FIT = { bag: 0.5, earrings: 0.48, serum: 0.46 }; // product height as a share of the frame
+  // Cast shadows: skew to the right, depth (positive falls behind the product, negative towards the camera), opacity, blur.
+  const CAST = { soft: [0.35, 0.14, 0.2, 26], side: [0.6, 0.17, 0.24, 16], sun: [0.55, -0.13, 0.3, 7] };
+  const IMGS = new Map();
+  const load = (f) => {
+    if (!IMGS.has(f)) IMGS.set(f, new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = `${PHOTO_DIR}${f}.webp`; }));
+    return IMGS.get(f);
+  };
+  const layer = (w, h) => { const c = document.createElement('canvas'); c.width = Math.max(1, Math.round(w)); c.height = Math.max(1, Math.round(h)); return c; };
+  // Left and right edge of the product's bottom rows (its footprint), as fractions of the cut-out width.
+  const footOf = (img) => {
+    const w = 160, h = Math.max(8, Math.round((w * img.naturalHeight) / img.naturalWidth));
+    const t = layer(w, h).getContext('2d', { willReadFrequently: true }); t.drawImage(img, 0, 0, w, h);
+    const rows = Math.max(2, Math.round(h * 0.04)); const d = t.getImageData(0, h - rows, w, rows).data; let l = w, r = -1;
+    for (let i = 3; i < d.length; i += 4) if (d[i] > 128) { const x = ((i - 3) / 4) % w; l = Math.min(l, x); r = Math.max(r, x); }
+    return r < l ? [0.25, 0.75] : [l / w, (r + 1) / w];
+  };
+  // Square by default. Two variants:
+  // - 'wide' is a 16:9 version for the 16:9 format: a band of the background around the surface, with the
+  //   product at a natural size in it, rather than a crop that would fill the frame with it.
+  // - 'ad' is for the editorial campaign layouts, whose headline sits over the bottom of the image: the scene
+  //   moves up so the product ends above the text, and the strip left at the bottom mirrors the surface.
+  async function composite(kind, scene, variant) {
+    const wide = variant === 'wide', ad = variant === 'ad';
+    const [bg, cut] = await Promise.all([load(`bg-${scene}`), load(`${kind}-cutout`)]);
+    const m = { ...BG0, ...BG[scene] }; const N = 1200, H = wide ? Math.round((N * 9) / 16) : N;
+    const cv = layer(N, H); const x = cv.getContext('2d');
+    const r = Math.max(N / bg.naturalWidth, N / bg.naturalHeight), bw = bg.naturalWidth * r, bh = bg.naturalHeight * r;
+    const top = wide ? Math.min(0, Math.max(H - bh, H * 0.82 - m.base * bh)) : ad ? Math.min((H - bh) / 2, H * 0.64 - m.base * bh) : (H - bh) / 2;
+    x.drawImage(bg, (N - bw) / 2, top, bw, bh);
+    if (top + bh < H) { x.save(); x.translate(0, 2 * (top + bh)); x.scale(1, -1); x.drawImage(bg, (N - bw) / 2, top, bw, bh); x.restore(); }
+    const ph = (wide ? H * 0.6 : N * FIT[kind] * (ad ? 0.8 : 1)) * m.scale, pw = (ph * cut.naturalWidth) / cut.naturalHeight;
+    const cx = N * m.x, by = top + m.base * bh, px = cx - pw / 2, py = by - ph;
+    // The product, graded to the scene: lit from the left, a little shade on the right, the scene's colour cast.
+    const pc = layer(pw, ph); const p = pc.getContext('2d');
+    p.drawImage(cut, 0, 0, pc.width, pc.height); p.globalCompositeOperation = 'source-atop';
+    const g = p.createLinearGradient(0, 0, pc.width, 0);
+    g.addColorStop(0, `rgba(255,255,255,${m.lit})`); g.addColorStop(0.45, 'rgba(255,255,255,0)'); g.addColorStop(1, `rgba(0,0,0,${m.shade})`);
+    p.fillStyle = g; p.fillRect(0, 0, pc.width, pc.height);
+    if (m.ta) { p.globalAlpha = m.ta; p.fillStyle = m.tint; p.fillRect(0, 0, pc.width, pc.height); p.globalAlpha = 1; }
+    if (m.dark) { p.fillStyle = `rgba(0,0,0,${m.dark})`; p.fillRect(0, 0, pc.width, pc.height); }
+    // Rim light: a thin strip along the product's own left and top edges, in the scene's light colour.
+    if (m.rim) {
+      const ec = layer(pw, ph); const e = ec.getContext('2d'); const d = Math.max(2, pw * 0.012);
+      e.drawImage(cut, 0, 0, ec.width, ec.height); e.globalCompositeOperation = 'destination-out'; e.drawImage(cut, d, d * 0.7, ec.width, ec.height);
+      e.globalCompositeOperation = 'source-in'; e.fillStyle = m.rim; e.fillRect(0, 0, ec.width, ec.height);
+      p.globalCompositeOperation = 'screen'; p.drawImage(ec, 0, 0); p.globalCompositeOperation = 'source-over';
+    }
+    // Shadows use the canvas shadow blur: the shape is drawn off the canvas and only its shadow lands in frame.
+    const OFF = N * 4; // (H is the height, N the width)
+    const ghost = (t, color, blur, dx = 0, dy = 0) => {
+      x.save(); x.shadowColor = color; x.shadowBlur = blur; x.shadowOffsetX = OFF + dx; x.shadowOffsetY = dy;
+      x.setTransform(t[0], t[1], t[2], t[3], t[4] - OFF, t[5]); x.drawImage(pc, -pw / 2, -ph, pw, ph); x.restore();
+    };
+    if (CAST[m.cast]) { const [sk, dp, op, bl] = CAST[m.cast]; ghost([1, 0, -sk, dp, cx, by], `rgba(28,18,10,${op})`, bl); }
+    const [fl, fr] = footOf(cut); const fx = px + pw * ((fl + fr) / 2), rx = Math.max(pw * 0.18, pw * (fr - fl) * 0.62);
+    [[rx, rx * 0.09, m.contact], [rx * 1.5, rx * 0.2, m.contact * 0.45]].forEach(([a, b, o]) => {
+      x.save(); x.translate(fx, by); x.scale(1, b / a); const rg = x.createRadialGradient(0, 0, 0, 0, 0, a);
+      rg.addColorStop(0, `rgba(22,14,8,${o})`); rg.addColorStop(1, 'rgba(22,14,8,0)'); x.fillStyle = rg; x.fillRect(-a, -a, 2 * a, 2 * a); x.restore();
+    });
+    if (m.reflect) {
+      const rc = layer(pw, ph * 0.45); const rr = rc.getContext('2d');
+      rr.translate(0, pc.height); rr.scale(1, -1); rr.drawImage(pc, 0, 0); rr.setTransform(1, 0, 0, 1, 0, 0);
+      const fade = rr.createLinearGradient(0, 0, 0, rc.height); fade.addColorStop(0, `rgba(0,0,0,${m.reflect})`); fade.addColorStop(1, 'rgba(0,0,0,0)');
+      rr.globalCompositeOperation = 'destination-in'; rr.fillStyle = fade; rr.fillRect(0, 0, rc.width, rc.height);
+      x.drawImage(rc, px, by + 2, pw, ph * 0.45);
+    }
+    x.drawImage(pc, px, py, pw, ph);
+    return toUrl(cv);
+  }
+  const toUrl = async (cv) => {
+    const blob = await new Promise((res, rej) => cv.toBlob((b) => (b ? res(b) : rej(new Error('blob'))), 'image/jpeg', 0.9));
+    return URL.createObjectURL(blob);
+  };
+  // The phone photo in a 16:9 frame: the whole photo, centred on a blurred, darkened copy of itself.
+  async function framedOriginal(kind) {
+    const ph = await load(`${kind}-original`); const W = 1200, H = 675;
+    const cv = layer(W, H); const x = cv.getContext('2d');
+    const sm = layer(48, 27); sm.getContext('2d').drawImage(ph, 0, (ph.naturalHeight - (ph.naturalWidth * 9) / 16) / 2, ph.naturalWidth, (ph.naturalWidth * 9) / 16, 0, 0, 48, 27);
+    x.imageSmoothingQuality = 'high'; x.drawImage(sm, 0, 0, W, H); x.fillStyle = 'rgba(20,16,12,.18)'; x.fillRect(0, 0, W, H);
+    const w = (H * ph.naturalWidth) / ph.naturalHeight; x.drawImage(ph, (W - w) / 2, 0, w, H);
+    return toUrl(cv);
+  }
+  // Where the product's centre sits in a composited scene (fraction of the height), so wide crops keep it in
+  // view (the --fy property, used in shopier.css). Null for illustrations, which use the CSS defaults.
+  function focusY(spec) {
+    if (!isScene(spec)) return null; const [, k, s, f] = spec.split(':');
+    if (f || !hasPhotos(k, s)) return null;
+    const m = { ...BG0, ...BG[s] }; return +(m.base - (FIT[k] * m.scale) / 2).toFixed(3);
+  }
+  // A scene image: the composite once it is ready (a blank frame for the few milliseconds before), or the
+  // illustration when the photos for it are not there.
+  const BLANK = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR4nGN49ewBAAVuArGJTF5AAAAAAElFTkSuQmCC'; // a plain warm-grey pixel
+  const SCENES = new Map(); const CUT_RATIO = {};
+  let artQueued = false;
+  const queueArt = () => { if (artQueued) return; artQueued = true; setTimeout(() => { artQueued = false; csRender(false); staticAds(); }, 0); };
+  const hasPhotos = (k, s) => (s === 'original' ? PHOTOS.has(`${k}-original`) : PHOTOS.has(`${k}-cutout`) && PHOTOS.has(`bg-${s}`));
+  function scenePic(spec) {
+    const [, k, s, f] = spec.split(':');
+    if (!hasPhotos(k, s)) return fallback(spec);
+    let e = SCENES.get(spec);
+    if (!e) {
+      e = {}; SCENES.set(spec, e);
+      e.p = (s === 'original' ? framedOriginal(k) : composite(k, s, f)).then((u) => { e.url = u; }, () => { e.failed = true; }).then(() => {
+        $$('img[data-fb]').forEach((img) => { if (img.dataset.fb === spec && !img.dataset.fell) img.src = pic(spec); });
+        const main = spec.split(':').slice(0, 3).join(':');
+        if (main === 'p:bag:luxury-1' || Object.entries(lastScene).some(([pk, ps]) => main === `p:${pk}:${ps}`)) queueArt();
+      });
+    }
+    return e.url || (e.failed ? fallback(spec) : BLANK);
+  }
+  // The campaign layouts size the product shadow from the cut-out's proportions.
+  Object.keys(PRODUCTS).forEach((k) => { if (PHOTOS.has(`${k}-cutout`)) load(`${k}-cutout`).then((i) => { CUT_RATIO[k] = i.naturalWidth / i.naturalHeight; queueArt(); }, () => {}); });
+  // After the page has loaded, build the remaining scenes one by one, so switching is instant later.
+  window.addEventListener('load', () => setTimeout(async () => {
+    for (const k of Object.keys(PRODUCTS)) for (const st of STYLES) for (let i = 1; i <= st.vars.length; i++) {
+      const spec = `p:${k}:${st.id}-${i}`; if (SCENES.has(spec)) continue;
+      scenePic(spec); const e = SCENES.get(spec); if (e && e.p) await e.p;
+    }
+  }, 1200));
   $$('[data-pic]').forEach((img) => { img.decoding = 'async'; setPic(img, img.dataset.pic); });
-  const imgTag = (spec, alt = '', extra = '') => `<img src="${pic(spec)}" data-fb="${spec}" alt="${esc(alt)}" decoding="async"${extra}>`;
+  const imgTag = (spec, alt = '', extra = '') => { const c = focusY(spec); return `<img src="${pic(spec)}" data-fb="${spec}" alt="${esc(alt)}" decoding="async"${c == null ? '' : ` style="--fy:${c}"`}${extra}>`; };
 
   /* ------------------------------------------------------------ shared bits */
   const toastEl = $('#toast'); let toastT;
@@ -133,10 +279,10 @@
   const lastScene = { bag: COPY.bag.scene, earrings: COPY.earrings.scene, serum: COPY.serum.scene };
   const campSpec = (o) => {
     const k = o.kind || 'bag'; const c = COPY[k];
-    return { direction: 'editorial', format: 'portrait', kind: k, brand: c.brand, title: c.title, message: c.message, discount: c.discount, cta: c.cta, palette: c.palette, logo: null, color: null, img: { cut: pic(`cut:${k}`), scene: pic(`p:${k}:${lastScene[k]}`) }, ...o };
+    return { direction: 'editorial', format: 'portrait', kind: k, brand: c.brand, title: c.title, message: c.message, discount: c.discount, cta: c.cta, palette: c.palette, logo: null, color: null, img: { cut: pic(`cut:${k}`), scene: pic(`p:${k}:${lastScene[k]}`), sceneAd: pic(`p:${k}:${lastScene[k]}:ad`), ratio: CUT_RATIO[k] }, ...o };
   };
   function staticAds() {
-    const hero = $('[data-hero-ad]'); if (hero) hero.innerHTML = C.render(campSpec({ format: 'portrait', discount: 0, img: { cut: pic('cut:bag'), scene: pic('p:bag:luxury-1') } }));
+    const hero = $('[data-hero-ad]'); if (hero) hero.innerHTML = C.render(campSpec({ format: 'portrait', discount: 0, img: { cut: pic('cut:bag'), scene: pic('p:bag:luxury-1'), sceneAd: pic('p:bag:luxury-1:ad'), ratio: CUT_RATIO.bag } }));
     const trio = $('[data-trio-ad]'); if (trio) trio.innerHTML = C.render(campSpec({ direction: 'bold', format: 'story', palette: 'violet' }));
     const flow = $('[data-flow-ad]'); if (flow) flow.innerHTML = C.render(campSpec({ direction: 'bold', format: 'post', palette: 'violet' }));
   }
@@ -187,8 +333,9 @@
   function psResult(doSweep) {
     const p = PRODUCTS[ps.kind]; const s = STYLE[ps.style]; const v = s.vars[ps.v];
     setPic($('#ps-orig'), `p:${ps.kind}:original`); $('#ps-orig').alt = STR.origAlt(p.name);
-    setPic($('#ps-before'), `p:${ps.kind}:original`); $('#ps-before').alt = STR.origAlt(p.name);
-    const after = $('#ps-after'); setPic(after, `p:${ps.kind}:${sceneId()}`); after.alt = STR.resultAlt(p.name, s.name, v);
+    const wide = ps.ratio === '16/9' ? ':wide' : '';
+    setPic($('#ps-before'), `p:${ps.kind}:original${wide}`); $('#ps-before').alt = STR.origAlt(p.name);
+    const after = $('#ps-after'); setPic(after, `p:${ps.kind}:${sceneId()}${wide}`); after.alt = STR.resultAlt(p.name, s.name, v);
     after.dataset.light = ps.light; after.dataset.mood = ps.mood;
     $('#ps-lab').textContent = s.name; $('#ps-crumb').textContent = p.name;
     psCmp.style.setProperty('--ratio', ps.ratio.replace('/', ' / ')); psCmp.dataset.ratio = ps.ratio;
@@ -232,7 +379,7 @@
   const spec = (format) => ({
     direction: cs.direction, format, kind: cs.kind, brand: cs.brand, title: cs.title, message: cs.message,
     discount: cs.discountOn ? cs.discount : 0, cta: cs.cta, logo: cs.logo, palette: cs.palette, color: cs.color,
-    img: { cut: pic(`cut:${cs.kind}`), scene: pic(`p:${cs.kind}:${lastScene[cs.kind]}`) },
+    img: { cut: pic(`cut:${cs.kind}`), scene: pic(`p:${cs.kind}:${lastScene[cs.kind]}`), sceneAd: pic(`p:${cs.kind}:${lastScene[cs.kind]}:ad`), ratio: CUT_RATIO[cs.kind] },
   });
   function csProducts() {
     $('#cs-products').innerHTML = Object.entries(PRODUCTS).map(([k, p]) => `<button type="button" role="radio" aria-checked="${k === cs.kind}" tabindex="${k === cs.kind ? 0 : -1}" data-v="${k}">${imgTag(`p:${k}:studio-1`)}<span>${esc(p.name)}</span></button>`).join('');
