@@ -2,7 +2,7 @@
 
 Where every visual on `site/proposals/shopier/` comes from, and what it may be used for.
 
-**Status (2026-11-20):** the products and their scenes are **photographic**. The 11 Part A images from [shopier-image-prompts.md](shopier-image-prompts.md) are in. The try-on (models, garments, results) stays **code-drawn illustrations** by decision.
+**Status (2026-11-20):** every visual is **photographic**: the 11 Part A images (products and backgrounds) and the 8 Part B images (try-on) from [shopier-image-prompts.md](shopier-image-prompts.md). The code-drawn illustrations remain only as the fallback.
 
 ## Third-party brand assets
 
@@ -38,19 +38,19 @@ Every visual below is an original, code-drawn illustration (SVG generated in the
 | Phone-photo originals: Hilal handbag, Damla earrings on their stand, Gül serum | `assets/art-products.js` scene `original` | `<product>-original` (generated) | Delivered |
 | Product cut-outs (campaign layouts, scenes) | `art-products.js` `A.product()` | `<product>-cutout` (cut from the original on a Mac with `tools/proposals/cutout.swift`, not generated) | Made |
 | 8 scenes per product (studio, lifestyle, luxury campaign, seasonal × 2) | `art-products.js` `A.scene()` | Composited in the browser: `<product>-cutout` on `bg-<style>-<1–2>` (8 generated empty backgrounds shared by all products) | Backgrounds delivered |
-| Models Ada, Nil, Mira ("before") | `assets/art-people.js` `A.person(id, 'before')` | `model-<id>-before` | Not generated |
-| Garments: blazer, dress, jacket (catalogue) | `art-people.js` `A.garment()` | `garment-<id>` | Not generated |
-| Try-on results (3 models × 3 garments) | `art-people.js` `A.person(id, garment)` | `tryon-<id>-<garment>` | Not generated |
+| Models Ada and Nil ("before") | `assets/art-people.js` `A.person(id, 'before')` | `model-<id>-before` | Delivered |
+| Garments: blazer and dress (catalogue) | `art-people.js` `A.garment()` | `garment-<id>` | Delivered |
+| Try-on results (2 models × 2 garments) | `art-people.js` `A.person(id, garment)` | `tryon-<id>-<garment>` | Delivered |
 | Campaign creatives (3 directions × 4 formats) | `assets/campaign.js` `render()` | — (always rendered live: editable text over the product image) | n/a |
 | Social preview images `og-image.png`, `og-image-tr.png` | Rendered with headless Chrome from the bag photo, two composites and a campaign layout | — | Rendered from photos |
 
 **Product preservation.** In the illustrations, every scene uses one shared product drawing. With photos, every scene draws the cut-out taken from the product's own phone photo onto an empty background. Either way the product is identical by construction: no image model ever redraws it.
 
-**People.** The three models are fictional illustrations. They share one pose, so each before/after pair lines up. None depicts a real person.
+**People.** The two models, Ada and Nil, are fictional, AI-generated people; neither depicts a real person. Each try-on result keeps the model's pose and framing, so each before/after pair lines up.
 
 **Fictional content.** The brands (Saye Atelier, Ilgın Jewelry, Nemra Skin, Ela Studio), products, prices and models are invented demo content, as the page disclosure says.
 
 ## Not used
 
 - No stock photos, no images copied from Shopier or any other site, and no image collages.
-- The phone photos and backgrounds are AI-generated example images made from the prompts, with fictional products. The page labels every result a prepared example.
+- All photos (phone photos, backgrounds, models, garments and try-on results) are AI-generated example images made from the prompts, with fictional products and people. The page labels every result a prepared example.

@@ -2,17 +2,17 @@
 
 > **Purpose:** photo-realistic images for the Shopier proposal page (`site/proposals/shopier/`).
 >
-> **Status (2026-11-20):** Part A (11 images) delivered and published. Part B (try-on) is on hold: the try-on stays illustrated. If it is picked up again, make the 9 try-on results in a dedicated try-on tool (FASHN or Kling) rather than a general image model, which tends to change the face or the garment. Real photos from the internet won't work: no source has the same garments on several people with matching product shots, and the try-on research datasets (VITON-HD, Dress Code) are non-commercial only.
+> **Status (2026-11-20):** Part A (11 images) delivered and published. Part B (try-on, 8 images) delivered and published.
 
-**26 images in total, and only 9 of them need input images.** The page builds the rest itself:
+**19 images in total, and only the 4 try-on results need input images.** The page builds the rest itself:
 
 - **Product scenes are not generated one by one.** Each product needs one phone photo. I cut the product out of it on the Mac. The page then places that cut-out on 8 empty backgrounds that all three products share, and adds a matching shadow and colour grade. So the product in every scene is the same pixels as in the phone photo, and nothing has to be checked for product drift.
-- **Try-on** uses 3 models and 3 garments, so 9 try-on results.
+- **Try-on** uses 2 models and 2 garments, so only 4 try-on results.
 
 | Part | What | Count | Input images |
 |---|---|---|---|
 | A · Product Studio | 3 phone photos + 8 empty backgrounds | 11 | none |
-| B · Try-On | 3 models + 3 garments + 9 try-on results | 15 | 2 per try-on |
+| B · Try-On | 2 models + 2 garments + 4 try-on results | 8 | 2 per try-on |
 
 **Part A alone makes the opening, the Product Studio, the Campaign Studio and the flow section photographic.** Part B replaces the try-on illustrations. If time is short, send Part A first.
 
@@ -103,65 +103,68 @@ Square **1024 × 1024**. **No product in the picture.** A product is placed on e
 
 ---
 
-## Part B · Try-On (15 images)
+## Part B · Try-On (8 images)
 
-People and garments: portrait **1024 × 1536**.
+Two models and two garments, so 4 try-on results.
 
-### Models (3, no input image)
+**Make the 4 try-on results in a dedicated try-on tool**, not a general image model, which tends to change the face or the garment.
+- [FASHN](https://fashn.ai): its 10 free credits cover the 4 try-ons with room for retries.
+- Kling's **AI Virtual Try-On**, under AI Images, also works.
+
+The models and garments are ordinary text-prompt images, so make those in your usual tool.
+
+All 8 images: portrait **1024 × 1536** (2:3).
+
+| Step | Files | How |
+|---|---|---|
+| 1 | `model-ada-before.jpg`, `model-nil-before.jpg` | Text prompt, no input image |
+| 2 | `garment-blazer.jpg`, `garment-dress.jpg` | Text prompt, no input image |
+| 3 | `tryon-ada-blazer.jpg`, `tryon-ada-dress.jpg`, `tryon-nil-blazer.jpg`, `tryon-nil-dress.jpg` | Try-on tool: one model photo + one garment photo |
+
+### Step 1 · Models (2)
+
+Try-on tools work best with the whole body visible, facing the camera, arms a little away from the body and fitted clothes. These prompts ask for exactly that.
 
 #### `model-ada-before.jpg`
 
-> Full-length e-commerce studio photo of a fictional woman in her late twenties with light olive skin and dark brown hair in a sleek low bun, standing straight and facing the camera, arms relaxed at her sides, a calm natural expression. She wears a fitted oatmeal ribbed knit top with short sleeves, high-waisted camel wide-leg trousers and nude pointed heels. Plain warm light-grey seamless studio backdrop, a soft floor shadow. Her whole body is in frame from head to shoes, with some space above her head. Portrait 2:3. Photorealistic premium fashion e-commerce photograph, soft even studio light, full-frame camera, 50 mm lens, true-to-life skin and fabric texture, no text, no logos, no watermark.
+> Full-length e-commerce studio photo of a fictional woman in her late twenties with light olive skin and dark brown hair in a sleek low bun, standing straight and facing the camera, arms relaxed and held slightly away from her body, hands visible, a calm natural expression. She wears a fitted plain white crew-neck T-shirt with short sleeves, slim-fit high-waisted camel trousers and simple nude flat shoes. Plain warm light-grey seamless studio backdrop, soft even light, a soft floor shadow. Her whole body is in frame from head to shoes, centred, with some space above her head and below her feet. Portrait 2:3. Photorealistic premium fashion e-commerce photograph, full-frame camera, 50 mm lens, true-to-life skin and fabric texture, no text, no logos, no watermark.
 
 #### `model-nil-before.jpg`
 
 **Input (optional):** image 1 = `model-ada-before.jpg`, for the backdrop, light, clothes and framing only.
 
-> Full-length e-commerce studio photo of a different fictional woman in her early thirties with deep brown skin, long dark wavy hair worn loose and a curvy build (Turkish size 44–46), standing straight and facing the camera, arms relaxed at her sides, a warm natural expression. She wears a fitted oatmeal ribbed knit top with short sleeves, high-waisted camel wide-leg trousers and nude pointed heels. Plain warm light-grey seamless studio backdrop, a soft floor shadow. Same backdrop, light and framing as image 1, but do not copy the person. Her whole body is in frame from head to shoes. Portrait 2:3. Photorealistic premium fashion e-commerce photograph, soft even studio light, full-frame camera, 50 mm lens, true-to-life skin and fabric texture, no text, no logos, no watermark.
+> Full-length e-commerce studio photo of a different fictional woman in her early thirties with deep brown skin, long dark wavy hair worn loose behind her shoulders, and a curvy build (Turkish size 44–46), standing straight and facing the camera, arms relaxed and held slightly away from her body, hands visible, a warm natural expression. She wears a fitted plain white crew-neck T-shirt with short sleeves, slim-fit high-waisted camel trousers and simple nude flat shoes. Plain warm light-grey seamless studio backdrop, soft even light, a soft floor shadow. Same backdrop, light and framing as image 1, but do not copy the person. Her whole body is in frame from head to shoes, centred, with some space above her head and below her feet. Portrait 2:3. Photorealistic premium fashion e-commerce photograph, full-frame camera, 50 mm lens, true-to-life skin and fabric texture, no text, no logos, no watermark.
 
-#### `model-mira-before.jpg`
+### Step 2 · Garments (2)
 
-**Input (optional):** image 1 = `model-ada-before.jpg`, as for Nil.
-
-> Full-length e-commerce studio photo of a different fictional woman in her mid twenties with warm medium skin, an auburn chin-length bob with a side part and a petite, slim build, standing straight and facing the camera, arms relaxed at her sides, a friendly natural expression. She wears a fitted oatmeal ribbed knit top with short sleeves, high-waisted camel wide-leg trousers and nude pointed heels. Plain warm light-grey seamless studio backdrop, a soft floor shadow. Same backdrop, light and framing as image 1, but do not copy the person. Her whole body is in frame from head to shoes. Portrait 2:3. Photorealistic premium fashion e-commerce photograph, soft even studio light, full-frame camera, 50 mm lens, true-to-life skin and fabric texture, no text, no logos, no watermark.
-
-### Garments (3, no input image)
+Try-on tools need the whole garment, flat and unobstructed, front view, on a plain background.
 
 #### `garment-blazer.jpg`
 
-> Ghost-mannequin product photo of an ecru linen double-breasted blazer with a relaxed fit, peak lapels, four brown horn buttons, two flap pockets and long sleeves. No person and no visible mannequin, the inside of the back neckline just visible, front view, centred, on a plain very light grey seamless background with a soft floor shadow. Portrait 2:3. Photorealistic premium fashion e-commerce photograph, soft even studio light, true-to-life fabric texture, no text, no logos, no watermark.
+> Ghost-mannequin product photo of an ecru linen double-breasted blazer with a relaxed fit, peak lapels, four brown horn buttons, two flap pockets and long sleeves. The whole garment is visible, front view, buttoned, centred, with no person, no visible mannequin, no hanger and nothing else in frame, the inside of the back neckline just visible. Plain very light grey seamless background, soft even light, a soft shadow. Portrait 2:3. Photorealistic premium fashion e-commerce photograph, true-to-life linen texture, no text, no logos, no labels, no watermark.
 
 #### `garment-dress.jpg`
 
-> Ghost-mannequin product photo of a terracotta linen midi shirt dress with short sleeves, a small shirt collar, a button placket, a self-tie belt knotted on the left of the waist and a softly flared skirt. No person and no visible mannequin, the inside of the back neckline just visible, front view, centred, on a plain very light grey seamless background with a soft floor shadow. Portrait 2:3. Photorealistic premium fashion e-commerce photograph, soft even studio light, true-to-life fabric texture, no text, no logos, no watermark.
+> Ghost-mannequin product photo of a terracotta linen midi shirt dress with short sleeves, a small shirt collar, a button placket, a self-tie belt knotted at the waist and a softly flared skirt. The whole dress is visible from collar to hem, front view, centred, with no person, no visible mannequin, no hanger and nothing else in frame, the inside of the back neckline just visible. Plain very light grey seamless background, soft even light, a soft shadow. Portrait 2:3. Photorealistic premium fashion e-commerce photograph, true-to-life linen texture, no text, no logos, no labels, no watermark.
 
-#### `garment-jacket.jpg`
+### Step 3 · Try-on results (4)
 
-> Ghost-mannequin product photo of a chocolate-brown suede cropped jacket, waist length, with a wide spread collar, an open front with three small gold buttons on the left edge and long sleeves with a cuff band. No person and no visible mannequin, the inside of the back neckline just visible, front view, centred, on a plain very light grey seamless background with a soft floor shadow. Portrait 2:3. Photorealistic premium fashion e-commerce photograph, soft even studio light, true-to-life fabric texture, no text, no logos, no watermark.
-
-### Try-on results (9 edits)
-
-Each result is an edit of a model photo. Attach **image 1 = the model** and **image 2 = the garment**, then use the prompt for that garment. The same three prompts work for all three models.
-
-| Garment | Ada | Nil | Mira |
+| File | Model photo | Garment photo | Category, if the tool asks |
 |---|---|---|---|
-| Blazer | `tryon-ada-blazer.jpg` | `tryon-nil-blazer.jpg` | `tryon-mira-blazer.jpg` |
-| Dress | `tryon-ada-dress.jpg` | `tryon-nil-dress.jpg` | `tryon-mira-dress.jpg` |
-| Jacket | `tryon-ada-jacket.jpg` | `tryon-nil-jacket.jpg` | `tryon-mira-jacket.jpg` |
+| `tryon-ada-blazer.jpg` | `model-ada-before.jpg` | `garment-blazer.jpg` | Top |
+| `tryon-ada-dress.jpg` | `model-ada-before.jpg` | `garment-dress.jpg` | One-piece / dress |
+| `tryon-nil-blazer.jpg` | `model-nil-before.jpg` | `garment-blazer.jpg` | Top |
+| `tryon-nil-dress.jpg` | `model-nil-before.jpg` | `garment-dress.jpg` | One-piece / dress |
 
-Image 1 = `model-<name>-before.jpg`, image 2 = `garment-<garment>.jpg`.
+**In FASHN:** open Virtual Try-On, upload the model photo as the model and the garment photo as the garment, choose the category from the table if it asks, pick the highest quality, then generate and download. No text prompt is needed.
 
-#### Blazer prompt
+**In Kling:** go to AI Images, then AI Virtual Try-On. Upload your own model photo instead of a built-in model, and use "Upload Single Garment" for the garment.
 
-> Edit image 1. Dress the woman in the exact blazer shown in image 2, worn open over her existing oatmeal knit top and camel trousers, fitted naturally to her body, with the same colour, linen texture, lapels, horn buttons and pockets. Keep everything else in image 1 unchanged: her face and identity, hair, skin tone, body shape, pose, hands, shoes, camera angle, framing, backdrop and light. Photorealistic drape, folds and shadows. Do not add accessories.
+**Keep a result only if** the face, hair, body, pose and backdrop match the model photo and the garment matches its catalogue photo (colour, buttons, collar, belt). Otherwise run it again.
 
-#### Dress prompt
+**No try-on tool?** In a general image editor, attach image 1 = the model photo and image 2 = the garment photo, then use:
 
-> Edit image 1. Dress the woman in the exact shirt dress shown in image 2, replacing her top and trousers, fitted naturally to her body, with the same terracotta colour, linen texture, collar, buttons and tie belt; her lower legs show below the hem. Swap her shoes for simple tan flat sandals. Keep everything else in image 1 unchanged: her face and identity, hair, skin tone, body shape, pose, hands, camera angle, framing, backdrop and light. Photorealistic drape, folds and shadows. Do not add accessories.
-
-#### Jacket prompt
-
-> Edit image 1. Dress the woman in the exact cropped suede jacket shown in image 2, worn open over her existing oatmeal knit top and camel trousers, fitted naturally to her body, with the same chocolate-brown suede, collar, gold buttons and cuffs. Keep everything else in image 1 unchanged: her face and identity, hair, skin tone, body shape, pose, hands, shoes, camera angle, framing, backdrop and light. Photorealistic drape, folds and shadows. Do not add accessories.
+> Edit image 1. Dress the woman in the exact garment shown in image 2, fitted naturally to her body, with the same colour, fabric, collar, buttons and details. For the blazer, wear it over her white T-shirt and camel trousers. For the dress, replace her T-shirt and trousers with it. Keep everything else in image 1 unchanged: her face and identity, hair, skin tone, body shape, pose, hands, shoes, camera angle, framing, backdrop and light. Photorealistic drape, folds and shadows. Do not add accessories.
 
 ---
 

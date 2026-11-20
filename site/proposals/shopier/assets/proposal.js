@@ -34,10 +34,9 @@
   const GARMENTS = [
     { id: 'blazer', name: L('Kruvaze Keten Blazer', 'Double-Breasted Linen Blazer'), price: 3490 },
     { id: 'dress', name: L('Keten Gömlek Elbise', 'Linen Shirt Dress'), price: 2790 },
-    { id: 'jacket', name: L('Kısa Süet Ceket', 'Cropped Suede Jacket'), price: 4990 },
   ];
   const GAR = Object.fromEntries(GARMENTS.map((g) => [g.id, g]));
-  const MODELS = [{ id: 'ada', name: 'Ada' }, { id: 'nil', name: 'Nil' }, { id: 'mira', name: 'Mira' }];
+  const MODELS = [{ id: 'ada', name: 'Ada' }, { id: 'nil', name: 'Nil' }];
   const price = (n) => (LANG === 'tr' ? `${n.toLocaleString('tr-TR')} TL` : `₺${n.toLocaleString('en-US')}`);
 
   const STR = {
@@ -77,6 +76,8 @@
   const PHOTOS = new Set([
     'bag-original', 'earrings-original', 'serum-original', 'bag-cutout', 'earrings-cutout', 'serum-cutout',
     'bg-studio-1', 'bg-studio-2', 'bg-lifestyle-1', 'bg-lifestyle-2', 'bg-luxury-1', 'bg-luxury-2', 'bg-seasonal-1', 'bg-seasonal-2',
+    'model-ada-before', 'model-nil-before', 'garment-blazer', 'garment-dress',
+    'tryon-ada-blazer', 'tryon-ada-dress', 'tryon-nil-blazer', 'tryon-nil-dress',
   ]);
   const fallback = (spec) => {
     const [k, a, b] = spec.split(':');

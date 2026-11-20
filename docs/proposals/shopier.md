@@ -1,6 +1,6 @@
 # Proposal: Shopier (SOHA → Shopier)
 
-> **Status:** Published with product photos; the try-on stays illustrated · **Updated:** 2026-11-20
+> **Status:** Published with all photos (product studio and try-on) · **Updated:** 2026-11-20
 > **Pages:**
 > - English (default): `site/proposals/shopier/` → <https://mertz1999.github.io/soha/proposals/shopier/>
 > - Turkish: `site/proposals/shopier/tr/` → <https://mertz1999.github.io/soha/proposals/shopier/tr/>
@@ -56,7 +56,7 @@ shopier.com and appstore.shopier.com sit behind a Cloudflare bot check that auto
 | 2 | "Bir Fotoğraf. Üç Akıllı Deneyim." | Three large visual cards linking to the demos. A swipeable row on mobile. |
 | 3 | AI Product Studio: "Stüdyo Çekimi Olmadan, Stüdyo Kalitesinde." | Seller-panel frame. **Original** (3 demo products, local-only upload) · **Controls** (4 styles with 2 backgrounds each, lighting, mood, format, the live brief line) · **Results** (compare slider, 2 variations, full size, reset). |
 | 4 | AI Campaign Studio: "Üründen Kampanyaya. Tek Bir Akışta." | Product, brand name, palette or custom colour, logo upload, campaign name, message, discount, button. 3 directions × 4 formats rendered live. Click text in the preview to edit it. "The full set" shows all four formats at once. PNG/SVG export. |
-| 5 | AI Virtual Try-On: "Satın Almadan Önce Üzerinizde Görün." | 3 garments, 3 models, before/after slider, results-on-this-model strip, full size, reset. The upload card states the photo was not processed. |
+| 5 | AI Virtual Try-On: "Satın Almadan Önce Üzerinizde Görün." | 2 garments, 2 models, before/after slider, results-on-this-model strip, full size, reset. The upload card states the photo was not processed. |
 | 6 | "Tek Ürün. Tüm Görsel İçerikler." | The journey: upload → product photography → campaign → fashion visualisation → storefront (phone mock-up). Five workflow steps. "Shopier App Store için yeni bir AI deneyimi", marked as a possible future flow. |
 | 7 | "Shopier Satıcıları İçin Bir Sonraki Adım." | 15-minute call (mailto), Calendly, SOHA link, clients line, independence disclosure. |
 
@@ -71,9 +71,9 @@ shopier.com and appstore.shopier.com sit behind a Cloudflare bot check that auto
 
 ## Images
 
-The products and their scenes use photos (Part A is in). The try-on deliberately stays illustrated (decided 2026-11-20): generated try-ons weren't accurate enough, and no internet source can supply a consistent, licensed set (see [shopier-image-prompts.md](shopier-image-prompts.md)). The illustrations stay as the fallback (see [shopier-assets.md](shopier-assets.md)):
+Every section uses photos now: the products and their scenes (Part A) and the try-on (Part B). The try-on was cut to 2 models × 2 garments to keep the image count low (see [shopier-image-prompts.md](shopier-image-prompts.md)). Internet photos can't be used: no source has the same garments on several people with matching product shots, and the try-on research datasets are non-commercial only. The illustrations stay as the fallback (see [shopier-assets.md](shopier-assets.md)):
 - `art-products.js`: three products (the earrings hang on a small brass stand) and their 8 scenes plus the phone-photo original.
-- `art-people.js`: three models and three garments, adapted from the Düğün.com people drawings.
+- `art-people.js`: the models and garments, adapted from the Düğün.com people drawings (the page uses Ada and Nil, the blazer and the dress).
 
 **How the photos work.** The photo set is 26 images, and only the 9 try-on results need input images ([shopier-image-prompts.md](shopier-image-prompts.md)):
 - **Product scenes are composited, not generated one by one.**
@@ -88,7 +88,7 @@ The products and their scenes use photos (Part A is in). The try-on deliberately
     - an `ad` one for the editorial campaign layouts, with the product raised above the headline and the surface mirrored into the strip below
   - Wide crops (the 16:9 compare, the variation and style thumbnails) centre on the product using `--fy`, set from the same table.
   - All scenes are built in the background after the page loads, so switching is instant.
-- **Try-on** is 3 models × 3 garments, each result an edit of the model's "before" photo.
+- **Try-on** is 2 models × 2 garments: 2 model photos, 2 garment photos and 4 results, each made in a try-on tool from a model photo and a garment photo.
 
 To add photos:
 1. Cut out each product:
@@ -150,5 +150,11 @@ Open <http://localhost:4321/proposals/shopier/> (Turkish: `/proposals/shopier/tr
   - The opening, studio (all four formats), campaign (3 directions × 4 formats for each product), the three cards and the flow section checked at 1440 × 900.
   - Mobile checked at 375 px, with no horizontal overflow. No console errors.
 - Social images re-rendered from the photos.
+- Try-on photos (Part B):
+  - In the delivered zip the two blazer results were swapped (`tryon-ada-blazer` showed Nil and the other way round). They were renamed on import.
+  - Each before and after pair lines up almost exactly (checked by blending them).
+  - The try-on frame now matches the photos' 2:3 shape, so the whole figure shows head to feet.
+  - The third card and the flow step keep the head in view.
+  - Checked at 1440 × 900 (every slide one screen) and at 375 px, with no console errors.
 - Turkish: all visible strings, alt text and ARIA labels translated; Turkish casing in campaign copy; brand names keep their spelling.
 - Mobile layouts checked at 390 px and 375 px through fixed-width iframes, because headless Chrome won't render a window under about 500 px.
