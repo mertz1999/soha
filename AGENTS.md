@@ -2,6 +2,8 @@
 
 Guidance for AI coding agents working in this repository.
 
+**New here?** Read [HANDOFF.md](HANDOFF.md) first. It covers what this repo is, where it lives, the client proposals and their status, how they are built, and how the user likes to work.
+
 ## Languages: English is the default page
 
 Every public page opens in **English by default**. Other languages are alternates at a subfolder.
